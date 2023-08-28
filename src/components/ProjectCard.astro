@@ -1,0 +1,42 @@
+---
+import Icon from "./Icon.astro";
+
+type Props = {
+  title: string;
+  desc: string;
+  ghLink?: string;
+  liveLink?: string;
+  blogLink?: string;
+};
+const { props } = Astro;
+---
+
+<div
+  class="w-full sm:max-w-[300px] outline outline-offset-1 outline-[0.5px] rounded outline-slate-900 px-2 my-1"
+>
+  {
+    props.blogLink ? (
+      <h4 class="capitalize flex gap-1 items-center">
+        <a href={props.blogLink} class="font-bold underline-offset-4">
+          {props.title}
+        </a>
+        <Icon name="fluent:window-new-16-filled" />
+      </h4>
+    ) : (
+      <h4 class="capitalize flex gap-1 items-center">
+        {props.title}
+        <Icon name="fluent:window-new-16-filled" />
+      </h4>
+    )
+  }
+  <p class="text-gray-400">
+    {props.desc} Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero placeat
+    beatae incidunt neque exercitationem deserunt. Sunt earum p
+  </p>
+  <p class="links flex gap-2 text-xs tracking-wider underline-offset-4 italic">
+    <a href={props.ghLink} class="decoration-dotted">Github</a> /
+    <a href={props.liveLink} class="decoration-dotted text-yellow-200"
+      >Live site</a
+    >
+  </p>
+</div>

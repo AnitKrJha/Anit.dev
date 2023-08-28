@@ -1,0 +1,30 @@
+---
+const path = new URL(Astro.request.url).pathname;
+let pathname: "blog" | "home" | "guestbook" | "" = "";
+if (path === "/") pathname = "home";
+else if (path.includes("/guestbook")) pathname = "guestbook";
+else pathname = "blog";
+---
+
+<nav class="w-full py-2 my-12 tracking-tight text-gray-500">
+  <ul class="flex">
+    <a
+      href="/"
+      class={`py-1 px-2 ${pathname === "home" ? "text-gray-50" : ""}`}
+    >
+      <li>home</li>
+    </a>
+    <a
+      href="/blog"
+      class={`py-1 px-2 ${pathname === "blog" ? "text-gray-50" : ""}`}
+    >
+      <li>blog</li>
+    </a>
+    <a
+      href="/guestbook"
+      class={`py-1 px-2 ${pathname === "guestbook" ? "text-gray-50" : ""}`}
+    >
+      <li>guestbook</li>
+    </a>
+  </ul>
+</nav>

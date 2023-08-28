@@ -1,15 +1,55 @@
 ---
+import IconChip from "../components/IconChip.astro";
+import Projects from "../components/Projects.astro";
+import BaseLayout from "./../Layouts/BaseLayout.astro";
+import Icon from "/public/favicon.svg";
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="Anit Jha">
+  <h2 class="tracking-tight mb-8">hey, I'm anitjha 👋</h2>
+  <p>
+    I'm 20 y/o and I'm a CS undergrad student. I like <strong
+      >playing chess</strong
+    > and <strong>building things</strong>. I enjoy problem-solving, web
+    development and OSS. I use "<strong>fedora</strong> + <strong
+      >windows"</strong
+    > , (<em>WSL</em> ftw ✌️).
+  </p>
+  <p>
+    Currently studying <strong>Machine Learning</strong>
+    <em>(ML)</em>.
+  </p>
+
+  <h3 class="mt-14">Skills ✏️</h3>
+
+  <p class="break-keep leading-8">
+    I'm well-versed in
+
+    <IconChip icon={Icon} text="NextJS" shadowColorClass="shadow-gray-50" />
+    <IconChip
+      icon={Icon}
+      text="Firebase"
+      shadowColorClass="shadow-yellow-500"
+    />
+    <IconChip
+      icon={Icon}
+      text="Typescript"
+      shadowColorClass="shadow-blue-500"
+    />
+
+    and the <IconChip
+      icon={Icon}
+      text="Linux/Unix"
+      shadowColorClass="shadow-black"
+    /> environments. <IconChip
+      shadowColorClass="shadow-orange-500"
+      icon={Icon}
+      text="Astro"
+    /> is also in my toolkit.
+
+    <p>
+      And guess what? I'm <strong>currently learning Kotlin</strong> too.📚🚀
+    </p>
+  </p>
+  <Projects />
+</BaseLayout>

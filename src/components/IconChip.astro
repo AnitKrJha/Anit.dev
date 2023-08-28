@@ -1,0 +1,16 @@
+---
+import { Image } from "astro:assets";
+type Props = {
+  icon: ImageMetadata;
+  text: string;
+  shadowColorClass: string;
+};
+const { icon, text, shadowColorClass } = Astro.props;
+---
+
+<span
+  class={`not-prose gap-1.5 items-center text-gray-50 bg-stone-900 border rounded px-1.5 w-fit text-sm py-1 mx-1 shadow ${shadowColorClass}`}
+>
+  <Image src={icon} height={16} width={16} alt="icon" class="inline" />
+  {text}
+</span>
