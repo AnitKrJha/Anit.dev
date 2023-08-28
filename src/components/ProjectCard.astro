@@ -29,13 +29,15 @@ const { props } = Astro;
       </h4>
     )
   }
-  <p class="text-gray-400">
+  <p class="text-gray-700 dark:text-gray-400">
     {props.desc} Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero placeat
     beatae incidunt neque exercitationem deserunt. Sunt earum p
   </p>
   <p class="links flex gap-2 text-xs tracking-wider underline-offset-4 italic">
     <a href={props.ghLink} class="decoration-dotted">Github</a> /
-    <a href={props.liveLink} class="decoration-dotted text-yellow-200"
+    <a
+      href={props.liveLink}
+      class="decoration-dotted dark:text-yellow-200 text-yellow-700"
       >Live site</a
     >
   </p>

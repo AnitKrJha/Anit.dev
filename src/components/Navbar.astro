@@ -6,25 +6,37 @@ else if (path.includes("/guestbook")) pathname = "guestbook";
 else pathname = "blog";
 ---
 
-<nav class="w-full py-2 my-12 tracking-tight text-gray-500">
+<nav class="w-full py-2 my-12 tracking-tight text-gray-800 dark:text-gray-500">
   <ul class="flex">
-    <a
-      href="/"
-      class={`py-1 px-2 ${pathname === "home" ? "text-gray-50" : ""}`}
-    >
-      <li>home</li>
-    </a>
-    <a
-      href="/blog"
-      class={`py-1 px-2 ${pathname === "blog" ? "text-gray-50" : ""}`}
-    >
-      <li>blog</li>
-    </a>
-    <a
-      href="/guestbook"
-      class={`py-1 px-2 ${pathname === "guestbook" ? "text-gray-50" : ""}`}
-    >
-      <li>guestbook</li>
-    </a>
+    <li>
+      <a
+        href="/"
+        class={`py-1 px-2 ${
+          pathname === "home" ? "text-black dark:text-gray-50" : ""
+        }`}
+      >
+        home
+      </a>
+    </li>
+    <li>
+      <a
+        href="/blog"
+        class={`py-1 px-2 ${
+          pathname === "blog" ? "text-black dark:text-gray-50" : ""
+        }`}
+      >
+        blog
+      </a>
+    </li>
+    <li>
+      <a
+        href="/guestbook"
+        class={`py-1 px-2 ${
+          pathname === "guestbook" ? "text-black dark:text-gray-50" : ""
+        }`}
+      >
+        guestbook
+      </a>
+    </li>
   </ul>
 </nav>
