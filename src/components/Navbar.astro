@@ -1,42 +1,41 @@
 ---
+import type { Image } from "astro:assets";
+import Navlink from "./Navlink.astro";
+import Icon from "./Icon.astro";
+import ColorModeToggle from "./ColorModeToggle.astro";
+
+type NavItemProps = { displayName: string; slug: string };
+
 const path = new URL(Astro.request.url).pathname;
 let pathname: "blog" | "home" | "guestbook" | "" = "";
 if (path === "/") pathname = "home";
 else if (path.includes("/guestbook")) pathname = "guestbook";
 else pathname = "blog";
+
+let NavItems: NavItemProps[] = [
+  {
+    displayName: "home",
+    slug: "/",
+  },
+  {
+    displayName: "blog",
+    slug: "/blog",
+  },
+  {
+    displayName: "guestbook",
+    slug: "/guestbook",
+  },
+];
 ---
 
-<nav class="w-full py-2 my-12 tracking-tight text-gray-800 dark:text-gray-500">
+<nav
+  class="w-full py-2 my-12 tracking-tight text-gray-800 dark:text-gray-500 flex"
+>
   <ul class="flex">
-    <li>
-      <a
-        href="/"
-        class={`py-1 px-2 ${
-          pathname === "home" ? "text-black dark:text-gray-50" : ""
-        }`}
-      >
-        home
-      </a>
-    </li>
-    <li>
-      <a
-        href="/blog"
-        class={`py-1 px-2 ${
-          pathname === "blog" ? "text-black dark:text-gray-50" : ""
-        }`}
-      >
-        blog
-      </a>
-    </li>
-    <li>
-      <a
-        href="/guestbook"
-        class={`py-1 px-2 ${
-          pathname === "guestbook" ? "text-black dark:text-gray-50" : ""
-        }`}
-      >
-        guestbook
-      </a>
-    </li>
+    {NavItems.map((item) => <Navlink {...item} />)}
   </ul>
+
+  <div class="ml-auto">
+    <ColorModeToggle />
+  </div>
 </nav>

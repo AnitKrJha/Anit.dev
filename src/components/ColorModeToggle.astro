@@ -1,0 +1,41 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<button class="dark-mode-button ml-auto rounded p-1" title="dark mode">
+  <Icon name="mdi:weather-night" class="dark-mode-icon" />
+</button>
+<button class="light-mode-button ml-auto rounded p-1" title="light mode">
+  <Icon name="mdi:white-balance-sunny" class="light-mode-icon" />
+</button>
+<script is:inline>
+const html = document.documentElement;
+const darkmodebtn = document.querySelector(".dark-mode-button");
+const lightmodebtn = document.querySelector(".light-mode-button");
+
+// Check the localStorage theme and update button classes accordingly
+if (localStorage.theme === "dark") {
+    darkmodebtn.classList.add("bg-white");
+} else if (localStorage.theme === "light") {
+    lightmodebtn.classList.add("bg-gray-300");
+}
+
+// Function to toggle dark mode
+function enableDarkMode() {
+    html.classList.add("dark");
+    localStorage.theme = "dark";
+    darkmodebtn.classList.add("bg-white");
+    lightmodebtn.classList.remove("bg-gray-300");
+}
+
+// Function to toggle light mode
+function enableLightMode() {
+    html.classList.remove("dark");
+    localStorage.theme = "light";
+    lightmodebtn.classList.add("bg-gray-300");
+    darkmodebtn.classList.remove("bg-white");
+}
+
+darkmodebtn.addEventListener("click", enableDarkMode);
+lightmodebtn.addEventListener("click", enableLightMode);
+</script>

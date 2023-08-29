@@ -1,16 +1,18 @@
 ---
 import { Image } from "astro:assets";
+import Icon from "./Icon.astro";
 type Props = {
-  icon: ImageMetadata;
+  iconName: string;
   text: string;
   shadowColorClass: string;
 };
-const { icon, text, shadowColorClass } = Astro.props;
+const { iconName, text, shadowColorClass } = Astro.props;
 ---
 
 <span
-  class={`not-prose gap-1.5 items-center text-gray-50 bg-stone-900 border rounded px-1.5 w-fit text-sm py-1 mx-1 shadow ${shadowColorClass}`}
+  class={`not-prose gap-1.5 items-center bg-stone-200 text-black dark:text-gray-50 dark:bg-stone-800 border rounded px-1.5 w-fit text-sm py-0.5 mx-1 shadow inline-flex ${shadowColorClass}`}
 >
-  <Image src={icon} height={16} width={16} alt="icon" class="inline" />
+  <!-- <Image src={icon} height={16} width={16} alt="icon" class="inline" /> -->
+  <Icon name={iconName} class="inline" height={16} width={16} />
   {text}
 </span>

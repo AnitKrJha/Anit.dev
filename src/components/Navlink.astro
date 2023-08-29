@@ -1,0 +1,25 @@
+---
+type Props = {
+  displayName: string;
+  slug: string;
+};
+const { displayName, slug } = Astro.props;
+const path = new URL(Astro.request.url).pathname;
+let pathname: "blog" | "home" | "guestbook" | "" = "";
+if (path === "/") pathname = "";
+else if (path.includes("/guestbook")) pathname = "guestbook";
+else pathname = "blog";
+
+let active = pathname === slug.slice(1);
+
+//Idk can be better implemented 🥴
+---
+
+<li>
+  <a
+    href={slug}
+    class={`py-1 px-2 ${active ? "text-black dark:text-gray-50" : ""}`}
+  >
+    {displayName}
+  </a>
+</li>
