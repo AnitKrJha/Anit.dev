@@ -43,13 +43,13 @@ const { title } = Astro.props;
       crossorigin="anonymous"
     />
 
-    <ViewTransitions />
+    <!-- <ViewTransitions /> -->
   </head>
   <body
-    class="bg-yellow-50 dak:text-slate-50 text-slate-800 dark:bg-stone-950 max-w-3xl mx-auto px-4"
+    class="bg-[#F4EFE0] dak:text-slate-50 text-slate-800 dark:bg-stone-950 max-w-3xl mx-auto px-4 overflow-y-scroll"
   >
     <Navbar />
-    <main class="prose dark:prose-invert py-2 px-2">
+    <main class="prose prose-gray dark:prose-invert py-2 px-2">
       <slot />
     </main>
     <style is:global>

@@ -18,7 +18,11 @@ let active = pathname === slug.slice(1);
 <li>
   <a
     href={slug}
-    class={`py-1 px-2 ${active ? "text-black dark:text-gray-50" : ""}`}
+    class={`py-1 px-2 ${
+      active
+        ? "underline underline-offset-4 text-gray-950 dark:text-gray-50"
+        : ""
+    } text-gray-500`}
   >
     {displayName}
   </a>
