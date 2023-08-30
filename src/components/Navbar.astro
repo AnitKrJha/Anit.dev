@@ -35,7 +35,7 @@ let NavItems: NavItemProps[] = [
     {NavItems.map((item) => <Navlink {...item} />)}
   </ul>
 
-  <div class="ml-auto">
+  <div class="ml-auto" transition:persist>
     <ColorModeToggle />
   </div>
 </nav>
