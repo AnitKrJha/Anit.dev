@@ -78,9 +78,10 @@ const { title } = Astro.props;
   >
     <Navbar />
     <main
-      class="prose prose-gray dark:prose-invert py-2 px-2"
+      class="prose prose-stone dark:prose-invert py-2 px-2"
       transition:animate="slide"
     >
+      <slot name="extra-header" />
       <slot />
     </main>
     <style is:global>

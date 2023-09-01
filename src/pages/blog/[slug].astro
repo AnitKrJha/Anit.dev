@@ -1,0 +1,33 @@
+---
+import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../Layouts/BaseLayout.astro";
+import Icon from "../../components/Icon.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog");
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+type Props = {
+  post: CollectionEntry<"blog">;
+};
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+
+<BaseLayout title={post.data.title} description={post.data.description}>
+  <a
+    slot="extra-header"
+    href="/blog"
+    title="go back"
+    class={` flex items-center w-fit py-1 underline hover:decoration-slate-400 underline-offset-4 duration-200  dark:text-gray-50 text-gray-950 gap-1`}
+  >
+    <Icon name="mdi:arrow-left" height={16} width={16} />back
+  </a>
+  <Content />
+</BaseLayout>

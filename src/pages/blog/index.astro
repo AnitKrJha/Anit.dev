@@ -1,7 +1,34 @@
 ---
+import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
+import { formattedDate } from "./../../lib/utils";
+
+// Get all entries from a collection.
+// Requires the name of the collection as an argument.
+// Example: retrieve `src/content/blog/**`
+const allBlogPosts = await getCollection("blog");
+console.log(allBlogPosts);
+
+// Get a single entry from a collection.
+// Requires the name of the collection and either
+// the entry `slug` (content collections) or `id` (data collections)
+// Example: retrieve `src/content/authors/grace-hopper.json`
+// const graceHopperProfile = await getEntry('');
 ---
 
-<BaseLayout title="Anit |blog">
-  <h1>hello I am blog</h1>
+<BaseLayout title="Anit Blogs">
+  <h2>Read my blogs</h2>
+  {
+    allBlogPosts.map((post) => {
+      return (
+        <div class="border-b-gray-400 border-b">
+          <h3>
+            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+          </h3>
+          <p>{post.data.description}</p>
+          <small>Date: {formattedDate(post.data.date)}</small>
+        </div>
+      );
+    })
+  }
 </BaseLayout>
