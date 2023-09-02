@@ -21,9 +21,9 @@ const allBlogPosts = await getCollection("blog");
     allBlogPosts.map((post) => {
       return (
         <div class="border-b-gray-400 border-b">
-          <h3 class="text-lg" transition:name={post.data.title}>
+          <h3 class="text-lg" transition:name={post.slug}>
             <a class="no-underline " href={`/blog/${post.slug}`}>
-              {post.data.title}
+              {post.slug}
             </a>
           </h3>
           <p>{post.data.description}</p>

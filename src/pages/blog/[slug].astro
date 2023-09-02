@@ -29,7 +29,7 @@ const { Content } = await post.render();
   >
     <Icon name="mdi:arrow-left" height={16} width={16} />back
   </a>
-  <h3 transition:name={post.data.title}>
+  <h3 transition:name={post.slug}>
     {post.data.title}
   </h3>
   <Content />
