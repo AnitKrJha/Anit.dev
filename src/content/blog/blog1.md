@@ -7,9 +7,8 @@ date: "02-03-2004"
 slug: "the-power-of-code"
 ---
 
-### The Power of Code Blocks
 
-In the world of programming, code blocks are an essential tool for sharing and explaining code snippets. Markdown makes it easy to include code blocks in your documents. To create a code block, simply wrap your code in triple backticks (\```) and specify the programming language for syntax highlighting.
+In the world of programming, code blocks are an essential tool for sharing and explaining code snippets. Markdown makes it easy to include code blocks in your documents. To create a code block, simply wrap your code in triple backticks (```) and specify the programming language for syntax highlighting.
 
 ```python
 def greet(name):

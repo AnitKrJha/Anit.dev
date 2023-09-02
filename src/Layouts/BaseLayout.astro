@@ -42,7 +42,7 @@ const { title } = Astro.props;
 
     <!-- open graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Shoubhit Dash" />
+    <meta property="og:site_name" content="Anit Kumar Jha" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
     <!-- <meta property="og:description" content={description} />
@@ -77,10 +77,7 @@ const { title } = Astro.props;
     class="bg-[#F4EFE0] dak:text-slate-50 text-slate-800 dark:bg-stone-950 max-w-3xl mx-auto px-4 overflow-y-scroll transition-[background] duration-500"
   >
     <Navbar />
-    <main
-      class="prose prose-stone dark:prose-invert py-2 px-2"
-      transition:animate="slide"
-    >
+    <main class="prose prose-stone dark:prose-invert py-2 px-2">
       <slot name="extra-header" />
       <slot />
     </main>

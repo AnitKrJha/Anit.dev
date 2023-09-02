@@ -4,10 +4,9 @@ description: "Blockquotes are a valuable way to emphasize quotes or excerpts fro
 isDraft: true
 tags: ['fd', 'df']
 date: "02-03-2004"
-slug : the-art-of-blockquotes"
+slug : "the-art-of-blockquotes"
 ---
 
-### The Art of Blockquotes
 
 Blockquotes are a valuable way to emphasize quotes or excerpts from external sources. To create a blockquote, simply use the greater than symbol (\`>\`) followed by the quoted text.
 

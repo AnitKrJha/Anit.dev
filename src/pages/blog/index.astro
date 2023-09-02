@@ -7,7 +7,6 @@ import { formattedDate } from "./../../lib/utils";
 // Requires the name of the collection as an argument.
 // Example: retrieve `src/content/blog/**`
 const allBlogPosts = await getCollection("blog");
-console.log(allBlogPosts);
 
 // Get a single entry from a collection.
 // Requires the name of the collection and either
@@ -22,8 +21,10 @@ console.log(allBlogPosts);
     allBlogPosts.map((post) => {
       return (
         <div class="border-b-gray-400 border-b">
-          <h3>
-            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+          <h3 class="text-lg" transition:name={post.data.title}>
+            <a class="no-underline " href={`/blog/${post.slug}`}>
+              {post.data.title}
+            </a>
           </h3>
           <p>{post.data.description}</p>
           <small>Date: {formattedDate(post.data.date)}</small>

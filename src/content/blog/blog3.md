@@ -7,7 +7,6 @@ date: "02-03-2004"
 slug: "lists-for-organization"
 ---
 
-### Lists for Organization
 
 Lists are a fantastic tool for organizing information in a structured manner. Markdown offers two types of lists: ordered (numbered) and unordered (bulleted).
 
