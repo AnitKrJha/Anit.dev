@@ -12,17 +12,10 @@ const { props } = Astro;
 ---
 
 <div
-  class="w-full sm:max-w-[300px] outline outline-offset-1 outline-[0.5px] rounded dark:outline-slate-900 outline-[#FFFFE0] px-2 my-1"
+  class="w-full sm:max-w-[300px] outline outline-[0.5px] rounded dark:outline-slate-900 outline-[#FFFFE0] px-2 my-1"
 >
   {
-    props.blogLink ? (
-      <h4 class="capitalize flex gap-1 items-center">
-        <a href={props.blogLink} class="font-bold underline-offset-4">
-          {props.title}
-        </a>
-        <Icon name="fluent:window-new-16-filled" />
-      </h4>
-    ) : (
+    (
       <h4 class="capitalize flex gap-1 items-center">
         {props.title}
         <Icon name="fluent:window-new-16-filled" />
@@ -30,13 +23,22 @@ const { props } = Astro;
     )
   }
   <p class="text-gray-700 dark:text-gray-400">
-    {props.desc} Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero placeat
-    beatae incidunt neque exercitationem deserunt. Sunt earum p
+    {props.desc} Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
+    placeat beatae incidunt neque exercitationem deserunt. Sunt earum p
   </p>
   <p class="links flex gap-2 text-xs tracking-wider underline-offset-4 italic">
-    <a href={props.ghLink} class="decoration-dotted">Github</a> /
     <a
+      transition:animate="none"
+      target="_blank"
+      rel="no-referrer"
+      href={props.ghLink}
+      class="decoration-dotted">Github</a
+    > /
+    <a
+      transition:animate="none"
       href={props.liveLink}
+      target="_blank"
+      rel="no-referrer"
       class="decoration-dotted dark:text-yellow-200 text-yellow-700"
       >Live site</a
     >
