@@ -4,7 +4,7 @@ description: "Blockquotes are a valuable way to emphasize quotes or excerpts fro
 isDraft: true
 tags: ['fd', 'df']
 date: "02-03-2004"
-slug : the-art-of-blockquotes"
+slug : the-art-of-blockquotes
 ---
 
 
