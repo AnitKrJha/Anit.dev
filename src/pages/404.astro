@@ -1,0 +1,27 @@
+---
+import BaseLayout from "../Layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+---
+
+<BaseLayout
+  title="OOPS! Page Not Found"
+  description="Sorry, the page you're looking for isn't here. It might have been moved or doesn't exist. Don't worry; we're here to help you get back on track. Visit our homepage or use the navigation menu to explore our website."
+>
+  <div
+    class="flex items-center justify-center dark:bg-slate-900 bg-[#efe7d7] ring-2 ring-[#c6c2b9] dark:ring-stone-900 p-6 aspect-square max-w-xs m-auto rounded-full mt-14"
+  >
+    <div class="text-center">
+      <h2 class="pt-0 mt-0">404 - Developer's Oasis</h2>
+      <p>Uh-oh! You've hit a coding hiccup.</p>
+      <a
+        slot="extra-header"
+        href="/blog"
+        title="go back"
+        class={` m-auto flex items-center w-fit py-1 underline hover:decoration-slate-400 underline-offset-4 duration-200  dark:text-gray-50 text-gray-950 gap-1 `}
+      >
+        <Icon name="mdi:arrow-left" height={16} width={16} />
+        <span>Show Me Blogs</span>
+      </a>
+    </div>
+  </div>
+</BaseLayout>
