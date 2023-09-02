@@ -4,10 +4,10 @@ import Navbar from "../components/Navbar.astro";
 import Icon from "/public/favicon.svg";
 type Props = {
   title: string;
-  description?: string;
+  description: string;
   image?: string;
 };
-const { title } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
 <html lang="en" class="dark font-graphik">
@@ -38,22 +38,22 @@ const { title } = Astro.props;
     <!-- primary meta tags -->
     <title>{title}</title>
     <meta name="title" content={title} />
-    <!-- <meta name="description" content={description} /> -->
+    <meta name="description" content={description} />
 
     <!-- open graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Shoubhit Dash" />
+    <meta property="og:site_name" content="Anit Kumar Jha" />
     <meta property="og:url" content={Astro.url} />
     <meta property="og:title" content={title} />
-    <!-- <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} /> -->
+    <meta property="og:description" content={description} />
+    <!-- <meta property="og:image" content={image} />  -->
 
     <!-- twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={Astro.url} />
     <meta property="twitter:title" content={title} />
-    <!-- <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={image} /> -->
+    <meta property="twitter:description" content={description} />
+    <!-- <meta property="twitter:image" content={image} />  -->
 
     <!-- link tags-->
     <link
@@ -77,10 +77,7 @@ const { title } = Astro.props;
     class="bg-[#F4EFE0] dak:text-slate-50 text-slate-800 dark:bg-stone-950 max-w-3xl mx-auto px-4 overflow-y-scroll transition-[background] duration-500"
   >
     <Navbar />
-    <main
-      class="prose prose-stone dark:prose-invert py-2 px-2"
-      transition:animate="slide"
-    >
+    <main class="prose prose-stone dark:prose-invert py-2 px-2">
       <slot name="extra-header" />
       <slot />
     </main>

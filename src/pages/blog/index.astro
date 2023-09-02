@@ -7,7 +7,6 @@ import { formattedDate } from "./../../lib/utils";
 // Requires the name of the collection as an argument.
 // Example: retrieve `src/content/blog/**`
 const allBlogPosts = await getCollection("blog");
-console.log(allBlogPosts);
 
 // Get a single entry from a collection.
 // Requires the name of the collection and either
@@ -16,14 +15,22 @@ console.log(allBlogPosts);
 // const graceHopperProfile = await getEntry('');
 ---
 
-<BaseLayout title="Anit Blogs">
+<BaseLayout
+  title="Anit Blogs"
+  description="Anit's technical blogs and development insights"
+>
   <h2>Read my blogs</h2>
   {
     allBlogPosts.map((post) => {
       return (
-        <div class="border-b-gray-400 border-b">
-          <h3>
-            <a href={`/blog/${post.slug}`}>{post.data.title}</a>
+        <div class="dark:border-b-gray-800 border-b-gray-300  border-b">
+          <h3 transition:name={post.slug} class="text-lg ">
+            <a
+              class="no-underline hover:text-gray-500 dark:hover:text-gray-400 duration-300"
+              href={`/blog/${post.slug}`}
+            >
+              {post.data.title}
+            </a>
           </h3>
           <p>{post.data.description}</p>
           <small>Date: {formattedDate(post.data.date)}</small>
