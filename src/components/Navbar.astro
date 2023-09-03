@@ -1,9 +1,7 @@
 ---
-import type { Image } from "astro:assets";
-import Navlink from "./Navlink.astro";
-import Icon from "./Icon.astro";
 import ColorModeToggle from "./ColorModeToggle.astro";
-
+import Icon from "./Icon.astro";
+import Navlink from "./Navlink.astro";
 type NavItemProps = { displayName: string; slug: string };
 
 const path = new URL(Astro.request.url).pathname;
@@ -29,13 +27,16 @@ let NavItems: NavItemProps[] = [
 ---
 
 <nav
-  class="w-full py-2 my-12 tracking-tight text-gray-800 dark:text-gray-500 flex"
+  class="w-full py-2 my-12 tracking-tight text-gray-800 dark:text-gray-500 flex items-center"
 >
+  <Icon name="logo" class="mr-2 fill-black dark:fill-white" />
   <ul class="flex">
     {NavItems.map((item) => <Navlink {...item} />)}
   </ul>
 
+
   <div class="ml-auto gap-1" transition:persist>
+
     <ColorModeToggle />
   </div>
 </nav>
