@@ -2,6 +2,9 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
 import { formattedDate } from "./../../lib/utils";
+import BlogPreview from "../../components/BlogPreview.astro";
+import type { Code } from "astro:components";
+import Icon from "../../components/Icon.astro";
 
 // Get all entries from a collection.
 // Requires the name of the collection as an argument.
@@ -19,23 +22,29 @@ const allBlogPosts = await getCollection("blog");
   title="Anit Blogs"
   description="Anit's technical blogs and development insights"
 >
-  <h2>Read my blogs</h2>
+  <h1 class="text-2xl mb-6 inline-block" transition:animate="slide">
+    Read my blogs
+    <Icon name="icon-park-outline:hand-down" class="inline ml-2" />
+  </h1>
   {
+    // allBlogPosts.map((post) => {
+    //   return (
+    //     <div class="dark:border-b-gray-800 border-b-gray-300  border-b">
+    //       <h3 transition:name={post.slug} class="text-lg ">
+    //         <a
+    //           class="no-underline hover:text-gray-500 dark:hover:text-gray-400 duration-300"
+    //           href={`/blog/${post.slug}`}
+    //         >
+    //           {post.data.title}
+    //         </a>
+    //       </h3>
+    //       <p>{post.data.description}</p>
+    //       <small>Date: {formattedDate(post.data.date)}</small>
+    //     </div>
+    //   );
+    // })
     allBlogPosts.map((post) => {
-      return (
-        <div class="dark:border-b-gray-800 border-b-gray-300  border-b">
-          <h3 transition:name={post.slug} class="text-lg ">
-            <a
-              class="no-underline hover:text-gray-500 dark:hover:text-gray-400 duration-300"
-              href={`/blog/${post.slug}`}
-            >
-              {post.data.title}
-            </a>
-          </h3>
-          <p>{post.data.description}</p>
-          <small>Date: {formattedDate(post.data.date)}</small>
-        </div>
-      );
+      return <BlogPreview {...post} />;
     })
   }
 </BaseLayout>

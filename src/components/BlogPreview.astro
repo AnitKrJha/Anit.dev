@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { formattedDate } from "../lib/utils";
+type Props = CollectionEntry<"blog">;
+const {
+  data: { date, description, image, isDraft, tags, title },
+  ...other
+} = Astro.props;
+---
+
+<a href={`/blog/${other.slug}`} class="no-underline group">
+  <article
+    class="group-hover:bg-black/5 dark:group-hover:bg-gray-200/5 duration-500 p-1 rounded flex flex-col sm:flex-row gap-6 items-center sm:items-start my-8"
+  >
+    <figure
+      class="rounded aspect-video w-full sm:basis-60 flex-grow-0 flex-shrink-0 my-0 max-w-sm overflow-hidden"
+    >
+      {
+        image ? (
+          <Image
+            transition:name={other.slug + "image"}
+            class="object-cover aspect-video rounded"
+            src={image}
+            alt={`${title} cover image`}
+          />
+        ) : (
+          <h4
+            transition:name={other.slug + "image"}
+            class="w-full aspect-video rounded grid place-items-center bg-stone-600 text-white"
+          >
+            {title}
+          </h4>
+        )
+      }
+    </figure>
+    <div class="">
+      <h3
+        class="text-lg font-bold my-0"
+        transition:name={other.slug + "heading"}
+      >
+        {title}
+      </h3>
+      <p>{description}</p>
+      <time><small>{formattedDate(date)}</small></time>
+    </div>
+  </article>
+</a>

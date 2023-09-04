@@ -2,6 +2,7 @@
 import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
+import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -16,7 +17,12 @@ type Props = {
   post: CollectionEntry<"blog">;
 };
 
-const { post } = Astro.props;
+const {
+  post,
+  post: {
+    data: { date, isDraft, title, image },
+  },
+} = Astro.props;
 const { Content } = await post.render();
 ---
 
@@ -29,6 +35,25 @@ const { Content } = await post.render();
   >
     <Icon name="mdi:arrow-left" height={16} width={16} />back
   </a>
-  <h3 transition:name={post.slug}>{post.data.title}</h3>
+  <figure class="w-full overflow-hidden">
+    {
+      image ? (
+        <Image
+          transition:name={post.slug + "image"}
+          class="object-cover  aspect-video rounded"
+          src={image}
+          alt={`${title} cover image`}
+        />
+      ) : (
+        <h4
+          transition:name={post.slug + "image"}
+          class="w-full aspect-video grid place-items-center bg-stone-600 rounded text-white"
+        >
+          {title}
+        </h4>
+      )
+    }
+  </figure>
+  <h3 transition:name={post.slug + "heading"}>{post.data.title}</h3>
   <Content />
 </BaseLayout>

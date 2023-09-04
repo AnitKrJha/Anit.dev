@@ -4,6 +4,7 @@ description: "Lists are a fantastic tool for organizing information in a structu
 isDraft: true
 tags: ['fd', 'df']
 date: "02-03-2004"
+image: './Wallpaper maybe.png'
 slug: "lists-for-organization"
 ---
 
