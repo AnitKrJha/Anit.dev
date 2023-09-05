@@ -27,14 +27,14 @@ const { Content } = await post.render();
 ---
 
 <BaseLayout title={post.data.title} description={post.data.description}>
-  <a
+  <button
+    transition:persist="back-button-blog"
     slot="extra-header"
-    href="/blog"
     title="go back"
-    class={` flex items-center w-fit py-1 underline hover:decoration-slate-400 underline-offset-4 duration-200  dark:text-gray-50 text-gray-950 gap-1`}
+    class={`back-button flex items-center w-fit py-1 underline hover:decoration-slate-400 underline-offset-4 duration-200  dark:text-gray-50 text-gray-950 gap-1`}
   >
     <Icon name="mdi:arrow-left" height={16} width={16} />back
-  </a>
+  </button>
   <figure class="w-full overflow-hidden">
     {
       image ? (
@@ -57,3 +57,9 @@ const { Content } = await post.render();
   <h3 transition:name={post.slug + "heading"}>{post.data.title}</h3>
   <Content />
 </BaseLayout>
+<script is:inline>
+function goBack() {
+  window.history.back();
+}
+document.querySelector(".back-button")?.addEventListener("click", goBack);
+</script>

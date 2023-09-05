@@ -29,6 +29,7 @@ const { title, description } = Astro.props;
 
       setColorMode();
       document.addEventListener("astro:after-swap", setColorMode);
+      document.addEventListener("astro:page-load", setColorMode);
     </script>
     <!-- global meta tags -->
     <meta charset="utf-8" />
@@ -74,7 +75,7 @@ const { title, description } = Astro.props;
     <ViewTransitions />
   </head>
   <body
-    class="bg-[#fff9eb] dak:text-slate-50 text-slate-800 dark:bg-stone-950 max-w-3xl mx-auto px-4 overflow-y-scroll transition-[background] duration-500"
+    class="bg-[#fff9eb] dak:text-slate-50 text-slate-800 dark:bg-stone-950 max-w-3xl mx-auto px-4 overflow-y-scroll"
   >
     <Navbar />
     <main class="prose prose-stone dark:prose-invert py-2 px-2">

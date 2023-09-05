@@ -11,7 +11,7 @@ const {
 
 <a href={`/blog/${other.slug}`} class="no-underline group">
   <article
-    class="group-hover:bg-black/5 dark:group-hover:bg-gray-200/5 duration-500 p-1 rounded flex flex-col sm:flex-row gap-6 items-center sm:items-start my-8"
+    class="duration- 00 p-1 rounded flex flex-col sm:flex-row gap-6 items-center sm:items-start my-8"
   >
     <figure
       class="rounded aspect-video w-full sm:basis-60 flex-grow-0 flex-shrink-0 my-0 max-w-sm overflow-hidden"
@@ -19,18 +19,19 @@ const {
       {
         image ? (
           <Image
+            loading={"eager"}
             transition:name={other.slug + "image"}
             class="object-cover aspect-video rounded"
             src={image}
             alt={`${title} cover image`}
           />
         ) : (
-          <h4
+          <p
             transition:name={other.slug + "image"}
-            class="w-full aspect-video rounded grid place-items-center bg-stone-600 text-white"
+            class="w-full font-bold aspect-video rounded grid place-items-center bg-stone-600 text-white"
           >
             {title}
-          </h4>
+          </p>
         )
       }
     </figure>
