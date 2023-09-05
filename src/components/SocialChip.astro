@@ -1,0 +1,76 @@
+---
+import Icon from "./Icon.astro";
+type Props = {
+  socialMedia: "insta" | "linkedin" | "twitter" | "github";
+};
+const { socialMedia } = Astro.props;
+let socialDetails = {
+  url: "",
+  handle: "",
+  iconName: "",
+  accent: "",
+};
+switch (socialMedia) {
+  case "insta":
+    socialDetails.url = "https://instagram.com/anitjhaaa";
+    socialDetails.handle = "@anitjhaaa";
+    socialDetails.iconName = "mdi:instagram";
+    socialDetails.accent = "shadow-pink-400";
+    break;
+  case "linkedin":
+    socialDetails.url = "https://linkedin.com/in/anitjha";
+    socialDetails.handle = "@anitjha";
+    socialDetails.iconName = "logos:linkedin-icon";
+    socialDetails.accent = "shadow-blue-400";
+
+    break;
+  case "github":
+    socialDetails.url = "https://github.com/anitkrjha";
+    socialDetails.handle = "@anikrjha";
+    socialDetails.iconName = "mdi:github";
+    socialDetails.accent = "shadow-gray-400";
+    break;
+  case "twitter":
+    socialDetails.url = "https://twitter.com/_anitjha";
+    socialDetails.handle = "@_anitjha";
+    socialDetails.iconName = "logos:twitter";
+    socialDetails.accent = "shadow-sky-300";
+    break;
+
+  default:
+    break;
+}
+---
+
+<a
+  href={socialDetails.url}
+  target="_blank"
+  referrerpolicy="no-referrer"
+  class={`${socialDetails.accent} shadow border no-underline border-stone-100 dark:border-neutral-700 bg-stone-200 dark:bg-neutral-800 rounded flex items-center justify-between px-3 py-3 w-full my-2 group`}
+>
+  <div class={`flex items-center basis-full gap-3 italic`}>
+    <Icon
+      name={socialDetails.iconName}
+      class={`${socialMedia === "insta" ? "text-pink-500" : ""}`}
+      height={24}
+      width={24}
+    />
+    <p class="font-bold my-0 text-base text-neutral-900 dark:text-neutral-100">
+      {socialDetails.handle}
+    </p>
+    <div
+      class="ml-auto group-hover:translate-x-1 group-hover:-1translate-y-1 duration-200"
+    >
+      <svg
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        ><path
+          d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
+          fill="currentColor"></path></svg
+      >
+    </div>
+  </div>
+</a>

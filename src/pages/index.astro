@@ -1,7 +1,19 @@
 ---
+import { getCollection } from "astro:content";
+import BlogPreview from "../components/BlogPreview.astro";
 import IconChip from "../components/IconChip.astro";
 import Projects from "../components/Projects.astro";
+import SmallBlogPreview from "../components/SmallBlogPreview.astro";
 import BaseLayout from "./../Layouts/BaseLayout.astro";
+import SocialChip from "../components/SocialChip.astro";
+const allPosts = await getCollection("blog");
+const latestPosts = allPosts
+  .sort((a, b) => {
+    if (a.data.date > b.data.date) return 1;
+    if (a.data.date < b.data.date) return -1;
+    else return 0;
+  })
+  .slice(0, 3);
 ---
 
 <BaseLayout
@@ -9,27 +21,55 @@ import BaseLayout from "./../Layouts/BaseLayout.astro";
   description="Anit Jha, CSE student love OSS, building things."
 >
   <header>
-    <h1 class="text-2xl tracking-tight mb-8" transition:animate="slide">
-      hey, I'm anitjha 👋
-    </h1>
-    <p>
-      I'm 20 y/o and I'm a CS undergrad student. I like <strong
-        >playing chess</strong
-      > and <strong>building things</strong>. I enjoy problem-solving, web
-      development and OSS. I use "<strong>fedora</strong> + <strong
-        >windows"</strong
-      > , (<em>WSL</em> ftw ✌️).
+    <h2 class="text-2xl tracking-tight mb-8 mt-3" " ">hey, I'm anitjha 👋</h2>
+    <p class="sm:leading-9">
+      Hi there, I'm a 20-year-old CS undergrad student who has a passion for
+      <IconChip
+        iconName="mdi:chess-knight"
+        text="chess"
+        shadowColorClass="shadow-green-500"
+      /> and building things 🔨. I thoroughly enjoy problem-solving, especially
+      in the realms of web development and open-source (OSS). My go-to setup is
+      "<IconChip
+        text="Fedora"
+        iconName="logos:fedora"
+        shadowColorClass="shadow-sky-400"
+      />
+       + <IconChip
+        text="Windows"
+        iconName="mdi:microsoft-windows"
+        shadowColorClass="shadow-cyan-200"
+      />" with a sprinkle of <IconChip
+        text="WSL"
+        iconName="logos:archlinux"
+        shadowColorClass="shadow-yellow-200"
+      /> for that extra functionality ✌️.
     </p>
     <p>
-      Currently studying <strong>Machine Learning</strong>
-      <em>(ML)</em>.
+      Currently, I'm diving deep into the world of <strong
+        >Machine Learning</strong
+      > (<em>ML</em>) in my studies.
     </p>
   </header>
+  <hr class="my-0 border-pink-300" />
 
-  <h3 class="mt-14">Skills.</h3>
+  <section class="social">
+    <p>You can stay <strong>updated</strong> and follow my journey here. 👇🏻</p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+      <SocialChip socialMedia="insta" />
+      <SocialChip socialMedia="twitter" />
+      <SocialChip socialMedia="linkedin" />
+      <SocialChip socialMedia="github" />
+    </div>
+  </section>
 
-  <p class="">
-    I'm well-versed in
+  <h3 class="mt-14 mb-8 shdow-">Skills and Interests ✏️</h3>
+
+  <p class="leading-9">
+    I've explored a diverse range of technologies and environments, mastering
+    key domains including:
+    <br />
+    <strong>Web Frameworks and BaaS:</strong>
 
     <IconChip
       iconName="teenyicons:nextjs-outline"
@@ -46,21 +86,87 @@ import BaseLayout from "./../Layouts/BaseLayout.astro";
       text="Typescript"
       shadowColorClass="shadow-blue-500"
     />
-
-     and the <IconChip
-      iconName="flat-color-icons:linux"
-      text="Linux/Unix"
-      shadowColorClass="shadow-black"
-    />
-     environments. <IconChip
+    <IconChip
       shadowColorClass="shadow-orange-500"
       iconName="simple-icons:astro"
       text="Astro"
-    /> is also in my toolkit.
-
-    <p>
-      And guess what? I'm <strong>currently learning Kotlin</strong> too.📚🚀
-    </p>
+    />
+    <br />
+     Proficient in the <strong>Server and the Terminal</strong>, with expertise
+    in various <IconChip
+      iconName="flat-color-icons:linux"
+      text="Linux/Unix"
+      shadowColorClass="shadow-black"
+    /> environments. <br />
+     I've also mastered <strong>Backend Languages</strong>, including
+    <IconChip
+      shadowColorClass="shadow-green-500"
+      iconName="vscode-icons:file-type-python"
+      text="Python"
+    />,
+    <IconChip
+      shadowColorClass="shadow-red-500"
+      iconName="logos:java"
+      text="Java"
+    />, and <IconChip
+      shadowColorClass="shadow-purple-500"
+      iconName="logos:go"
+      text="Golang"
+    />.
+    <br /> Currently, I'm delving into <strong>Machine Learning</strong>,
+    utilizing tools like <IconChip
+      shadowColorClass="shadow-orange-500"
+      iconName="logos:tensorflow"
+      text="TensorFlow"
+    /> and <IconChip
+      shadowColorClass="shadow-pink-500"
+      iconName="logos:pytorch"
+      text="PyTorch"
+    /> to expand my knowledge further.
+    <br />
+     Very comfortable with <strong>Version Control Systems</strong> with
+    <IconChip
+      shadowColorClass="shadow-orange-500"
+      iconName="logos:git-icon"
+      text="Git"
+    /> and
+    <IconChip
+      shadowColorClass="shadow-purple-500"
+      iconName="mdi:github"
+      text="GitHub"
+    />.
   </p>
+
+  <hr class="border border-neutral-300 dark:border-neutral-700" />
+  <section>
+    <p>
+      I also have a passion for sharing my knowledge and insights from my
+      experiences. One way I do this is by writing blogs. Some of them are 👇
+    </p>
+    {
+      latestPosts.map((post) => (
+        <SmallBlogPreview
+          date={post.data.date}
+          title={post.data.title}
+          slug={post.slug}
+        />
+      ))
+    }
+    <a
+      href="/blog"
+      class="no-underline justify-end gap-2 hover:underline flex w-full items-center pr-3"
+      >See More <svg
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        ><path
+          d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
+          fill="currentColor"></path></svg
+      ></a
+    >
+  </section>
+
   <Projects />
 </BaseLayout>
