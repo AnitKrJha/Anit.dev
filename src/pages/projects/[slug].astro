@@ -53,7 +53,9 @@ const { Content } = await project.render();
       )
     }
   </figure>
-  <div class="links flex w-full no-underline justify-end gap-2 text-sm">
+  <div
+    class="links flex w-full no-underline justify-end gap-2 text-xs sm:text-sm mb-4"
+  >
     {
       ghLink && (
         <a
@@ -81,14 +83,14 @@ const { Content } = await project.render();
       )
     }
   </div>
-  <h3 transition:name={"/projects/" + project.slug + "heading"}>
+  <h1 transition:name={"/projects/" + project.slug + "heading"}>
     {project.data.name}
-  </h3>
+  </h1>
   <Content />
 </BaseLayout>
 <script is:inline>
 function goBack() {
-    window.history.back();
+  window.history.back();
 }
-document.querySelector(".back-button")?.addEventListener("click", goBack);
+  document.querySelector(".back-button")?.addEventListener("click", goBack);
 </script>

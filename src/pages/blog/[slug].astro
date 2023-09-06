@@ -54,7 +54,7 @@ const { Content } = await post.render();
       )
     }
   </figure>
-  <h3 transition:name={post.slug + "heading"}>{post.data.title}</h3>
+  <h1 transition:name={post.slug + "heading"}>{post.data.title}</h1>
   <Content />
 </BaseLayout>
 <script is:inline>

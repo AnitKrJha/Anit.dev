@@ -3,11 +3,15 @@ import { getCollection } from "astro:content";
 import ProjectCard from "../../components/ProjectCard.astro";
 import BaseLayout from "./../../Layouts/BaseLayout.astro";
 import ProjectPreview from "../../components/ProjectPreview.astro";
+import Icon from "../../components/Icon.astro";
 const projects = await getCollection("projects");
 ---
 
 <BaseLayout title="Projects" description="List of projects made by Anit Jha.">
-  <h2>Projects</h2>
+  <h1 class="text-2xl mb-6 mt-4 inline-block">
+    My Projects
+    <Icon name="icon-park-outline:hand-down" class="inline ml-2" />
+  </h1>
   <main>
     {
       projects.length === 0 ? (
