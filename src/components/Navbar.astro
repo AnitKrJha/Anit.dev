@@ -4,12 +4,6 @@ import Icon from "./Icon.astro";
 import Navlink from "./Navlink.astro";
 type NavItemProps = { displayName: string; slug: string };
 
-const path = new URL(Astro.request.url).pathname;
-let pathname: "blog" | "home" | "guestbook" | "" = "";
-if (path === "/") pathname = "home";
-else if (path.includes("/guestbook")) pathname = "guestbook";
-else pathname = "blog";
-
 let NavItems: NavItemProps[] = [
   {
     displayName: "home",
@@ -19,9 +13,13 @@ let NavItems: NavItemProps[] = [
     displayName: "blog",
     slug: "/blog",
   },
+  // {
+  //   displayName: "guestbook",
+  //   slug: "/guestbook",
+  // },
   {
-    displayName: "guestbook",
-    slug: "/guestbook",
+    displayName: "projects",
+    slug: "/projects",
   },
 ];
 ---

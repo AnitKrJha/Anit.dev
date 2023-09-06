@@ -1,0 +1,94 @@
+---
+import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import BaseLayout from "../../Layouts/BaseLayout.astro";
+import Icon from "../../components/Icon.astro";
+import { Image } from "astro:assets";
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects");
+
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+type Props = {
+  project: CollectionEntry<"projects">;
+};
+
+const {
+  project,
+  project: {
+    data: { isDraft, name, image, ghLink, liveLink },
+  },
+} = Astro.props;
+const { Content } = await project.render();
+---
+
+<BaseLayout title={project.data.name} description={project.data.description}>
+  <button
+    slot="extra-header"
+    title="go back"
+    class={`back-button flex items-center w-fit py-1 underline hover:decoration-slate-400 underline-offset-4 duration-200  dark:text-gray-50 text-gray-950 gap-1`}
+  >
+    <Icon name="mdi:arrow-left" height={16} width={16} />back
+  </button>
+  <figure class="w-full overflow-hidden">
+    {
+      image ? (
+        <Image
+          transition:name={"/projects/" + project.slug + "image"}
+          class="object-cover  aspect-video rounded"
+          src={image}
+          alt={`${name} cover image`}
+        />
+      ) : (
+        <p
+          transition:name={"/projects/" + project.slug + "image"}
+          class="w-full aspect-video grid font-bold place-items-center bg-stone-600 rounded text-white"
+        >
+          {name}
+        </p>
+      )
+    }
+  </figure>
+  <div class="links flex w-full no-underline justify-end gap-2 text-sm">
+    {
+      ghLink && (
+        <a
+          href={ghLink}
+          target="_blank"
+          referrerpolicy="no-referrer"
+          class="flex items-center gap-1 no-underline outline rounded outline-1 p-1"
+        >
+          <Icon name="mdi:github" />
+          Github
+        </a>
+      )
+    }
+    {
+      liveLink && (
+        <a
+          href={liveLink}
+          target="_blank"
+          referrerpolicy="no-referrer"
+          class="flex items-center gap-1 no-underline bg-stone-200 rounded px-1 text-black outline-1 outline"
+        >
+          <Icon name="mdi:open-in-new" />
+          Live Site
+        </a>
+      )
+    }
+  </div>
+  <h3 transition:name={"/projects/" + project.slug + "heading"}>
+    {project.data.name}
+  </h3>
+  <Content />
+</BaseLayout>
+<script is:inline>
+function goBack() {
+    window.history.back();
+}
+document.querySelector(".back-button")?.addEventListener("click", goBack);
+</script>

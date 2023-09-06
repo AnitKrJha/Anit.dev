@@ -11,7 +11,7 @@ const {
 
 <a href={`/blog/${other.slug}`} class="no-underline group">
   <article
-    class="group-hover:bg-neutral-300 dark:group-hover:bg-neutral-800 duration-200 p-1 rounded flex flex-col sm:flex-row gap-6 items-center sm:items-start my-8"
+    class="duration-200 p-1 bg-neutral-200 dark:bg-neutral-900 rounded flex flex-col sm:flex-row gap-6 items-center sm:items-start my-8 border-b border-b-lime-500"
   >
     <figure
       class="rounded aspect-video w-full sm:basis-60 flex-grow-0 flex-shrink-0 my-0 max-w-sm overflow-hidden"
@@ -37,12 +37,12 @@ const {
     </figure>
     <div class="">
       <h3
-        class="text-lg font-bold my-0"
+        class="text-lg font-bold my-0 group-hover:text-lime-500"
         transition:name={other.slug + "heading"}
       >
         {title}
       </h3>
-      <p class="opacity-80">{description}</p>
+      <p class="opacity-80 text-sm">{description}</p>
       <time class="opacity-80"><small>{formattedDate(date)}</small></time>
     </div>
   </article>

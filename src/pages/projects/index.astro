@@ -1,0 +1,30 @@
+---
+import { getCollection } from "astro:content";
+import ProjectCard from "../../components/ProjectCard.astro";
+import BaseLayout from "./../../Layouts/BaseLayout.astro";
+import ProjectPreview from "../../components/ProjectPreview.astro";
+const projects = await getCollection("projects");
+---
+
+<BaseLayout title="Projects" description="List of projects made by Anit Jha.">
+  <h2>Projects</h2>
+  <main>
+    {
+      projects.length === 0 ? (
+        <p>No Projects yet 🚫</p>
+      ) : (
+        projects.map((project) => {
+          return (
+            <ProjectPreview
+              blogLink={"/projects/" + project.slug}
+              ghLink={project.data.ghLink}
+              liveLink={project.data.liveLink}
+              title={project.data.name}
+              desc={project.data.description}
+            />
+          );
+        })
+      )
+    }
+  </main>
+</BaseLayout>

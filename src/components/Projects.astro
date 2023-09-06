@@ -1,36 +1,43 @@
 ---
+import { getCollection } from "astro:content";
 import ProjectCard from "./ProjectCard.astro";
+const projects = await getCollection("projects");
 ---
 
 <h3 class="mt-14">Projects 📚</h3>
 <p>I've also worked on a few projects of my own.</p>
 <section class="grid grid-cols-1 sm:grid-cols-2 gap-x-3">
-  <ProjectCard
-    blogLink="fsd"
-    title="fdsf"
-    desc="fsdf"
-    ghLink="fsdf"
-    liveLink="sdf"
-  />
-  <ProjectCard
-    blogLink="fsd"
-    title="fdsf"
-    desc="fsdf"
-    ghLink="fsdf"
-    liveLink="sdf"
-  />
-  <ProjectCard
-    blogLink="fsd"
-    title="fdsf"
-    desc="fsdf"
-    ghLink="fsdf"
-    liveLink="sdf"
-  />
-  <ProjectCard
-    blogLink="fsd"
-    title="fdsf"
-    desc="fsdf"
-    ghLink="fsdf"
-    liveLink="sdf"
-  />
+  {
+    projects.length === 0 ? (
+      <p>No Projects yet 🚫</p>
+    ) : (
+      projects.map((project) => {
+        return (
+          <ProjectCard
+            blogLink={"/projects/" + project.slug}
+            ghLink={project.data.ghLink}
+            liveLink={project.data.liveLink}
+            title={project.data.name}
+            desc={project.data.description}
+          />
+        );
+      })
+    )
+  }
 </section>
+<a
+  href="/projects"
+  class="flex items-center text-sm gap-2 no-underline justify-end hover:underline"
+  >..all projects <svg
+    width="10"
+    height="10"
+    viewBox="0 0 12 12"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    class=""
+  >
+    <path
+      d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
+      fill="currentColor"></path>
+  </svg></a
+>

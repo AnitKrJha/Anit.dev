@@ -1,0 +1,92 @@
+---
+import { Image } from "astro:assets";
+type Props = {
+  title: string;
+  desc: string;
+  ghLink?: string;
+  liveLink?: string;
+  blogLink: string;
+  image?: ImageMetadata;
+};
+const {
+  props,
+  props: { title, desc, ghLink, liveLink, blogLink, image },
+} = Astro;
+---
+
+<div>
+  <a href={`${blogLink}`} class="no-underline group">
+    <article
+      class="border-t no-underline bg-[#fff2d3] dark:bg-neutral-900 rounded-t justify-between px-3 py-2 w-full my-2 group border-orange-500 rounded flex flex-col sm:flex-row gap-6 items-center sm:items-start"
+    >
+      <figure
+        class="rounded aspect-video w-full sm:basis-60 flex-grow-0 flex-shrink-0 my-0 max-w-sm overflow-hidden"
+      >
+        {
+          image ? (
+            <Image
+              loading={"eager"}
+              transition:name={blogLink + "image"}
+              class="object-cover aspect-video rounded"
+              src={image}
+              alt={`${title} cover image`}
+            />
+          ) : (
+            <p
+              transition:name={blogLink + "image"}
+              class="w-full font-bold aspect-video rounded grid place-items-center bg-stone-600 text-white"
+            >
+              {title}
+            </p>
+          )
+        }
+      </figure>
+      <div class="">
+        <h3
+          class="text-lg capitalize flex gap-1 items-center mt-2 w-full justify-between group-hover:text-orange-500 duration-200"
+          transition:name={blogLink + "heading"}
+        >
+          {title}
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="rotate-45 text-gray-400 group-hover:text-orange-600"
+          >
+            <path
+              d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
+              fill="currentColor"></path>
+          </svg>
+        </h3>
+        <p class="text-sm dark:opacity-80 mt-3 line-clamp-3 text-ellipsis">
+          {desc}
+        </p>
+      </div>
+    </article>
+  </a>
+  <p
+    class="border-b border-blue-500 py-2 links flex gap-2 text-xs tracking-wider underline-offset-4 -mt-2 pl-2 bg-[#e6d7b9] dark:bg-stone-800 rounded-b"
+  >
+    {
+      ghLink && (
+        <a target="_blank" rel="no-referrer" href={props.ghLink}>
+          Github
+        </a>
+      )
+    } |
+    {
+      liveLink && (
+        <a
+          href={props.liveLink}
+          target="_blank"
+          rel="no-referrer"
+          class=" dark:text-yellow-200 text-yellow-900"
+        >
+          Live site
+        </a>
+      )
+    }
+  </p>
+</div>
