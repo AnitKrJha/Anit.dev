@@ -21,16 +21,12 @@ const latestPosts = allPosts
   description="Anit Jha, CSE student love OSS, building things."
 >
   <header>
-    <h2 class="text-2xl tracking-tight mb-8 mt-3" " ">hey, I'm anitjha 👋</h2>
+    <h2 class="text-2xl tracking-tight mb-8 mt-3">hey, I'm anitjha 👋</h2>
     <p class="sm:leading-9">
       Hi there, I'm a 20-year-old CS undergrad student who has a passion for
-      <IconChip
-        iconName="mdi:chess-knight"
-        text="chess"
-        shadowColorClass="shadow-green-500"
-      /> and building things 🔨. I thoroughly enjoy problem-solving, especially
-      in the realms of web development and open-source (OSS). My go-to setup is
-      "<IconChip
+      <strong>Chess</strong> and building things. I thoroughly enjoy
+      problem-solving, especially in the realms of web development and
+      open-source (OSS). My go-to setup is "<IconChip
         text="Fedora"
         iconName="logos:fedora"
         shadowColorClass="shadow-sky-400"
@@ -39,11 +35,7 @@ const latestPosts = allPosts
         text="Windows"
         iconName="mdi:microsoft-windows"
         shadowColorClass="shadow-cyan-200"
-      />" with a sprinkle of <IconChip
-        text="WSL"
-        iconName="logos:archlinux"
-        shadowColorClass="shadow-yellow-200"
-      /> for that extra functionality ✌️.
+      />" with a sprinkle of <strong>WSL</strong> for that extra functionality.
     </p>
     <p>
       Currently, I'm diving deep into the world of <strong
@@ -51,11 +43,11 @@ const latestPosts = allPosts
       > (<em>ML</em>) in my studies.
     </p>
   </header>
-  <hr class="my-0 border-pink-300" />
+  <hr class="my-0 border-neutral-300 dark:border-neutral-700 border" />
 
   <section class="social">
     <p>You can stay <strong>updated</strong> and follow my journey here. 👇🏻</p>
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-4">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-4">
       <SocialChip socialMedia="insta" />
       <SocialChip socialMedia="twitter" />
       <SocialChip socialMedia="linkedin" />
@@ -141,7 +133,9 @@ const latestPosts = allPosts
   <section>
     <p>
       I also have a passion for sharing my knowledge and insights from my
-      experiences. One way I do this is by writing blogs. Some of them are 👇
+      experiences. One way I do this is by occasionally <strong
+        >writing blogs</strong
+      >. Some of them are 👇
     </p>
     {
       latestPosts.map((post) => (
@@ -155,7 +149,7 @@ const latestPosts = allPosts
     <a
       href="/blog"
       class="no-underline justify-end gap-2 hover:underline flex w-full items-center pr-3"
-      >See More <svg
+      >..more blogs<svg
         width="12"
         height="12"
         viewBox="0 0 12 12"

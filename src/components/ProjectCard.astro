@@ -6,41 +6,65 @@ type Props = {
   desc: string;
   ghLink?: string;
   liveLink?: string;
-  blogLink?: string;
+  blogLink: string;
 };
-const { props } = Astro;
+const {
+  props,
+  props: { ghLink, liveLink, blogLink },
+} = Astro;
 ---
 
-<div
-  class="w-full sm:max-w-[300px] outline outline-[0.5px] rounded dark:outline-slate-900 outline-[#FFFFE0] px-2 my-1"
->
-  {
-    (
-      <h4 class="capitalize flex gap-1 items-center">
-        {props.title}
-        <Icon name="fluent:window-new-16-filled" />
-      </h4>
-    )
-  }
-  <p class="text-gray-700 dark:text-gray-400">
-    {props.desc} Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
-    placeat beatae incidunt neque exercitationem deserunt. Sunt earum p
-  </p>
-  <p class="links flex gap-2 text-xs tracking-wider underline-offset-4 italic">
-    <a
-      transition:animate="none"
-      target="_blank"
-      rel="no-referrer"
-      href={props.ghLink}
-      class="decoration-dotted">Github</a
-    > /
-    <a
-      transition:animate="none"
-      href={props.liveLink}
-      target="_blank"
-      rel="no-referrer"
-      class="decoration-dotted dark:text-yellow-200 text-yellow-700"
-      >Live site</a
+<div>
+  <a
+    href={blogLink}
+    class=` border-t no-underline  bg-stone-200/60 dark:bg-neutral-900 rounded-t flex flex-col items-start justify-between px-3 py-2 w-full my-2 group ${blogLink?"border-orange-500":'border-stone-100 dark:border-neutral-800'}`
+  >
+    <h4
+      class="capitalize flex gap-1 items-center mt-2 w-full justify-between group-hover:text-orange-500 duration-200"
     >
+      {props.title}
+      <svg
+        width="12"
+        height="12"
+        viewBox="0 0 12 12"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        class="rotate-45 text-gray-400 group-hover:text-orange-600"
+      >
+        <path
+          d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
+          fill="currentColor"></path>
+      </svg>
+    </h4>
+    <p class="text-sm dark:opacity-80 mt-3 line-clamp-3 text-ellipsis">
+      {props.desc} Lorem ipsum dolor sit amet consectetur adipisicing elit. Vero
+      placeat beatae incidunt neque exercitationem deserunt. Sunt earum p Lorem
+      ipsum dolor sit amet consectetur adipisicing elit. Delectus quod laborum
+      at beatae, aliquam veritatis tempore quasi distinctio fugit hic dolorum
+      nostrum aut explicabo ipsam quia, aspernatur nam rerum animi.
+    </p>
+  </a>
+  <p
+    class="py-2 links flex gap-2 text-xs tracking-wider underline-offset-4 -mt-2 pl-2 bg-stone-200 dark:bg-stone-800 rounded-b"
+  >
+    {
+      ghLink && (
+        <a target="_blank" rel="no-referrer" href={props.ghLink}>
+          Github
+        </a>
+      )
+    } |
+    {
+      liveLink && (
+        <a
+          href={props.liveLink}
+          target="_blank"
+          rel="no-referrer"
+          class=" dark:text-yellow-200 text-yellow-900"
+        >
+          Live site
+        </a>
+      )
+    }
   </p>
 </div>
