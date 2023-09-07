@@ -1,0 +1,50 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<hr class="mt-8 dark:border-neutral-700 border-neutral-300" />
+<footer
+  class="prose dark:prose-invert flex pt-4 pb-1 justify-between text-sm items-center mx-auto"
+>
+  <div class="logo flex items-center flex-col leading-1">
+    <Icon name="logo" height={20} width={20} class="dark:fill-white" />
+    <span class="medium italic tracking-tighter text-black"> anit jha</span>
+  </div>
+  <div class="links flex gap-3 grow justify-end">
+    <a
+      href="https://github.com/anitkrjha"
+      title="github"
+      target="_blank"
+      referrerpolicy="no-referrer"
+    >
+      <Icon name="mdi:github" height={18} width={18} />
+    </a>
+    <a
+      href="https://linkedin.com/in/anitjha"
+      title="linkedin"
+      target="_blank"
+      referrerpolicy="no-referrer"
+    >
+      <Icon name="mdi:linkedin" height={18} width={18} />
+    </a>
+    <a
+      href="https://twitter.com/_anitjha"
+      title="twitter"
+      target="_blank"
+      referrerpolicy="no-referrer"
+    >
+      <Icon name="mdi:twitter" height={18} width={18} />
+    </a>
+    <a
+      href="https://instagram.com/anitjhaaa"
+      title="instagram"
+      target="_blank"
+      referrerpolicy="no-referrer"
+    >
+      <Icon name="mdi:instagram" height={18} width={18} />
+    </a>
+    <a href="/sitemap-index.xml" title="sitemap" data-astro-reload>
+      <Icon name="mdi:sitemap" height={18} width={18} />
+    </a>
+  </div>
+</footer>

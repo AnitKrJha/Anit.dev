@@ -2,6 +2,7 @@
 import { ViewTransitions } from "astro:transitions";
 import Navbar from "../components/Navbar.astro";
 import Icon from "/public/logo.svg";
+import Footer from "../components/Footer.astro";
 type Props = {
   title: string;
   description: string;
@@ -71,17 +72,18 @@ const { title, description } = Astro.props;
       type="font/ttf"
       crossorigin="anonymous"
     />
-
+    <link rel="sitemap" href="/sitemap-index.xml" />
     <ViewTransitions />
   </head>
   <body
-    class="bg-[#fff9eb] dak:text-slate-50 text-slate-800 dark:bg-stone-900 max-w-3xl mx-auto px-4 overflow-y-scroll"
+    class="bg-[#fff9eb] dak:text-slate-50 text-slate-800 dark:bg-stone-900 max-w-3xl mx-auto px-4 overflow-y-scroll min-h-[100dvh]"
   >
     <Navbar />
-    <main class="prose prose-stone dark:prose-invert py-2 px-2">
+    <main class="prose prose-stone dark:prose-invert py-2 px-2 mx-auto">
       <slot name="extra-header" />
       <slot />
     </main>
+    <Footer />
     <style is:global>
       @font-face {
         font-family: "graphik";
@@ -89,7 +91,7 @@ const { title, description } = Astro.props;
         font-display: swap;
       }
       p {
-        font-size: 1rem;
+        font-size: 0.95rem;
       }
       h4 {
         font-size: 1rem !important;
