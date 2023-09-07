@@ -29,7 +29,7 @@ const { Content } = await project.render();
 <BaseLayout
   title={project.data.name}
   description={project.data.description}
-  image=`https://og.anit.dev/og?${project.data.name}&type=project`
+  image=`https://og.anit.dev/og?title=${project.data.name.trimEnd()}&type=project`
 >
   <button
     slot="extra-header"
@@ -94,7 +94,7 @@ const { Content } = await project.render();
 </BaseLayout>
 <script is:inline>
 function goBack() {
-    window.history.back();
-  }
-  document.querySelector(".back-button")?.addEventListener("click", goBack);
+  window.history.back();
+}
+document.querySelector(".back-button")?.addEventListener("click", goBack);
 </script>

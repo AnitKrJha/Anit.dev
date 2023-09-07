@@ -29,7 +29,7 @@ const { Content } = await post.render();
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
-  image=`https://og.anit.dev/og?title=${post.data.title}`
+  image=`https://og.anit.dev/og?title=${post.data.title.trimEnd()}&type=blog`
 >
   <button
     transition:persist="back-button-blog"
