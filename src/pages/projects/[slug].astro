@@ -26,7 +26,11 @@ const {
 const { Content } = await project.render();
 ---
 
-<BaseLayout title={project.data.name} description={project.data.description}>
+<BaseLayout
+  title={project.data.name}
+  description={project.data.description}
+  image=`https://og.anit.dev/og?${project.data.name}&type=project`
+>
   <button
     slot="extra-header"
     title="go back"
@@ -90,7 +94,7 @@ const { Content } = await project.render();
 </BaseLayout>
 <script is:inline>
 function goBack() {
-  window.history.back();
-}
+    window.history.back();
+  }
   document.querySelector(".back-button")?.addEventListener("click", goBack);
 </script>

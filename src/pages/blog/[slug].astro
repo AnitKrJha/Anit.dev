@@ -26,7 +26,11 @@ const {
 const { Content } = await post.render();
 ---
 
-<BaseLayout title={post.data.title} description={post.data.description}>
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  image=`https://og.anit.dev/og?title=${post.data.title}`
+>
   <button
     transition:persist="back-button-blog"
     slot="extra-header"
