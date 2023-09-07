@@ -29,7 +29,7 @@ const { Content } = await project.render();
 <BaseLayout
   title={project.data.name}
   description={project.data.description}
-  image=`https://og.anit.dev/og?title=${name.trim()}&type=project`
+  image={`https://og.anit.dev/og?title=${name.trim()}&type=project`}
 >
   <button
     slot="extra-header"
