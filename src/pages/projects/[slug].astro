@@ -48,12 +48,13 @@ const { Content } = await project.render();
           alt={`${name} cover image`}
         />
       ) : (
-        <p
-          transition:name={"/projects/" + project.slug + "image"}
-          class="w-full aspect-video grid font-bold place-items-center bg-stone-600 rounded text-white"
-        >
-          {name}
-        </p>
+        <img
+          loading={"eager"}
+          transition:name={project.slug + "image"}
+          class="object-cover aspect-video rounded"
+          src={`https://og.anit.dev/og?title=${name}&type=project`}
+          alt={`${name} cover image`}
+        />
       )
     }
   </figure>

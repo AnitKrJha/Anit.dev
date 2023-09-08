@@ -25,19 +25,20 @@ const {
         {
           image ? (
             <Image
-              loading={"eager"}
+              loading={"lazy"}
               transition:name={blogLink + "image"}
               class="object-cover aspect-video rounded"
               src={image}
               alt={`${title} cover image`}
             />
           ) : (
-            <p
+            <img
+              loading={"eager"}
               transition:name={blogLink + "image"}
-              class="w-full font-bold aspect-video rounded grid place-items-center bg-stone-600 text-white"
-            >
-              {title}
-            </p>
+              class="object-cover aspect-video rounded"
+              src={`https://og.anit.dev/og?title=${title}&type=project`}
+              alt={`${title} cover image`}
+            />
           )
         }
       </figure>

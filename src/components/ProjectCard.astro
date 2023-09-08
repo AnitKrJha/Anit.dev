@@ -20,8 +20,8 @@ const {
     href={blogLink}
     class=` border-t no-underline  bg-neutral-100/60 dark:bg-neutral-900 rounded-t flex flex-col items-start justify-between px-3 py-2 w-full my-2 group border-orange-500 `
   >
-    <h4
-      class="capitalize flex gap-1 items-center mt-2 w-full justify-between group-hover:text-orange-500 duration-200"
+    <h3
+      class="!text-base capitalize flex gap-1 items-center mt-2 w-full justify-between group-hover:text-orange-500 duration-200"
     >
       {props.title}
       <svg
@@ -36,7 +36,7 @@ const {
           d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
           fill="currentColor"></path>
       </svg>
-    </h4>
+    </h3>
     <p class="text-sm dark:opacity-80 mt-3 line-clamp-3 text-ellipsis">
       {props.desc}
     </p>

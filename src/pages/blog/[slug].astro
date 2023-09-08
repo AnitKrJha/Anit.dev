@@ -49,12 +49,13 @@ const { Content } = await post.render();
           alt={`${title} cover image`}
         />
       ) : (
-        <p
+        <img
+          loading={"eager"}
           transition:name={post.slug + "image"}
-          class="w-full aspect-video grid font-bold place-items-center bg-stone-600 rounded text-white"
-        >
-          {title}
-        </p>
+          class="object-cover aspect-video rounded"
+          src={`https://og.anit.dev/og?title=${title}&type=blog`}
+          alt={`${title} cover image`}
+        />
       )
     }
   </figure>
