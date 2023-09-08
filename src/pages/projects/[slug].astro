@@ -3,6 +3,7 @@ import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
 import { Image } from "astro:assets";
+import ProjectDummyImage from "../../content/project Dummy.png";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -39,24 +40,12 @@ const { Content } = await project.render();
     <Icon name="mdi:arrow-left" height={16} width={16} />back
   </button>
   <figure class="w-full overflow-hidden">
-    {
-      image ? (
-        <Image
-          transition:name={"/projects/" + project.slug + "image"}
-          class="object-cover  aspect-video rounded"
-          src={image}
-          alt={`${name} cover image`}
-        />
-      ) : (
-        <img
-          loading={"eager"}
-          transition:name={project.slug + "image"}
-          class="object-cover aspect-video rounded"
-          src={`https://og.anit.dev/og?title=${name}&type=project`}
-          alt={`${name} cover image`}
-        />
-      )
-    }
+    <Image
+      transition:name={"/projects/" + project.slug + "image"}
+      class="object-cover aspect-video rounded"
+      src={!!image ? image : ProjectDummyImage}
+      alt={`${name} cover image`}
+    />
   </figure>
   <div
     class="links flex w-full no-underline justify-end gap-2 text-xs sm:text-sm mb-4"

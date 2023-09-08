@@ -3,6 +3,7 @@ import { getCollection, getEntry, type CollectionEntry } from "astro:content";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
 import { Image } from "astro:assets";
+import BlogDummyImage from "../../content/blog_dummy.png";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -40,24 +41,12 @@ const { Content } = await post.render();
     <Icon name="mdi:arrow-left" height={16} width={16} />back
   </button>
   <figure class="w-full overflow-hidden">
-    {
-      image ? (
-        <Image
-          transition:name={post.slug + "image"}
-          class="object-cover  aspect-video rounded"
-          src={image}
-          alt={`${title} cover image`}
-        />
-      ) : (
-        <img
-          loading={"eager"}
-          transition:name={post.slug + "image"}
-          class="object-cover aspect-video rounded"
-          src={`https://og.anit.dev/og?title=${title}&type=blog`}
-          alt={`${title} cover image`}
-        />
-      )
-    }
+    <Image
+      transition:name={post.slug + "image"}
+      class="object-cover aspect-video rounded"
+      src={!!image ? image : BlogDummyImage}
+      alt={`${title} cover image`}
+    />
   </figure>
   <h1 transition:name={post.slug + "heading"}>{post.data.title}</h1>
   <Content />

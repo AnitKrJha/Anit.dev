@@ -8,6 +8,7 @@ type Props = {
   blogLink: string;
   image?: ImageMetadata;
 };
+import ProjectDummyImage from "../content/project Dummy.png";
 const {
   props,
   props: { title, desc, ghLink, liveLink, blogLink, image },
@@ -22,25 +23,13 @@ const {
       <figure
         class="rounded aspect-video w-full sm:basis-60 flex-grow-0 flex-shrink-0 my-0 max-w-sm overflow-hidden"
       >
-        {
-          image ? (
-            <Image
-              loading={"lazy"}
-              transition:name={blogLink + "image"}
-              class="object-cover aspect-video rounded"
-              src={image}
-              alt={`${title} cover image`}
-            />
-          ) : (
-            <img
-              loading={"eager"}
-              transition:name={blogLink + "image"}
-              class="object-cover aspect-video rounded"
-              src={`https://og.anit.dev/og?title=${title}&type=project`}
-              alt={`${title} cover image`}
-            />
-          )
-        }
+        <Image
+          loading={"lazy"}
+          transition:name={blogLink + "image"}
+          class="object-cover aspect-video rounded"
+          src={image ? image : ProjectDummyImage}
+          alt={`${title} cover image`}
+        />
       </figure>
       <div class="">
         <h2
