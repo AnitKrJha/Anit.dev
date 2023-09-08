@@ -17,6 +17,7 @@ tags: []
 date: "DD-MM-YYYY"
 slug: ""
 ---`;
+
 const PROJECT_TEMPLATE = `---
 name: "PROJECT NAME"
 description: "PROJECT DESC"
@@ -24,9 +25,15 @@ isDraft: true
 slug: ""
 # ghLink: ""
 # liveLink: ""
-
 ---
 `;
+
+// ANSI escape codes for text color
+const reset = "\x1b[0m";
+const red = "\x1b[31m";
+const green = "\x1b[32m";
+const yellow = "\x1b[33m";
+const blue = "\x1b[34m";
 
 const enterChoice = () => {
   const rl = readline.createInterface({
@@ -34,63 +41,56 @@ const enterChoice = () => {
     output: process.stdout,
   });
 
-  rl.question("Blog or a Project?\n", (input) => {
-    rl.close();
-    processChoice(input);
-  });
+  rl.question(
+    yellow +
+      "Do you want to create a Blog " +
+      reset +
+      red +
+      "or a Project?\n" +
+      reset,
+    (input) => {
+      rl.close();
+      processChoice(input);
+    }
+  );
 };
 
 const createFile = async (type, name) => {
-  if (type === "blog") {
-    const blogfilepath = join(BLOG_DIRPATH, name + ".md");
-    console.log(`creating your blog at ${blogfilepath} ...\n`);
-    if (!fs.existsSync(blogfilepath)) {
-      fs.writeFile(blogfilepath, BLOG_TEMPLATE, (err) => {
-        if (err) throw err;
-        console.log("You Blog Template has been created ✌🏻\n");
-      });
-    } else {
+  const dirPath = type === "blog" ? BLOG_DIRPATH : PROJECT_DIRPATH;
+  const template = type === "blog" ? BLOG_TEMPLATE : PROJECT_TEMPLATE;
+  const filePath = join(dirPath, `${name}.md`);
+
+  console.log(
+    green + `Creating your ${type} at ${filePath} ...` + reset + "\n"
+  );
+
+  if (!fs.existsSync(filePath)) {
+    fs.writeFile(filePath, template, (err) => {
+      if (err) throw err;
       console.log(
-        "🚫🚫 A Blog with this name already exists. Please Enter a different name\n"
+        green + `Your ${type} Template has been created ✌🏻` + reset + "\n"
       );
-      askFileName("blog");
-    }
+    });
   } else {
-    const projectfilepath = join(PROJECT_DIRPATH, name + ".md");
-    console.log(`creating your blog at ${projectfilepath} ...\n`);
-    if (!fs.existsSync(projectfilepath)) {
-      fs.writeFile(projectfilepath, PROJECT_TEMPLATE, (err) => {
-        if (err) throw err;
-        console.log("You Project Template has been created ✌🏻\n");
-      });
-    } else {
-      console.log(
-        "🚫🚫 A Project with this name already exists. Please Enter a different name\n"
-      );
-      askFileName("project");
-    }
+    console.log(
+      red +
+        `🚫🚫 A ${type} with this name already exists. Please enter a different name.\n` +
+        reset
+    );
+    askFileName(type);
   }
 };
 
-const askFileName = (x) => {
+const askFileName = (type) => {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
   });
 
-  if (x === "blog") {
-    rl.question(`What Is the name of your ${x} post?\n`, (name) => {
-      rl.close();
-
-      createFile("blog", name);
-    });
-  } else {
-    rl.question(`What Is the name of your ${x} post?\n`, (name) => {
-      rl.close();
-
-      createFile("project", name);
-    });
-  }
+  rl.question(`What is the name of your ${type} post?\n`, (name) => {
+    rl.close();
+    createFile(type, name);
+  });
 };
 
 const processChoice = (type) => {
@@ -98,16 +98,18 @@ const processChoice = (type) => {
 
   switch (type) {
     case "blog":
-      console.log("Creating blog...\n");
+      console.log(blue + "Creating a blog..." + reset + "\n");
       askFileName("blog");
       break;
     case "project":
-      console.log("Creating project...\n");
+      console.log(blue + "Creating a project..." + reset + "\n");
       askFileName("project");
       break;
 
     default:
-      console.log("You have entered an Invalid Choice! Retry!");
+      console.log(
+        red + "You have entered an invalid choice! Please retry." + reset
+      );
       enterChoice();
   }
 };
