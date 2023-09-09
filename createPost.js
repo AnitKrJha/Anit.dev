@@ -14,6 +14,7 @@ title: "BLOG TITLE HERE"
 description: "BLOG DESCRIPTION"
 isDraft: true
 tags: []
+//image:
 date: "DD-MM-YYYY"
 slug: ""
 ---`;
