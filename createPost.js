@@ -14,16 +14,17 @@ title: "BLOG TITLE HERE"
 description: "BLOG DESCRIPTION"
 isDraft: true
 tags: []
-//image:
+#image:
 date: "DD-MM-YYYY"
-slug: ""
+#slug: ""
 ---`;
 
 const PROJECT_TEMPLATE = `---
 name: "PROJECT NAME"
 description: "PROJECT DESC"
 isDraft: true
-slug: ""
+#slug: ""
+#image:""
 # ghLink: ""
 # liveLink: ""
 ---
@@ -59,7 +60,7 @@ const enterChoice = () => {
 const createFile = async (type, name) => {
   const dirPath = type === "blog" ? BLOG_DIRPATH : PROJECT_DIRPATH;
   const template = type === "blog" ? BLOG_TEMPLATE : PROJECT_TEMPLATE;
-  const filePath = join(dirPath, `${name}.md`);
+  const filePath = join(dirPath, `${name}.mdx`);
 
   console.log(
     green + `Creating your ${type} at ${filePath} ...` + reset + "\n"

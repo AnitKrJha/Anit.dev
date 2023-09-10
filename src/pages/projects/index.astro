@@ -29,6 +29,7 @@ const projects = await getCollection("projects");
               liveLink={project.data.liveLink}
               title={project.data.name}
               desc={project.data.description}
+              image={project.data.image}
             />
           );
         })

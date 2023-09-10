@@ -1,0 +1,88 @@
+---
+title: "Git Stash : Beginner's Guide"
+description: "In the world of programming, code blocks are an essential tool for sharing and explaining code snippets."
+isDraft: false
+tags: ["fd", "df"]
+date: "02-03-2004"
+slug: git-stash
+image: "./../../assets/blog/Git_stash/Git_stash cover.jpg"
+---
+
+## Introduction: The Power of Git Stash
+
+Git stash is a powerful command that allows developers to temporarily save changes and switch branches without the need to commit unfinished work. It is recommended to use `git stash` sparingly, in rare situations. In this blog post, I will guide you through practical examples of using `git stash` in your everyday workflow, drawing from my own experience where git stash proved to be invaluable. These examples will help you effectively organize your work and seamlessly switch between branches. Let's get started!
+
+![Git stash will change your life](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vc8kgls7tkwkyrqws3dv.png)
+
+## Use Case 1: Stashing Changes Before Switching Branches
+
+Imagine you are working on a new feature branch called "User-Profile" that involves modifying multiple files. Suddenly, you realize you need to make changes to the main branch to fix an urgent bug. Instead of committing the incomplete changes and polluting your commit history and dealing with merge conflicts later, you can use `git stash` to save your progress:
+
+```bash
+git stash
+```
+
+This command will stash your changes, allowing you to switch to the main branch and fix the urgent bug without conflicts. Once you have resolved the issue, you can return to the "User-Profile" branch and apply the stashed changes using:
+
+```bash
+git stash apply
+```
+
+> Alternatively, you can use `git stash pop`. The `git stash pop` command removes the stash from the stash list, while `git stash apply` keeps the stash for future use.
+
+## Use Case 2: Stashing Multiple Sets of Changes
+
+In some cases, you might be working on multiple tasks that require extensive modifications across various files. To keep things organized, you can stash each set of changes separately. For example:
+
+```bash
+git stash save "Task: Implement Payment Gateway"
+git stash save "Feat: Introduce table view in dashboard"
+```
+
+![Output of git stash save](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rglntj0rtzm6yfwfkr9j.png)
+
+By providing descriptive messages like "Task: Implement Payment Gateway," you can easily identify the stashed changes later. Once you have completed the first task, you can return to the second task and apply the stashed changes:
+
+```bash
+git stash apply stash^{/<stash-name>}
+```
+
+![git stash apply](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ncnkotusqacfrikno4p3.png)
+
+## Use Case 3: Stashing Conflicting Changes
+
+Imagine you are working on a project with a teammate, and you both make changes to the same file simultaneously. However, your teammate's changes conflict with yours.
+This situation happened a few times, when I was working on the Moksha's website with my team-mate Harsh. In this situation, you can stash your changes to resolve the conflict:
+
+```bash
+git stash
+```
+
+After stashing your changes, you can pull the latest changes from the remote repository and apply them to your branch:
+
+```bash
+git pull origin main
+```
+
+Now that your branch is up to date, you can apply your stashed changes and resolve any conflicts that arise:
+
+```bash
+git stash apply
+```
+
+## Use Case 4: Checking the Stash List
+
+To keep track of your stashes, you can use the `git stash list` command. It provides an overview of your stashed changes:
+
+```bash
+git stash list
+```
+
+![output of git stash list command](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/psxvdn3z7a17rof1xn0j.png)
+
+The output will display a list of stashes, including their respective stash index and descriptions. This allows you to easily identify and select the correct stash when applying or discarding changes.
+
+## Conclusion
+
+Congratulations! You've learned how to leverage the power of `git stash` to effectively manage your work and switch between branches seamlessly. By stashing changes before switching branches, handling conflicting changes, and using descriptive messages, you can streamline your development workflow. Remember stash is not a very common command you will be using but it comes in handy in such situations.
+Stay tuned for more valuable blogs about development and developer tools. Happy coding!

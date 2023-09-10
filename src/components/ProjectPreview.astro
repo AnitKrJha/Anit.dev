@@ -18,7 +18,7 @@ const {
 <div>
   <a href={`${blogLink}`} class="no-underline group">
     <article
-      class="border-t no-underline bg-yellow-50 dark:bg-neutral-900 rounded-t justify-between px-3 py-2 w-full my-2 group border-orange-500 rounded flex flex-col sm:flex-row gap-6 items-center sm:items-start"
+      class="border-t no-underline bg-yellow-50 dark:bg-neutral-900 rounded-t px-3 py-2 w-full my-2 group border-orange-500 rounded flex flex-col sm:flex-row gap-6 items-center sm:items-start"
     >
       <figure
         class="rounded aspect-video w-full sm:basis-60 flex-grow-0 flex-shrink-0 my-0 max-w-sm overflow-hidden"
@@ -27,13 +27,13 @@ const {
           loading={"lazy"}
           transition:name={blogLink + "image"}
           class="object-cover aspect-video rounded"
-          src={image ? image : ProjectDummyImage}
+          src={!!image ? image : ProjectDummyImage}
           alt={`${title} cover image`}
         />
       </figure>
-      <div class="">
+      <div class="grow">
         <h2
-          class="!text-lg capitalize flex gap-1 items-center mt-2 w-full justify-between group-hover:text-orange-500 duration-200"
+          class="!text-lg capitalize flex gap-1 items-center mt-2 w-full grow justify-between group-hover:text-orange-500 duration-200"
           transition:name={blogLink + "heading"}
         >
           {title}
@@ -57,11 +57,16 @@ const {
     </article>
   </a>
   <p
-    class="border-blue-500 py-2 links flex gap-2 text-xs tracking-wider underline-offset-4 -mt-2 pl-2 bg-neutral-200 dark:bg-stone-800 rounded-b"
+    class="border-blue-500 py-2 links flex gap-2 text-xs tracking-widest underline-offset-4 -mt-2 pl-2 bg-neutral-200 dark:bg-stone-800 rounded-b"
   >
     {
       ghLink && (
-        <a target="_blank" rel="no-referrer" href={props.ghLink}>
+        <a
+          target="_blank"
+          rel="no-referrer"
+          href={props.ghLink}
+          class="font-bold"
+        >
           Github
         </a>
       )
@@ -72,7 +77,7 @@ const {
           href={props.liveLink}
           target="_blank"
           rel="no-referrer"
-          class=" dark:text-yellow-200 text-yellow-900"
+          class=" dark:text-yellow-200 text-yellow-900 font-bold"
         >
           Live site
         </a>
