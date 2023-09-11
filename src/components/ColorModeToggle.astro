@@ -25,6 +25,8 @@ import Icon from "./Icon.astro";
     function enableDarkMode() {
       document.documentElement.classList.add("dark");
       localStorage.theme = "dark";
+      // const metaTheme = document.querySelector('meta[name="theme-color"]');
+      // if (metaTheme !== null) metaTheme.setAttribute("content", "#1c1917");
       darkmodebtn?.classList.add("bg-white");
       lightmodebtn?.classList.remove("bg-gray-300");
     }
@@ -33,6 +35,8 @@ import Icon from "./Icon.astro";
     function enableLightMode() {
       document.documentElement.classList.remove("dark");
       localStorage.theme = "light";
+      // const metaTheme = document.querySelector('meta[name="theme-color"]');
+      // if (metaTheme !== null) metaTheme.setAttribute("content", "#fff9eb");
       lightmodebtn?.classList.add("bg-gray-300");
       darkmodebtn?.classList.remove("bg-white");
     }

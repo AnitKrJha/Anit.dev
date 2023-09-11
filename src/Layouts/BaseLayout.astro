@@ -13,17 +13,20 @@ const { title, description, image } = Astro.props;
 
 <html lang="en" class="dark" style="font-family: graphik;">
   <head>
+    <meta name="color-scheme" content="dark light" />
+    <meta name="theme-color" content="#1c1917" />
+
     <script is:inline>
       // On page load or when changing themes, best to add inline in `head` to avoid FOUC
 
       const setColorMode = () => {
-        if (
-          localStorage.theme === "dark" ||
-          (!("theme" in localStorage) &&
-            window.matchMedia("(prefers-color-scheme: dark)").matches)
-        ) {
+        if (localStorage.theme === "dark" || !("theme" in localStorage)) {
+          // const metaTheme = document.querySelector('meta[name="theme-color"]');
+          // if (metaTheme !== null) metaTheme.setAttribute("content", "#1c1917");
           document.documentElement.classList.add("dark");
         } else {
+          // const metaTheme = document.querySelector('meta[name="theme-color"]');
+          // if (metaTheme !== null) metaTheme.setAttribute("content", "#fff9eb");
           document.documentElement.classList.remove("dark");
         }
       };
@@ -37,7 +40,6 @@ const { title, description, image } = Astro.props;
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="icon" href={Icon.src} />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#ffdcdc" />
     <!-- primary meta tags -->
     <title>{title}</title>
     <meta name="title" content={title} />

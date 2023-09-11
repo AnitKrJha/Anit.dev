@@ -8,21 +8,148 @@ import Icon from "../components/Icon.astro";
   description="Sorry, the page you're looking for isn't here. It might have been moved or doesn't exist. Don't worry; we're here to help you get back on track. Visit our homepage or use the navigation menu to explore our website."
   image="https://og.anit.dev/og?title=404"
 >
-  <div
-    class="flex items-center justify-center dark:bg-slate-900 bg-[#efe7d7] ring-2 ring-[#c6c2b9] dark:ring-stone-900 p-6 aspect-square max-w-xs m-auto rounded-full mt-14"
-  >
-    <div class="text-center">
-      <h2 class="pt-0 mt-0">404 - Developer's Oasis</h2>
-      <p>Uh-oh! You've hit a coding hiccup.</p>
-      <a
-        slot="extra-header"
-        href="/blog"
-        title="go back"
-        class={` m-auto flex items-center w-fit py-1 underline hover:decoration-slate-400 underline-offset-4 duration-200  dark:text-gray-50 text-gray-950 gap-1 `}
-      >
-        <Icon name="mdi:arrow-left" height={16} width={16} />
-        <span>Show Me Blogs</span>
-      </a>
+  <div class="scanlines"></div>
+  <div class="glitch-container">
+    <div class="text">
+      <h1>404</h1>
+      <div class="subtitle">Not Found</div>
+      <div class="text-clip">
+        <h1>404</h1>
+        <div class="subtitle">Not Found</div>
+      </div>
     </div>
   </div>
+
+  <style lang="scss">
+    .scanlines {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+
+      // Courtesy https://codepen.io/zerospree/pen/mdevOB
+      background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAYAAAD37n+BAAAALElEQVQYV2NkYGD4/x9IMAIxAxoDmzhIHfU0gCxFB9S1AacfsFmNJQzAoQIAH84j/OCkeYUAAAAASUVORK5CYII=");
+      background-size: 12px 6px;
+      mix-blend-mode: color-dodge;
+      opacity: 0.5;
+
+      &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        background: rgb(255 255 255 / 5%);
+        height: 6px;
+        animation: scanline 5s linear infinite;
+      }
+    }
+
+    .glitch-container {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: -1;
+      animation: flicker 20ms infinite;
+    }
+
+    .text {
+      font-family: var(--font-display);
+      position: relative;
+      z-index: -1;
+      line-height: 0.8;
+      letter-spacing: 0.02em;
+      pointer-events: none;
+      user-select: none;
+      text-align: center;
+      text-shadow:
+        -1.5px 0 0 rgb(0 0 255),
+        1.5px 0 0 rgb(255 0 0),
+        0 1.5px 0 rgb(0 255 0);
+      filter: blur(1.5px);
+
+      h1 {
+        font-size: clamp(180px, 30vw, 400px);
+        font-variation-settings:
+          "wdth" 150,
+          "wght" 700;
+      }
+
+      .subtitle {
+        font-size: clamp(60px, 10vw, 180px);
+        font-variation-settings:
+          "wdth" 140,
+          "wght" 700;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        white-space: nowrap;
+      }
+
+      @media screen and (width <= 600px) {
+        line-height: 0.7;
+
+        h1 {
+          font-size: 90vw;
+          font-variation-settings:
+            "wdth" 50,
+            "wght" 300;
+        }
+
+        .subtitle {
+          font-size: 20vw;
+          font-variation-settings:
+            "wdth" 60,
+            "wght" 500;
+        }
+      }
+
+      .text-clip {
+        position: absolute;
+        top: 0;
+        left: -0.3rem;
+        text-shadow:
+          -1.5px 0 0 rgb(0 0 255),
+          1.5px 0 0 rgb(255 0 0),
+          0 1.5px 0 rgb(0 255 0),
+          0.35rem 0 0 var(--bg),
+          4px 4px 0 var(--bg);
+        animation: text-offset 8s linear infinite;
+
+        // Dark mode transition
+        transition: text-shadow 1s ease-in-out;
+      }
+    }
+
+    @keyframes text-offset {
+      0% {
+        clip-path: polygon(0 110%, 100% 110%, 100% 160%, 0 160%);
+      }
+
+      100% {
+        clip-path: polygon(0 -90%, 100% -90%, 100% -10%, 0 -10%);
+      }
+    }
+
+    @keyframes scanline {
+      0% {
+        transform: translate3d(0, 100vh, 0);
+      }
+
+      50% {
+        transform: translate3d(0, -6px, 0);
+      }
+    }
+
+    @keyframes flicker {
+      0% {
+        opacity: 0.9;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
 </BaseLayout>
