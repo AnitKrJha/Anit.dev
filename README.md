@@ -1,47 +1,71 @@
-# Astro Starter Kit: Minimal
+# Portfolio-Blog with Astro 3.0 🚀
 
-```
-npm create astro@latest -- --template minimal
-```
+This repository contains a minimal and performant Portfolio-Blog built with Astro 3.0. It leverages the latest view transitions to provide app-like animations, making your portfolio stand out. Below are the steps to set up and run the project:
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/minimal)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/minimal)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/minimal/devcontainer.json)
+## Setup
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+1. Clone the repository:
 
-## 🚀 Project Structure
+   ```bash
+   git clone https://github.com/anitkrjha/anit.dev
+   ```
 
-Inside of your Astro project, you'll see the following folders and files:
+2. Install dependencies using `pnpm` (Make sure you have `pnpm` installed globally, or you can use `npm` or `yarn` if preferred):
 
-```
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+   ```bash
+   pnpm i
+   ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+3. Start the development server:
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+   ```bash
+   pnpm run dev
+   ```
 
-Any static assets, like images, can be placed in the `public/` directory.
+4. Open your web browser and navigate to [http://localhost:4321](http://localhost:4321) to view your portfolio-blog.
 
-## 🧞 Commands
+[![Twitter](https://img.shields.io/twitter/follow/anitkrjha?style=social)](https://twitter.com/_anitjha)
+## Features
 
-All commands are run from the root of the project, from a terminal:
+- **Astro 3.0:** This project utilizes Astro 3.0, a modern static site generator that delivers exceptional performance.
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:3000`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+- **App-like Animations:** Enjoy seamless view transitions that give your portfolio-blog a dynamic and engaging user experience.
 
-## 👀 Want to learn more?
+- **Minimalistic Design:** Keep your portfolio clean and elegant with a minimalistic design that puts your content in the spotlight.
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Show Your Support! :star: :fork_and_knife:
+
+If you find this project interesting or useful, consider giving it a star :star: and forking it :fork_and_knife: on GitHub. Your support is greatly appreciated! 🙌
+
+## Found a Bug? :bug:
+
+If you encounter any issues or bugs, please [create an issue](https://github.com/anitkrjha/anit.dev/issues) on GitHub. Be sure to provide detailed information about the problem, including steps to reproduce it.
+
+## Contribute :hammer_and_wrench:
+
+Contributions are welcome! If you'd like to contribute to this project, follow these steps:
+
+1. Fork the repository.
+
+2. Create a new branch for your feature or bug fix:
+
+   ```bash
+   git checkout -b feature-or-bugfix-branch
+   ```
+
+3. Make your changes and commit them:
+
+   ```bash
+   git commit -m "Description of your changes"
+   ```
+
+4. Push your changes to your forked repository:
+
+   ```bash
+   git push origin feature-or-bugfix-branch
+   ```
+
+5. Open a pull request (PR) on GitHub, describing your changes and referencing any related issues.
+
+Feel free to customize and enhance your portfolio-blog further to showcase your unique style and talents. Happy coding and designing! 😊
+
