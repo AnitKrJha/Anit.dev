@@ -1,0 +1,5 @@
+# don't tell the humans about this
+User-agent: *
+Allow: /
+
+Sitemap: https://anit-dev.vercel.app/sitemap-index.xml

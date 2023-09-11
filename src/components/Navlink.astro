@@ -18,6 +18,7 @@ let active = pathname === slug.slice(1);
 <li>
   <a
     href={slug}
+    rel="prefetch"
     class={`py-1 px-2 ${
       active
         ? "underline underline-offset-4 text-black dark:text-gray-50"
