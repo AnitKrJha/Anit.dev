@@ -62,6 +62,7 @@ const { Content } = await post.render();
   </figure>
   <h1 transition:name={post.slug + "heading"}>{post.data.title}</h1>
   <Content />
+  <Icon name="Full Logo" height={90} width={90} class="dark:fill-white" />
 </BaseLayout>
 <script is:inline>
 function goBack() {
