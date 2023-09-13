@@ -6,6 +6,7 @@ import Projects from "../components/Projects.astro";
 import SmallBlogPreview from "../components/SmallBlogPreview.astro";
 import BaseLayout from "./../Layouts/BaseLayout.astro";
 import SocialChip from "../components/SocialChip.astro";
+import ImageGrid from "../components/ImageGrid.astro";
 const allPosts = await getCollection("blog");
 const latestPosts = allPosts
   .sort((a, b) => {
@@ -45,7 +46,7 @@ const latestPosts = allPosts
     </p>
   </header>
   <hr class="my-0 border-neutral-300 dark:border-neutral-700 border" />
-
+  <ImageGrid />
   <section class="social">
     <p>You can stay <strong>updated</strong> and follow my journey here. 👇🏻</p>
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-4">

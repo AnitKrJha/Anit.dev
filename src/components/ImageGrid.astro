@@ -1,0 +1,55 @@
+---
+import { Image } from "astro:assets";
+import nsit from "./../assets/Others/nsit.jpg";
+import anit from "./../assets/Others/anit.jpg";
+import potrait_keyboard from "./../assets/Others/potrait_keyboard.jpg";
+import potrait_leaves from "./../assets/Others/leaves.jpg";
+import vector_pattern from "./../assets/Others/vector_pattern.jpg";
+import night_life from "./../assets/Others/night_like.jpg";
+---
+
+<div class="columns-2 sm:columns-3 my-8">
+  <div class="relative rounded-lg bg-gray-500 h-40 mb-4">
+    <Image
+      alt="Me speaking on stage at React Summit about the future of Next.js"
+      src={night_life}
+      class="rounded-lg object-cover object-center h-full mt-0"
+    />
+  </div>
+  <div class="relative rounded-lg bg-gray-500 h-80 mb-4 sm:mb-0">
+    <Image
+      alt="Me, Lydia, and Delba filming the Next.js Conf keynote"
+      src={anit}
+      class="rounded-lg object-cover object-center h-full mt-0 sm:object-center"
+    />
+  </div>
+  <div class="relative rounded-lg bg-gray-500 h-40 sm:h-80 sm:mb-4">
+    <Image
+      alt="Me standing on stage at Reactathon delivering the keynote"
+      src={potrait_leaves}
+      class="rounded-lg object-cover object-center h-full mt-0 sm:object-center"
+    />
+  </div>
+  <div class="relative rounded-lg bg-gray-500 h-40 mb-4 sm:mb-0">
+    <Image
+      alt="Me standing on stage at SmashingConf giving a talk about my optimism for the web"
+      src={nsit}
+      class="rounded-lg object-cover object-center h-full mt-0"
+    />
+  </div>
+  <div class="relative rounded-lg bg-gray-500 h-40 mb-4">
+    <Image
+      alt="Me and Guillermo Rauch on stage for Vercel Ship, answering questions from the Next.js community"
+      src={vector_pattern}
+      class="rounded-lg object-cover object-center h-full mt-0"
+    />
+  </div>
+  <div class="relative rounded-lg bg-gray-500 h-80">
+    <Image
+      alt="My badge on top of a pile of badges from a Vercel meetup we held"
+      src={potrait_keyboard}
+      sizes="(min-width: 768px) 213px, 33vw"
+      class="rounded-lg object-cover object-center h-full mt-0"
+    />
+  </div>
+</div>
