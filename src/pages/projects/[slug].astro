@@ -53,7 +53,7 @@ const { Content } = await project.render();
   }
   <figure class="w-full overflow-hidden">
     <Image
-      transition:name={"/projects/" + project.slug + "image"}
+      transition:persist={"/projects/" + project.slug.trim() + "image"}
       class="object-cover aspect-video rounded"
       src={!!image ? image : ProjectDummyImage}
       alt={`${name} cover image`}

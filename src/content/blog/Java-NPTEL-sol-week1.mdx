@@ -1,0 +1,212 @@
+---
+title: "Java NPTEL Solutions Week 1: Basics"
+description: "NPTEL Solutions to the Programming in Java Course."
+isDraft: false
+tags: ["Java", "NPTEL"]
+image: "./../../assets/blog/Java/NPTEL JAVA.png"
+date: "09-14-2023"
+slug: "nptel-java-solution-week1"
+ogImage: "https://anit.dev/NPTEL_OG_JAVA.webp"
+---
+
+In this blog post, we will provide solutions to the Java NPTEL (National Programme on Technology Enhanced Learning) Week 1 assignments. These assignments cover a range of Java programming topics and are designed to test your understanding of fundamental concepts. We will provide the questions, followed by the code solutions, and a brief explanation of each solution.
+
+## Java Week 1: Q1 - Calculate the Perimeter and Area of a Circle
+
+**Question 1:** To find the perimeter and area of a circle given a value of radius.
+
+```java
+import java.util.Scanner;
+
+public class Exercise1_1 {
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        double radius = s.nextDouble();
+        double perimeter;
+        double area;
+
+        // Calculate the perimeter
+        perimeter = 2 * Math.PI * radius;
+
+        // Calculate the area
+        area = Math.PI * radius * radius;
+
+        System.out.println("Perimeter: " + perimeter);
+        System.out.println("Area: " + area);
+    }
+}
+```
+
+**Explanation:** In this solution, we take the radius of the circle as input from the user and then calculate the perimeter and area of the circle using the provided formulas. Finally, we print the results.
+
+## Java Week 1: Q2 - Find the Largest Among Three Numbers
+
+**Question 2:** To find the largest among three numbers x, y, and z.
+
+```java
+import java.util.Scanner;
+
+public class Exercise1_2 {
+    public static void main(String[] args) {
+        Scanner s = new Scanner(System.in);
+        int x = s.nextInt();
+        int y = s.nextInt();
+        int z = s.nextInt();
+        int result = 0;
+
+        // Use if...else ladder to find the largest among 3 numbers
+        if (x > y && x > z) {
+            result = x;
+        } else if (y > x && y > z) {
+            result = y;
+        } else if (z > y && z > x) {
+            result = z;
+        } else {
+            result = x;
+        }
+
+        System.out.println("Largest number: " + result);
+    }
+}
+```
+
+**Explanation:** This solution takes three numbers as input and uses conditional statements (if-else) to find the largest among them.
+
+## Java Week 1: Q3 - Calculate Sum of Even Numbers Divisible by 3
+
+**Question 3:** Consider the first n even numbers starting from zero (0) and calculate the sum of all the numbers divisible by 3 from 0 to n. Print the sum.
+
+```java
+import java.util.Scanner;
+
+public class Exercise1_3 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int sum = 0;
+
+        // Use a loop to iterate through even numbers and calculate the sum
+        for (int i = 0; i <= n; i++) {
+            int t = 2 * i;
+            if (t % 3 == 0) {
+                sum += t;
+            }
+        }
+
+        System.out.println("Sum of even numbers divisible by 3: " + sum);
+    }
+}
+```
+
+**Explanation:** In this solution, we take an integer input 'n' and use a loop to iterate through the first 'n' even numbers starting from zero. We check if each number is divisible by 3 and add it to the sum if it is.
+
+## Java Week 1: Q4 - Check for Armstrong Number
+
+**Question 4:** To check whether the number is an Armstrong number or not.
+
+```java
+import java.util.Scanner;
+
+public class Exercise1_4 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        int result = 0;
+        int remainder;
+        int temp;
+        int count = 0;
+        int i;
+
+        temp = n;
+
+        // Calculate the number of digits in 'n'
+        while (temp != 0) {
+            temp /= 10;
+            count++;
+        }
+
+        temp = n;
+
+        // Calculate the result for Armstrong number
+        while (count > 0) {
+            remainder = temp % 10;
+            result += Math.pow(remainder, count);
+            temp /= 10;
+            count--;
+        }
+
+        // Check if 'n' is an Armstrong number
+        if (n == result)
+            result = 1;
+        else
+            result = 0;
+
+        System.out.println("Is Armstrong number: " + result);
+    }
+}
+```
+
+**Explanation:** This solution checks whether a given number is an Armstrong number or not. It calculates the number of digits in the number, computes the sum of the digits raised to the power of the number of digits, and compares it with the original number.
+
+## Java Week 1: Q5 - Find Highest and Average Marks
+
+**Question 5:** To help Ram, find the highest mark and average mark secured by him in "s" number of subjects.
+
+```java
+import java.util.Scanner;
+
+public class Exercise1_5 {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        double mark_avg;
+        int result;
+        int i;
+        int s;
+
+        // Define the size of the array
+        s = input.nextInt();
+
+        // Define an array to store marks
+        int[] arr = new int[s];
+
+        // Insert marks into the array
+        for (i = 0; i < arr.length; i++) {
+            arr[i] = input.nextInt();
+        }
+
+        // Initialize maximum element as the first element of the array
+        int temp = 0;
+        int j;
+
+        for (i = 0; i < s; i++) {
+            for (j = 1; j < (s - i); j++) {
+                if (arr[j - 1] > arr[j]) {
+                    // Swap elements if needed
+                    temp = arr[j - 1];
+                    arr[j - 1] = arr[j];
+                    arr[j] = temp;
+                }
+            }
+        }
+
+        // The highest mark is the last element of the sorted array
+        result = arr[s - 1];
+
+        // Calculate the average mark
+        temp = 0;
+        for (i = 0; i < arr.length; i++) {
+            temp += arr[i];
+        }
+        mark_avg = (double) temp / s;
+
+        System.out.println("Highest mark: " + result);
+        System.out.println("Average mark: " + mark_avg);
+    }
+}
+```
+
+**Explanation:** This solution calculates the highest mark and the average mark secured by Ram in 's' number of subjects. It uses an array to store the marks, sorts the array to find the highest mark, and calculates the average mark by summing all the marks and dividing by the number of subjects.
+
+---
+
+In this blog post, we provided solutions to the Week 1 Java NPTEL assignments, covering topics such as circle calculations, finding the largest number, summing even numbers divisible by 3, checking for Armstrong numbers, and finding the highest and average marks. These assignments are designed to help you practice fundamental Java programming concepts. Feel free to use these solutions as a reference for your own learning and practice.

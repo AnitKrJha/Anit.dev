@@ -4,7 +4,9 @@ import ProjectCard from "../../components/ProjectCard.astro";
 import BaseLayout from "./../../Layouts/BaseLayout.astro";
 import ProjectPreview from "../../components/ProjectPreview.astro";
 import Icon from "../../components/Icon.astro";
-const projects = await getCollection("projects");
+const projects = (await getCollection("projects")).filter(
+  (project) => !project.data.isDraft
+);
 ---
 
 <BaseLayout

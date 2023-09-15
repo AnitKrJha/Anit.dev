@@ -15,7 +15,7 @@ description: "BLOG DESCRIPTION"
 isDraft: true
 tags: []
 #image:
-date: "DD-MM-YYYY"
+date: "MM-DD-YYYY"
 #slug: ""
 ---`;
 

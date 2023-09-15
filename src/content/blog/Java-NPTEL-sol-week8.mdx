@@ -1,0 +1,217 @@
+---
+title: " Java NPTEL Solutions Week 8: Mastering Advanced Pyramid Patterns"
+description: "NPTEL Solutions to the Programming in Java Course for week 8."
+isDraft: false
+tags: ["Java", "NPTEL"]
+image: "./../../assets/blog/Java/NPTEL JAVA.png"
+date: "09-16-2023"
+slug: "nptel-java-solution-week8"
+ogImage: "https://anit.dev/NPTEL_OG_JAVA.webp"
+---
+
+#
+
+Welcome to Week 8 of our Java NPTEL course! This week, we dive into the world of advanced pyramid patterns and more. Let's explore the solutions to these intriguing challenges while providing a brief explanation for each one.
+
+## Java Week 8: Q1 - Pyramid of Stars and Count
+
+**Question 1:** Write a program that prints a pyramid of '_' with a height 'n' and also prints the total number of '_' characters in the pyramid.
+
+```java
+import java.util.*;
+
+public class Pattern1 {
+    public static void main(String[] args) {
+        Scanner inr = new Scanner(System.in);
+        int n = inr.nextInt();
+        int k = 0, sum = 0;
+        for (int i = 1; i <= n; ++i, k = 0) {
+            for (int space = 1; space <= n - i; ++space) {
+                System.out.print("  ");
+            }
+            while (k != 2 * i - 1) {
+                System.out.print("* ");
+                sum += 1;
+                ++k;
+            }
+            System.out.println();
+        }
+        System.out.println(sum);
+    }
+}
+```
+
+**Explanation:** This program generates a pyramid of '_' characters with a height of 'n' and calculates the total number of '_' characters in the pyramid. It uses nested loops to print the pyramid and increments the 'sum' variable for each '\*' character printed.
+
+## Java Week 8: Q2 - Pascal Pyramid of Stars
+
+**Question 2:** Write a program that prints a Pascal pyramid of '\*' with a height 'l'.
+
+```java
+import java.util.*;
+
+public class Pattern2 {
+    public static void main(String[] args) {
+        Scanner inr = new Scanner(System.in);
+        int l = inr.nextInt();
+        int i, j;
+        int space = l - 1;
+        for (i = 0; i < l; i++) {
+            for (j = 0; j < space; j++) {
+                System.out.print(" ");
+            }
+            for (j = 0; j <= i; j++) {
+                System.out.print("* ");
+            }
+            System.out.print("\n");
+            space--;
+        }
+    }
+}
+```
+
+**Explanation:** This program prints a Pascal pyramid of '_' characters with a height of 'l'. It uses nested loops to control the number of '_' characters and spaces printed on each line.
+
+## Java Week 8: Q3 - Pyramid of Numbers and Sum
+
+**Question 3:** Write a program that prints a pyramid of numbers with a height 'n' and also prints the sum of all the numbers in the pyramid.
+
+```java
+import java.util.*;
+
+public class Pattern3 {
+    public static void main(String[] args) {
+        Scanner inr = new Scanner(System.in);
+        int n = inr.nextInt();
+        int k = 1, sum = 0;
+        for (int i = 1; i <= n; ++i, k = 1) {
+            for (int space = 1; space <= n - i; ++space) {
+                System.out.print("  ");
+            }
+            while (k <= 2 * i - 1) {
+                System.out.print(k + " ");
+                sum += k;
+                ++k;
+            }
+            System.out.println();
+        }
+        System.out.println(sum);
+    }
+}
+```
+
+**Explanation:** This program generates a pyramid of numbers with a height of 'n' and calculates the sum of all the numbers in the pyramid. It uses nested loops to print the pyramid and adds each number to the 'sum' variable.
+
+## Java Week 8: Q4 - Symmetric Pascal's Triangle
+
+**Question 4:** Write a program to print a symmetric Pascal's triangle of '\*' characters with a height 'l' of odd length. If 'l' is even, the program should print "Invalid line number."
+
+```java
+import java.util.*;
+
+public class Pattern4 {
+    public static void main(String[] args) {
+        Scanner inr = new Scanner(System.in);
+        int l = inr.nextInt();
+        int ul = 0; // Upper Line
+        int ll = 0; // Lower Line
+
+        if (l % 2 != 0) {
+            ul = (l / 2) + 1;
+            ll = l - ul;
+            // Code for upper half
+            for (int i = 1; i <= ul; i++) {
+                for (int s = 1; s <= (ul - i); s++) {
+                    System.out.print(" ");
+                }
+                for (int j = 1; j <= i; j++) {
+                    System.out.print("* ");
+                }
+                System.out.println();
+            }
+
+            // Code for lower half
+            int llc = ll;
+            for (int i = 1; i <= ll; i++) {
+                for (int s = llc; s < ll; s++) {
+                    System.out.print(" ");
+                }
+                for (int j = 1; j <= (ll - i + 1); j++) {
+                    System.out.print(" *");
+                }
+                llc--;
+                System.out.println();
+            }
+        } else {
+            System.out.print("Invalid line number");
+        }
+    }
+}
+```
+
+**Explanation:** This program prints a symmetric Pascal's triangle of '\*' characters with a height of 'l' if 'l' is odd. If 'l' is even, it prints "Invalid line number." It uses conditional statements and loops to create the pattern.
+
+## Java Week 8: Q5 - 7 Segment Display for Digits
+
+**Question 5:** Write a program to display any digit 'n' from 0-9 using a "7 segment display."
+
+```java
+import java.util.*;
+
+public class Pattern5 {
+    private static final Map<Integer, Integer> encodings = new HashMap<Integer, Integer>();
+
+    static {
+        encodings.put(0, 0x7E);
+        encodings.put(1, 0x30);
+        encodings.put(2, 0x6D);
+        encodings.put(3, 0x79);
+        encodings.put(4, 0x33);
+        encodings.put(5, 0x5B);
+        encodings.put(6, 0x5F);
+        encodings.put(7, 0x70);
+        encodings.put(8, 0x7F);
+        encodings.put(9, 0x7B);
+    }
+
+    public static void printDigit(int digit) {
+        int code = encode(digit);
+        char[] bits =
+            String.format("%7s", Integer.toBinaryString(code))
+                .replace(' ', '0').toCharArray();
+
+        lightSegment(bits[0] == '1', " _ \n", "   \n");
+        lightSegment(bits[5] == '1', "|", " ");
+        lightSegment(bits[6] == '1', "_", " ");
+        lightSegment(bits[1] == '1', "|\n", " \n");
+        lightSegment(bits[4] == '1', "|", " ");
+        lightSegment(bits[3] == '1', "_", " ");
+        lightSegment(bits[2] == '1', "|\n", "\n");
+    }
+
+    private static void lightSegment(boolean on, String onValue, String offValue) {
+        System.out.print(on ? onValue : offValue);
+        try {
+            Thread.sleep(0);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static int encode(int digit) {
+        return encodings.containsKey(digit) ? encodings.get(digit) : 0x00;
+    }
+
+    public static void main(String[] args) {
+        Scanner inr = new Scanner(System.in);
+        int n = inr.nextInt();
+        printDigit(n);
+    }
+}
+```
+
+**Explanation:** This program displays a digit (0-9) using a "7 segment display" pattern. It uses a predefined encoding map to determine which segments should be lit to represent the digit. The `printDigit` function handles the display, and `encode` maps digits to their corresponding binary patterns. The program then prints the segments accordingly.
+
+---
+
+These solutions cover a variety of advanced patterns and techniques, enhancing your Java programming skills. Continue practicing and exploring new challenges to become a proficient Java programmer. Stay tuned for more Java NPTEL solutions in the upcoming weeks!

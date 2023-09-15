@@ -18,19 +18,24 @@ type Props = {
   post: CollectionEntry<"blog">;
 };
 
-const {
+let {
   post,
   post: {
-    data: { date, isDraft, title, image },
+    data: { date, isDraft, title, image, ogImage },
   },
 } = Astro.props;
 const { Content } = await post.render();
+
+if (!ogImage) {
+  ogImage = `https://og.anit.dev/og?title=${title.trim()}&type=blog`;
+}
+// console.table(ogImage);
 ---
 
 <BaseLayout
   title={post.data.title}
   description={post.data.description}
-  image={`https://og.anit.dev/og?title=${title.trim()}&type=blog`}
+  image={ogImage}
 >
   <button
     transition:persist="back-button-blog"
@@ -54,7 +59,7 @@ const { Content } = await post.render();
   }
   <figure class="w-full overflow-hidden">
     <Image
-      transition:name={post.slug + "image"}
+      transition:persist={post.slug.trim() + "image"}
       class="object-cover aspect-video rounded"
       src={!!image ? image : BlogDummyImage}
       alt={`${title} cover image`}

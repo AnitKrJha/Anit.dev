@@ -1,0 +1,141 @@
+---
+title: " Java NPTEL Solutions Week 2: Mastering Advanced Java Challenges"
+description: "NPTEL Solutions to the Programming in Java Course for week 2."
+isDraft: false
+tags: ["Java", "NPTEL"]
+image: "./../../assets/blog/Java/NPTEL JAVA.png"
+date: "09-15-2023"
+slug: "nptel-java-solution-week2"
+ogImage: "https://anit.dev/NPTEL_OG_JAVA.webp"
+---
+
+In this blog post, we'll dive deep into the solutions for Week 2 of your Java NPTEL course. These challenges will help you grasp more advanced concepts in Java programming. Let's tackle each question efficiently while keeping our code clean and concise.
+
+## Java Week 2: Q1 - Calling 'print()' Using Inner Classes
+
+In this problem, we have an outer class `School` and an inner class `Student`. To call the `print()` method in the `Student` class, you can create an object of the inner class and use it to invoke the `print()` method. Here's the solution:
+
+```java
+class School {
+    class Student {
+        public void print() {
+            System.out.println("Hi! I am inner class STUDENT of outer class SCHOOL.");
+        }
+    }
+}
+
+public class Question211 {
+    public static void main(String[] args) {
+        School.Student s1 = new School().new Student();
+        s1.print();
+    }
+}
+```
+
+Explanation: We create an object of the inner class `Student` using `School.Student s1 = new School().new Student();` and then call the `print()` method on this object.
+
+## Java Week 2: Q2 - Calling Methods of Different Classes
+
+In this question, we have two separate classes, `School` and `Student`, each with its own `print()` method. To call these methods, you can create objects of the respective classes and invoke their `print()` methods. Here's the solution:
+
+```java
+class School {
+    public void print() {
+        System.out.println("Hi! I am class SCHOOL.");
+    }
+}
+
+class Student {
+    public void print() {
+        System.out.println("Hi! I am class STUDENT");
+    }
+}
+
+public class Question212 {
+    public static void main(String[] args) {
+        Student stu = new Student();
+        stu.print();
+
+        School sch = new School();
+        sch.print();
+    }
+}
+```
+
+Explanation: We create objects of both the `Student` and `School` classes and then call their respective `print()` methods.
+
+## Java Week 2: Q3 - Calling Methods by Creating a New Method
+
+In this question, you need to call the `print()` method of class `Question` by creating a method named `studentMethod()`. Here's the solution:
+
+```java
+public class Question213 {
+    public static void main(String[] args) {
+        Question213 q = new Question213();
+        q.studentMethod();
+    }
+
+    void print(Question213 object) {
+        System.out.print("Well Done!");
+    }
+
+    void studentMethod() {
+        Question213 q = new Question213();
+        q.print(q);
+    }
+}
+```
+
+Explanation: We create an object of the `Question213` class and call the `studentMethod()`, which in turn calls the `print()` method of the same class.
+
+## Java Week 2: Q4 - Calling Constructors in a Specific Order
+
+This question involves calling constructors in a specific order in the `Answer` class. We create an object of the `Answer` class with the appropriate constructor. Here's the solution:
+
+```java
+public class Question214 {
+    public static void main(String[] args) {
+        Answer a = new Answer(10, "MCQ");
+    }
+}
+
+class Answer {
+    Answer() {
+        System.out.println("You got nothing.");
+    }
+
+    Answer(int marks, String type) {
+        this();
+        System.out.println("You got " + marks + " for an " + type);
+    }
+}
+```
+
+Explanation: We create an object of the `Answer` class using the constructor with parameters, which in turn calls the default constructor using `this()`.
+
+## Java Week 2: Q5 - Debugging to Print 'NPTEL JAVA'
+
+This question requires debugging to print the text 'NPTEL JAVA.' Here's the corrected solution:
+
+```java
+public class Question215 {
+    public static void main(String[] args) {
+        // Declare variables with names 'nptel', 'space', and 'java' with proper data types.
+        String nptel, space, java;
+
+        // Initialize the variables with proper input
+        nptel = "NPTEL";
+        space = " ";
+        java = "JAVA";
+
+        // Print the desired output
+        System.out.print(nptel + space + java);
+    }
+}
+```
+
+Explanation: The code declares and initializes three strings and then prints them concatenated with spaces to get the desired output 'NPTEL JAVA.'
+
+---
+
+That wraps up our solutions for Week 2 of your Java NPTEL course. These challenges have introduced you to some advanced Java concepts, including inner classes, method calls, and constructor invocation. Keep practicing and exploring, and you'll continue to improve your Java programming skills. Stay tuned for more Java NPTEL solutions in the coming weeks!

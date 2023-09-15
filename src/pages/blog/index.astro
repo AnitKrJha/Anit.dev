@@ -7,7 +7,11 @@ import Icon from "../../components/Icon.astro";
 // Get all entries from a collection.
 // Requires the name of the collection as an argument.
 // Example: retrieve `src/content/blog/**`
-const allBlogPosts = await getCollection("blog");
+const allBlogPosts = (await getCollection("blog")).sort((a, b) => {
+  if (a.data.date < b.data.date) return 1;
+  if (a.data.date > b.data.date) return -1;
+  else return 0;
+});
 
 // Get a single entry from a collection.
 // Requires the name of the collection and either
