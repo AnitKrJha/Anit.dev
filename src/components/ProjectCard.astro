@@ -18,11 +18,11 @@ const {
 <div>
   <a
     href={blogLink}
-    class=` border-t no-underline  bg-neutral-100/60 dark:bg-neutral-900 rounded-t flex flex-col items-start justify-between px-3 py-2 w-full my-2 group border-orange-500 `
+    class=` border-t no-underline  bg-neutral-100/50 dark:bg-neutral-900/60 rounded-t flex flex-col items-start justify-between px-3 py-2 w-full my-2 group border-rose-500 `
     rel="prefetch"
   >
     <h3
-      class="!text-base capitalize flex gap-1 items-center mt-2 w-full justify-between group-hover:text-orange-500 duration-200"
+      class="!text-base capitalize flex gap-1 items-center mt-2 w-full justify-between group-hover:text-rose-500 duration-200"
     >
       {props.title}
       <svg
@@ -31,7 +31,7 @@ const {
         viewBox="0 0 12 12"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        class="rotate-45 text-gray-400 group-hover:text-orange-600"
+        class="rotate-45 text-gray-400 group-hover:text-rose-600"
       >
         <path
           d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
@@ -43,7 +43,7 @@ const {
     </p>
   </a>
   <p
-    class="py-2 links flex gap-2 text-xs tracking-wider underline-offset-4 -mt-2 pl-2 bg-neutral-200 dark:bg-stone-800 rounded-b"
+    class="py-2 links flex gap-2 text-xs tracking-wider underline-offset-4 -mt-2 pl-2 bg-neutral-200/60 dark:bg-stone-800/60 rounded-b"
   >
     {
       ghLink && (
@@ -58,7 +58,7 @@ const {
           href={props.liveLink}
           target="_blank"
           rel="no-referrer"
-          class=" dark:text-yellow-200 text-yellow-900"
+          class=" dark:text-rose-200 text-rose-800"
         >
           Live site
         </a>
