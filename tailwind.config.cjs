@@ -5,7 +5,13 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        graphik: ["graphik", "system-ui", "sans-serif"],
+        bircolage: ["Bricolage Grotesque", "system-ui", "sans-serif"],
+      },
+      backgroundImage: {
+        darkGradient:
+          "radial-gradient(at right bottom, rgb(30, 58, 138), rgb(24, 24, 27), rgb(0, 0, 0))",
+        lightGradient:
+          "conic-gradient(at left top, rgb(254, 249, 195), rgb(254, 226, 226), rgb(255, 237, 213))",
       },
     },
   },
