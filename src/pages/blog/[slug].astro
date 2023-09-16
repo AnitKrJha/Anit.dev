@@ -38,7 +38,7 @@ if (!ogImage) {
   image={ogImage}
 >
   <button
-    transition:persist="back-button-blog"
+    transition:name="back-button-blog"
     slot="extra-header"
     title="go back"
     class={`back-button flex items-center w-fit py-1 underline hover:decoration-slate-400 underline-offset-4 duration-200  dark:text-gray-50 text-gray-950 gap-1`}
@@ -59,7 +59,7 @@ if (!ogImage) {
   }
   <figure class="w-full overflow-hidden">
     <Image
-      transition:persist={post.slug.trim() + "image"}
+      transition:name={post.slug.trim() + "image"}
       class="object-cover aspect-video rounded"
       src={!!image ? image : BlogDummyImage}
       alt={`${title} cover image`}
@@ -70,8 +70,8 @@ if (!ogImage) {
   <Icon name="Full Logo" height={90} width={90} class="dark:fill-white" />
 </BaseLayout>
 <script is:inline>
-function goBack() {
-  window.history.back();
-}
-document.querySelector(".back-button")?.addEventListener("click", goBack);
+  function goBack() {
+    window.history.back();
+  }
+  document.querySelector(".back-button")?.addEventListener("click", goBack);
 </script>

@@ -19,7 +19,7 @@ const {
     >
       <Image
         loading={"lazy"}
-        transition:persist={other.slug.trim() + "image"}
+        transition:name={other.slug.trim() + "image"}
         class="object-cover aspect-video rounded"
         src={!!image ? image : BlogImageDummy}
         alt={`${title} cover image`}
