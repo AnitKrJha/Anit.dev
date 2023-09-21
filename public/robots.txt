@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://anit-dev.vercel.app/sitemap-index.xml
+Sitemap: https://anit.dev/sitemap-index.xml
