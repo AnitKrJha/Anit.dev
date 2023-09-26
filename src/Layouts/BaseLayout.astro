@@ -15,12 +15,6 @@ const { title, description, image } = Astro.props;
   <head>
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#1c1917" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,600;12..96,700&display=auto"
-      rel="stylesheet"
-    />
 
     <script is:inline>
       // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -68,20 +62,27 @@ const { title, description, image } = Astro.props;
     <meta property="twitter:image" content={image} />
 
     <!-- link tags-->
-    <!-- <link
+    <link
       rel="preload"
-      href="/fonts/graphik.ttf"
+      href="/fonts/BricolageGrotesque_24pt-Medium.ttf"
       as="font"
       type="font/ttf"
       crossorigin="anonymous"
     />
     <link
       rel="preload"
-      href="/fonts/graphik2.ttf"
+      href="/fonts/BricolageGrotesque_24pt-Regular.ttf"
       as="font"
       type="font/ttf"
       crossorigin="anonymous"
-    /> -->
+    />
+    <link
+      rel="preload"
+      href="/fonts/BricolageGrotesque_24pt-SemiBold.ttf"
+      as="font"
+      type="font/ttf"
+      crossorigin="anonymous"
+    />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <ViewTransitions />
     <script>
@@ -93,22 +94,24 @@ const { title, description, image } = Astro.props;
     </script>
   </head>
   <body
-    class="bg-lightGradient dark:bg-darkGradient dak:text-slate-50 text-slate-800 dark:bg-stone-900 max-w-3xl mx-auto px-4 overflow-y-scroll border border-green-700"
+    class="bg-lightGradient dark:bg-darkGradient dak:text-slate-50 text-slate-800 dark:bg-stone-900 max-w-3xl mx-auto px-4 overflow-y-scroll"
   >
     <Navbar />
     <main
-      class="prose prose-stone dark:prose-invert py-2 px-2 min-h-[90dvh] !w-full max-w-full border-red-600 border"
+      class="prose prose-stone dark:prose-invert py-2 px-2 min-h-[90dvh] !w-full max-w-full"
     >
       <slot name="extra-header" />
       <slot />
     </main>
     <Footer />
     <style is:global>
-      /* @font-face {
-        font-family: "graphik";
-        src: url("/fonts/graphik.ttf"), url("/fonts/graphik2.ttf");
+      @font-face {
+        font-family: "bircolage";
+        src: url("/fonts/BricolageGrotesque_24pt-Medium.ttf"),
+          url("/fonts/BricolageGrotesque_24pt-Regular.ttf"),
+          url("/fonts/BricolageGrotesque_24pt-SemiBold.ttf");
         font-display: swap;
-      } */
+      }
       /* @keyframes fade-in {
         from {
           opacity: 0;
