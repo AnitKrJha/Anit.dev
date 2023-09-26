@@ -105,6 +105,9 @@ const { title, description, image } = Astro.props;
     </main>
     <Footer />
     <style is:global>
+      * {
+        @apply font-normal;
+      }
       @font-face {
         font-family: "bircolage";
         src: url("/fonts/BricolageGrotesque_24pt-Medium.ttf"),
