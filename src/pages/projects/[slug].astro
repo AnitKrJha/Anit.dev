@@ -96,8 +96,8 @@ const { Content } = await project.render();
   <Icon name="Full Logo" height={90} width={90} class="dark:fill-white" />
 </BaseLayout>
 <script is:inline>
-  function goBack() {
-    window.history.back();
-  }
-  document.querySelector(".back-button")?.addEventListener("click", goBack);
+function goBack() {
+  window.history.back();
+}
+document.querySelector(".back-button")?.addEventListener("click", goBack);
 </script>

@@ -14,6 +14,7 @@ const latestPosts = allPosts
     if (a.data.date < b.data.date) return -1;
     else return 0;
   })
+  .filter((post) => post.data.isDraft != true)
   .slice(0, 3);
 ---
 

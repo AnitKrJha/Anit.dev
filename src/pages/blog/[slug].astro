@@ -41,6 +41,7 @@ if (!ogImage) {
     transition:name="back-button-blog"
     slot="extra-header"
     title="go back"
+    type="button"
     class={`back-button flex items-center w-fit py-1 underline hover:decoration-slate-400 underline-offset-4 duration-200  dark:text-gray-50 text-gray-950 gap-1`}
   >
     <Icon name="mdi:arrow-left" height={16} width={16} />back
@@ -66,7 +67,9 @@ if (!ogImage) {
     />
   </figure>
   <h1 transition:name={post.slug + "heading"}>{post.data.title}</h1>
-  <Content />
+  <article class="content">
+    <Content />
+  </article>
   <Icon name="Full Logo" height={90} width={90} class="dark:fill-white" />
 </BaseLayout>
 <script is:inline>

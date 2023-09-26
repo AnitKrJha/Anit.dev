@@ -7,11 +7,13 @@ import Icon from "../../components/Icon.astro";
 // Get all entries from a collection.
 // Requires the name of the collection as an argument.
 // Example: retrieve `src/content/blog/**`
-const allBlogPosts = (await getCollection("blog")).sort((a, b) => {
-  if (a.data.date < b.data.date) return 1;
-  if (a.data.date > b.data.date) return -1;
-  else return 0;
-});
+const allBlogPosts = (await getCollection("blog"))
+  .sort((a, b) => {
+    if (a.data.date < b.data.date) return 1;
+    if (a.data.date > b.data.date) return -1;
+    else return 0;
+  })
+  .filter((post) => post.data.isDraft != true);
 
 // Get a single entry from a collection.
 // Requires the name of the collection and either
@@ -25,10 +27,7 @@ const allBlogPosts = (await getCollection("blog")).sort((a, b) => {
   description="Anit's technical blogs and development insights.I write about what I code"
   image="https://og.anit.dev/og?title=Technical Wrtings&type=blogs"
 >
-  <h1 class="text-2xl mb-6 mt-4 inline-block">
-    Read my blogs
-    <Icon name="icon-park-outline:hand-down" class="inline ml-2" />
-  </h1>
+  <h1 class="text-2xl mb-6 mt-4 inline-block">read my blogs 👇🏻</h1>
   {
     // allBlogPosts.map((post) => {
     //   return (

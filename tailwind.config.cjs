@@ -11,7 +11,7 @@ module.exports = {
         darkGradient:
           "linear-gradient(to left, rgb(3, 8, 68), rgb(4, 4, 27), rgb(0, 0, 0))",
         lightGradient:
-          "conic-gradient(at left top, rgb(254, 249, 195), rgb(254, 226, 226), rgb(255, 237, 213))",
+          "conic-gradient(at left top, rgb(254, 239, 195), rgb(254, 216, 226), rgb(255, 217, 200))",
       },
     },
   },

@@ -14,10 +14,7 @@ const projects = (await getCollection("projects")).filter(
   description="List of projects made by Anit Jha.Showcasing everything I code."
   image="https://og.anit.dev/og?title=Project Showcase&type=projects"
 >
-  <h1 class="text-2xl mb-6 mt-4 inline-block">
-    My Projects
-    <Icon name="icon-park-outline:hand-down" class="inline ml-2" />
-  </h1>
+  <h1 class="text-2xl mb-6 mt-4 inline-block">my projects</h1>
   <main>
     {
       projects.length === 0 ? (

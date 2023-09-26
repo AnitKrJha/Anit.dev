@@ -2,7 +2,10 @@
 import Icon from "./Icon.astro";
 ---
 
-<button class="dark-mode-button ml-auto rounded p-2" title="dark mode">
+<button
+  class="dark-mode-button ml-auto rounded p-2 text-black"
+  title="dark mode"
+>
   <Icon name="mdi:weather-night" class="dark-mode-icon" />
 </button>
 <button class="light-mode-button ml-auto rounded p-2" title="light mode">
@@ -16,9 +19,9 @@ import Icon from "./Icon.astro";
 
     // Check the localStorage theme and update button classes accordingly
     if (localStorage.theme === "dark") {
-      darkmodebtn?.classList.add("bg-white");
+      darkmodebtn?.classList.add("bg-white/60");
     } else if (localStorage.theme === "light") {
-      lightmodebtn?.classList.add("bg-gray-300");
+      lightmodebtn?.classList.add("bg-white/60");
     }
 
     // Function to toggle dark mode
@@ -27,8 +30,8 @@ import Icon from "./Icon.astro";
       localStorage.theme = "dark";
       // const metaTheme = document.querySelector('meta[name="theme-color"]');
       // if (metaTheme !== null) metaTheme.setAttribute("content", "#1c1917");
-      darkmodebtn?.classList.add("bg-white");
-      lightmodebtn?.classList.remove("bg-gray-300");
+      darkmodebtn?.classList.add("bg-white/60");
+      lightmodebtn?.classList.remove("bg-white/60");
     }
 
     // Function to toggle light mode
@@ -37,8 +40,8 @@ import Icon from "./Icon.astro";
       localStorage.theme = "light";
       // const metaTheme = document.querySelector('meta[name="theme-color"]');
       // if (metaTheme !== null) metaTheme.setAttribute("content", "#fff9eb");
-      lightmodebtn?.classList.add("bg-gray-300");
-      darkmodebtn?.classList.remove("bg-white");
+      lightmodebtn?.classList.add("bg-white/60");
+      darkmodebtn?.classList.remove("bg-white/60");
     }
 
     darkmodebtn?.addEventListener("click", enableDarkMode);
