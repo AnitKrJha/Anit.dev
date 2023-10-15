@@ -58,6 +58,9 @@ if (!ogImage) {
       </blockquote>
     )
   }
+  <h1 transition:name={post.slug + "heading"} class="mt-8">
+    {post.data.title}
+  </h1>
   <figure class="w-full overflow-hidden">
     <Image
       transition:name={post.slug.trim() + "image"}
@@ -66,7 +69,6 @@ if (!ogImage) {
       alt={`${title} cover image`}
     />
   </figure>
-  <h1 transition:name={post.slug + "heading"}>{post.data.title}</h1>
   <article class="content">
     <Content />
   </article>
