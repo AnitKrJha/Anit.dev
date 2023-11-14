@@ -7,6 +7,7 @@ import SmallBlogPreview from "../components/SmallBlogPreview.astro";
 import BaseLayout from "./../Layouts/BaseLayout.astro";
 import SocialChip from "../components/SocialChip.astro";
 import ImageGrid from "../components/ImageGrid.astro";
+import BannerChip from "../components/BannerChip.astro";
 const allPosts = await getCollection("blog");
 const latestPosts = allPosts
   .sort((a, b) => {
@@ -24,6 +25,7 @@ const latestPosts = allPosts
   description="Anit Jha, CSE student love to Code, playing Chess and Building Things in public. Open source contributor"
 >
   <header>
+    <BannerChip />
     <h1 class="tracking-tight mb-8 mt-3">hey, I'm anitjha 👋</h1>
     <p class="sm:leading-9">
       Hi there, I'm a 20-year-old CS undergrad student who has a passion for
@@ -45,123 +47,126 @@ const latestPosts = allPosts
         >Machine Learning</strong
       > (<em>ML</em>) in my studies.
     </p>
-  </header>
-  <hr class="my-0 border-neutral-300 dark:border-neutral-700 border" />
-  <ImageGrid />
-  <section class="social">
-    <p>You can stay <strong>updated</strong> and follow my journey here. 👇🏻</p>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-4">
-      <SocialChip socialMedia="insta" />
-      <SocialChip socialMedia="twitter" />
-      <SocialChip socialMedia="linkedin" />
-      <SocialChip socialMedia="github" />
-    </div>
-  </section>
 
-  <h2 class="mt-14 mb-8 shdow-">Skills and Interests ✏️</h2>
+    <hr class="my-0 border-neutral-100 dark:border-neutral-700 border" />
+    <ImageGrid />
+    <section class="social">
+      <p>
+        You can stay <strong>updated</strong> and follow my journey here. 👇🏻
+      </p>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-4">
+        <SocialChip socialMedia="insta" />
+        <SocialChip socialMedia="twitter" />
+        <SocialChip socialMedia="linkedin" />
+        <SocialChip socialMedia="github" />
+      </div>
+    </section>
 
-  <p class="leading-9">
-    I've explored a diverse range of technologies and environments, mastering
-    key domains including:
-    <br />
-    <strong>Web Frameworks and BaaS:</strong>
+    <h2 class="mt-14 mb-8 shdow-">Skills and Interests ✏️</h2>
 
-    <IconChip
-      iconName="teenyicons:nextjs-outline"
-      text="NextJS"
-      shadowColorClass="shadow-gray-50"
-    />
-    <IconChip
-      iconName="logos:firebase"
-      text="Firebase"
-      shadowColorClass="shadow-rose-500"
-    />
-    <IconChip
-      iconName="logos:typescript-icon"
-      text="Typescript"
-      shadowColorClass="shadow-blue-500"
-    />
-    <IconChip
-      shadowColorClass="shadow-rose-500"
-      iconName="simple-icons:astro"
-      text="Astro"
-    />
-    <br />
-     Proficient in the <strong>Server and the Terminal</strong>, with expertise
-    in various <IconChip
-      iconName="flat-color-icons:linux"
-      text="Linux/Unix"
-      shadowColorClass="shadow-black"
-    /> environments. <br />
-     I've also mastered <strong>Backend Languages</strong>, including
-    <IconChip
-      shadowColorClass="shadow-green-500"
-      iconName="vscode-icons:file-type-python"
-      text="Python"
-    />,
-    <IconChip
-      shadowColorClass="shadow-red-500"
-      iconName="logos:java"
-      text="Java"
-    />, and <IconChip
-      shadowColorClass="shadow-purple-500"
-      iconName="logos:go"
-      text="Golang"
-    />.
-    <br /> Currently, I'm delving into <strong>Machine Learning</strong>,
-    utilizing tools like <IconChip
-      shadowColorClass="shadow-rose-500"
-      iconName="logos:tensorflow"
-      text="TensorFlow"
-    /> and <IconChip
-      shadowColorClass="shadow-pink-500"
-      iconName="logos:pytorch"
-      text="PyTorch"
-    /> to expand my knowledge further.
-    <br />
-     Very comfortable with <strong>Version Control Systems</strong> with
-    <IconChip
-      shadowColorClass="shadow-rose-500"
-      iconName="logos:git-icon"
-      text="Git"
-    /> and
-    <IconChip
-      shadowColorClass="shadow-purple-500"
-      iconName="mdi:github"
-      text="GitHub"
-    />
-  </p>
-  <Projects />
-  <hr class="border border-neutral-300 dark:border-neutral-700" />
-  <section>
-    <p>
-      I also have a passion for sharing my knowledge and insights from my
-      experiences. One way I do this is by occasionally <strong
-        >writing blogs</strong
-      >. Some of them are 👇
+    <p class="leading-9">
+      I've explored a diverse range of technologies and environments, mastering
+      key domains including:
+      <br />
+      <strong>Web Frameworks and BaaS:</strong>
+
+      <IconChip
+        iconName="teenyicons:nextjs-outline"
+        text="NextJS"
+        shadowColorClass="shadow-gray-50"
+      />
+      <IconChip
+        iconName="logos:firebase"
+        text="Firebase"
+        shadowColorClass="shadow-rose-500"
+      />
+      <IconChip
+        iconName="logos:typescript-icon"
+        text="Typescript"
+        shadowColorClass="shadow-blue-500"
+      />
+      <IconChip
+        shadowColorClass="shadow-rose-500"
+        iconName="simple-icons:astro"
+        text="Astro"
+      />
+      <br />
+       Proficient in the <strong>Server and the Terminal</strong>, with
+      expertise in various <IconChip
+        iconName="flat-color-icons:linux"
+        text="Linux/Unix"
+        shadowColorClass="shadow-black"
+      /> environments. <br />
+       I've also mastered <strong>Backend Languages</strong>, including
+      <IconChip
+        shadowColorClass="shadow-green-500"
+        iconName="vscode-icons:file-type-python"
+        text="Python"
+      />,
+      <IconChip
+        shadowColorClass="shadow-red-500"
+        iconName="logos:java"
+        text="Java"
+      />, and <IconChip
+        shadowColorClass="shadow-purple-500"
+        iconName="logos:go"
+        text="Golang"
+      />.
+      <br /> Currently, I'm delving into <strong>Machine Learning</strong>,
+      utilizing tools like <IconChip
+        shadowColorClass="shadow-rose-500"
+        iconName="logos:tensorflow"
+        text="TensorFlow"
+      /> and <IconChip
+        shadowColorClass="shadow-pink-500"
+        iconName="logos:pytorch"
+        text="PyTorch"
+      /> to expand my knowledge further.
+      <br />
+       Very comfortable with <strong>Version Control Systems</strong> with
+      <IconChip
+        shadowColorClass="shadow-rose-500"
+        iconName="logos:git-icon"
+        text="Git"
+      /> and
+      <IconChip
+        shadowColorClass="shadow-purple-500"
+        iconName="mdi:github"
+        text="GitHub"
+      />
     </p>
-    {
-      latestPosts.map((post) => (
-        <SmallBlogPreview
-          date={post.data.date}
-          title={post.data.title}
-          slug={post.slug}
-        />
-      ))
-    }
-    <a
-      href="/blog"
-      class="text-sm no-underline justify-end gap-2 hover:underline flex w-full items-center pr-3 opacity-75"
-      >..more blogs<svg
-        width="10"
-        height="10"
-        viewBox="0 0 12 12"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-        ><path
-          d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
-          fill="currentColor"></path></svg
-      ></a
-    >
-  </section>
+    <Projects />
+    <hr class="border border-neutral-300 dark:border-neutral-700" />
+    <section>
+      <p>
+        I also have a passion for sharing my knowledge and insights from my
+        experiences. One way I do this is by occasionally <strong
+          >writing blogs</strong
+        >. Some of them are 👇
+      </p>
+      {
+        latestPosts.map((post) => (
+          <SmallBlogPreview
+            date={post.data.date}
+            title={post.data.title}
+            slug={post.slug}
+          />
+        ))
+      }
+      <a
+        href="/blog"
+        class="text-sm no-underline justify-end gap-2 hover:underline flex w-full items-center pr-3 opacity-75"
+        >..more blogs<svg
+          width="10"
+          height="10"
+          viewBox="0 0 12 12"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          ><path
+            d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
+            fill="currentColor"></path></svg
+        ></a
+      >
+    </section>
+  </header>
 </BaseLayout>
