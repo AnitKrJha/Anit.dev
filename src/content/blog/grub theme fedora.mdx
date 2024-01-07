@@ -1,0 +1,99 @@
+---
+title: "My guide to customize grub theme on fedora"
+description: "Writing this guide for myself because I tend to forget and get stuck, doing this. Changing Grub2 theme Fedora"
+isDraft: false
+tags:
+  [
+    "Grub",
+    "Fedora",
+    "RHEL",
+    "BootLoader",
+  ]
+image: "./../../assets/blog/Grub_Fedora/Grub_Cover.png"
+date: "01-01-2024"
+slug: "customize-grub-theme-fedora"
+---
+
+
+---
+
+### **Why Am I Writing This?**
+
+Today, I decided to switch up my Fedora GRUB2 theme. After sifting through tutorial after tutorial and restarting my computer a whopping 12 times, I think I've finally cracked the code on the correct way to do it. So let's dive right in! ✈️✈️
+
+### **Things You Would Need**
+
+Before we start, let's ensure you've got everything handy:
+
+- **Follow Instructions Carefully:** No skipping steps allowed! ⚠️
+- **Grab a Grub Theme:** You'll need one from [Gnome-Look](https://www.gnome-look.org/browse?cat=109&ord=rating). Surprise, surprise!
+- **Familiarity with Command Line:** Get a bit cozy with it.
+- **Patience is Key:** I'll walk you through each step in detail.
+
+---
+
+### **Step 1: Downloading a Grub Theme**
+
+First things first, head to [Gnome-Look](https://www.gnome-look.org/browse?cat=109&ord=rating) and pick a theme you fancy. Most likely, it'll be in an archive file.
+
+Once downloaded, double-click to extract it.
+
+Now, pop open the terminal and type:
+
+```bash
+sudo nautilus
+```
+
+This opens your file explorer in admin mode. Copy the extracted folder and navigate to `/boot/grub2/themes`. Paste it there.
+
+Congrats! You've aced a major step. Now, just stick to my commands religiously.
+
+---
+
+### **Step 2: Editing the Grub Config**
+
+Time to play with some configs! Open the terminal and access `/etc/default/grub` using your favorite editor:
+
+```bash
+sudo nano /etc/default/grub
+```
+
+Your file should mirror this:
+
+```plaintext
+GRUB_TIMEOUT="10"
+GRUB_DISTRIBUTOR="$(sed 's, release .*$,,g' /etc/system-release)"
+GRUB_DEFAULT="saved"
+GRUB_DISABLE_SUBMENU="true"
+#GRUB_TERMINAL_OUTPUT="console"
+GRUB_CMDLINE_LINUX="rhgb quiet"
+GRUB_DISABLE_RECOVERY="true"
+GRUB_ENABLE_BLSCFG="true"
+
+export GRUB_COLOR_NORMAL="light-gray/black"
+export GRUB_COLOR_HIGHLIGHT="magenta/black"
+GRUB_THEME="/boot/grub2/themes/<YOUR-THEME>/theme.txt"
+```
+
+> **Simply Replace `<your-theme>` with your actual theme folder name**
+
+This file controls Fedora's `grub.cfg` generation, which is crucial for booting.
+
+---
+
+### **Step 3: Generating the Grub.Cfg File**
+
+Almost there! Run these two commands:
+
+```bash
+sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+```
+
+**Reboot**
+
+---
+
+### **You're Welcome If It Helped You** 😎
+
+Remember, it's all about patience and precision! If you're having a blast customizing your Fedora GRUB2, then my mission here is accomplished. Happy theming!

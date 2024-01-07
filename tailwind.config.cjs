@@ -6,6 +6,7 @@ module.exports = {
     extend: {
       fontFamily: {
         bircolage: ["bircolage", "system-ui", "sans-serif"],
+        graphik: ["graphik", "system-ui"]
       },
       backgroundImage: {
         darkGradient:

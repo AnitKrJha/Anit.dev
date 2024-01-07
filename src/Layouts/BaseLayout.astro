@@ -11,7 +11,7 @@ type Props = {
 const { title, description, image } = Astro.props;
 ---
 
-<html lang="en" class="dark font-bircolage">
+<html lang="en" class="dark font-graphik">
   <head>
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#1c1917" />
@@ -64,21 +64,21 @@ const { title, description, image } = Astro.props;
     <!-- link tags-->
     <link
       rel="preload"
-      href="/fonts/BricolageGrotesque_24pt-Medium.ttf"
+      href="/fonts/graphik.ttf"
       as="font"
       type="font/ttf"
       crossorigin="anonymous"
     />
     <link
       rel="preload"
-      href="/fonts/BricolageGrotesque_24pt-Regular.ttf"
+      href="/fonts/graphik.ttf"
       as="font"
       type="font/ttf"
       crossorigin="anonymous"
     />
     <link
       rel="preload"
-      href="/fonts/BricolageGrotesque_24pt-SemiBold.ttf"
+      href="/fonts/graphik2.ttf"
       as="font"
       type="font/ttf"
       crossorigin="anonymous"
@@ -109,10 +109,10 @@ const { title, description, image } = Astro.props;
         @apply font-normal;
       }
       @font-face {
-        font-family: "bircolage";
-        src: url("/fonts/BricolageGrotesque_24pt-Medium.ttf"),
-          url("/fonts/BricolageGrotesque_24pt-Regular.ttf"),
-          url("/fonts/BricolageGrotesque_24pt-SemiBold.ttf");
+        font-family: "graphik";
+        src: url("/fonts/graphik.ttf"),
+          url("/fonts/graphik.ttf"),
+          url("/fonts/graphik2.ttf");
         font-display: swap;
       }
       /* @keyframes fade-in {
@@ -152,10 +152,10 @@ const { title, description, image } = Astro.props;
       } */
 
       p {
-        font-size: 0.95rem;
+        font-size: 1rem;
       }
       h4 {
-        font-size: 1rem !important;
+        font-size: 1.1rem !important;
       }
       h1 {
         @apply !text-2xl;
