@@ -32,19 +32,27 @@ Before we start, let's ensure you've got everything handy:
 
 ---
 
+### **Step 0: Try <b class="text-green-600">using grub-customizer</b> first**
+
+If that does not work then  ⬇️⬇️⬇️
+
 ### **Step 1: Downloading a Grub Theme**
 
 First things first, head to [Gnome-Look](https://www.gnome-look.org/browse?cat=109&ord=rating) and pick a theme you fancy. Most likely, it'll be in an archive file.
 
 Once downloaded, double-click to extract it.
 
-Now, pop open the terminal and type:
+Now pop open the terminal and write
 
 ```bash
-sudo nautilus
+sudo cp -r /path/to/extracted/theme /boot/grub2/themes
 ```
 
-This opens your file explorer in admin mode. Copy the extracted folder and navigate to `/boot/grub2/themes`. Paste it there.
+Replace `/path/to/extracted/theme` with the actual path to the extracted theme folder.
+
+This command will copy the entire extracted theme folder to the `/boot/grub2/themes` directory using the `sudo` command for administrative privileges.
+
+> It's important to note that when using the command line, you need to specify the correct paths to ensure the theme folder is a accurately copied to the designated GRUB themes directory. Adjust the path accordingly based on where the theme is extracted.
 
 Congrats! You've aced a major step. Now, just stick to my commands religiously.
 
@@ -83,12 +91,13 @@ This file controls Fedora's `grub.cfg` generation, which is crucial for booting.
 
 ### **Step 3: Generating the Grub.Cfg File**
 
-Almost there! Run these two commands:
+Almost there! Run this commands:
 
 ```bash
-sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg
 sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
+
+> 🚫🚫 Don't run this command ` sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg` because this file is meant not to be touched after **fedora 33**
 
 **Reboot**
 
