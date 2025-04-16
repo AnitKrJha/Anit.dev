@@ -13,6 +13,20 @@ const { title, description, image } = Astro.props;
 
 <html lang="en" class="dark font-graphik">
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      type="text/partytown"
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-2Z1H8WC6DF"></script>
+    <script type="text/partytown">
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-2Z1H8WC6DF");
+    </script>
     <meta name="color-scheme" content="dark light" />
     <meta name="theme-color" content="#1c1917" />
 
@@ -110,8 +124,7 @@ const { title, description, image } = Astro.props;
       }
       @font-face {
         font-family: "graphik";
-        src: url("/fonts/graphik.ttf"),
-          url("/fonts/graphik.ttf"),
+        src: url("/fonts/graphik.ttf"), url("/fonts/graphik.ttf"),
           url("/fonts/graphik2.ttf");
         font-display: swap;
       }
