@@ -8,6 +8,7 @@ import ProjectRow from "../../components/ProjectRow.astro";
 import { getProjects } from "../../lib/content";
 import ProjectDummyImage from "../../content/project-dummy.png";
 import { person, SITE_URL } from "../../lib/site";
+import { ogImageUrl } from "../../lib/og";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
@@ -27,7 +28,14 @@ const { Content } = await project.render();
 const more = (await getProjects()).filter((p) => p.slug !== project.slug).slice(0, 2);
 
 const cover = image ?? ProjectDummyImage;
-const ogImage = (await getImage({ src: cover, width: 1200, format: "jpg" })).src;
+const coverUrl = (await getImage({ src: cover, width: 1200, format: "jpg" })).src;
+const shareImage = ogImageUrl({
+  title: name,
+  type: "Project",
+  description,
+  meta: [year, tags.slice(0, 3).join(", ")].filter(Boolean).join(" · "),
+  image: coverUrl,
+});
 const url = `${SITE_URL}/projects/${project.slug}`;
 
 const jsonLd = [
@@ -37,7 +45,7 @@ const jsonLd = [
     name,
     description,
     url,
-    image: new URL(ogImage, SITE_URL).href,
+    image: new URL(coverUrl, SITE_URL).href,
     dateCreated: year ? String(year) : undefined,
     keywords: tags.join(", "),
     creator: { "@type": "Person", name: person.name, url: SITE_URL },
@@ -59,7 +67,7 @@ const jsonLd = [
 <BaseLayout
   title={name}
   description={description}
-  image={ogImage}
+  image={shareImage}
   imageAlt={imageAlt}
   noindex={isDraft}
   jsonLd={jsonLd}

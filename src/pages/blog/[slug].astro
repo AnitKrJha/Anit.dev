@@ -8,6 +8,7 @@ import PostRow from "../../components/PostRow.astro";
 import { getPosts } from "../../lib/content";
 import { formattedDate, isoDate, readingTime } from "../../lib/utils";
 import { person, SITE_URL } from "../../lib/site";
+import { ogImageUrl } from "../../lib/og";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -32,7 +33,17 @@ const shares = (p: (typeof others)[number]) => p.data.tags.some((t) => tags.incl
 const related = [...others.filter(shares), ...others.filter((p) => !shares(p))].slice(0, 2);
 
 const coverUrl = image ? (await getImage({ src: image, width: 1200, format: "jpg" })).src : undefined;
-const shareImage = ogImage ?? coverUrl;
+const minutes = readingTime(post.body);
+// Frontmatter `ogImage` wins; otherwise an og.anit.dev card with the cover as a thumbnail.
+const shareImage =
+  ogImage ??
+  ogImageUrl({
+    title,
+    type: "Blog",
+    description,
+    meta: `${formattedDate(date)} · ${minutes} min read`,
+    image: coverUrl,
+  });
 const url = `${SITE_URL}/blog/${post.slug}`;
 
 const jsonLd = [
@@ -45,7 +56,7 @@ const jsonLd = [
     mainEntityOfPage: url,
     datePublished: date.toISOString(),
     keywords: tags.join(", "),
-    ...(shareImage && { image: new URL(shareImage, SITE_URL).href }),
+    ...(coverUrl && { image: new URL(coverUrl, SITE_URL).href }),
     author: { "@type": "Person", name: person.name, url: SITE_URL },
     publisher: { "@type": "Person", name: person.name, url: SITE_URL },
   },
@@ -65,7 +76,7 @@ const jsonLd = [
   title={title}
   description={description}
   image={shareImage}
-  imageAlt={`Cover image for ${title}`}
+  imageAlt={`${title}, a post by ${person.name}`}
   type="article"
   publishedTime={date}
   tags={tags}
@@ -96,7 +107,7 @@ const jsonLd = [
       <p class="mt-4 flex flex-wrap items-center gap-x-2 text-sm text-ink-3">
         <time datetime={isoDate(date)}>{formattedDate(date)}</time>
         <span aria-hidden="true">·</span>
-        <span>{readingTime(post.body)} min read</span>
+        <span>{minutes} min read</span>
         {
           tags.length > 0 && (
             <>
@@ -130,7 +141,7 @@ const jsonLd = [
 
     <footer class="mt-14 border-t border-line pt-6 text-sm">
       <p class="text-ink-3">
-        Written by <a href="/" class="link">{person.name}</a>, a DevOps and automation engineer at Apple. Found a
+        Written by <a href="/" class="link">{person.name}</a>, a DevOps, tools and automation engineer at Apple Online Store. Found a
         mistake? Tell me on <a href="https://x.com/_anitjha" target="_blank" rel="noopener" class="link">X</a> or
         <a href="https://www.linkedin.com/in/anitjha" target="_blank" rel="noopener" class="link">LinkedIn</a>.
       </p>
