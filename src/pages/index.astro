@@ -6,6 +6,7 @@ import ProjectRow from "../components/ProjectRow.astro";
 import PostRow from "../components/PostRow.astro";
 import { getPosts, getProjects } from "../lib/content";
 import { experience, person, socials, toolbox, SITE_URL } from "../lib/site";
+import { ogImageUrl } from "../lib/og";
 import portrait from "../assets/Others/anit-portrait.jpg";
 import keyboard from "../assets/Others/potrait_keyboard.jpg";
 import campus from "../assets/Others/nsit.jpg";
@@ -35,7 +36,12 @@ const jsonLd = [
       url: SITE_URL,
       image: portraitUrl,
       jobTitle: person.role,
-      worksFor: { "@type": "Organization", name: person.company, url: "https://www.apple.com" },
+      worksFor: {
+        "@type": "Organization",
+        name: person.team,
+        alternateName: person.teamShort,
+        parentOrganization: { "@type": "Organization", name: person.company, url: "https://www.apple.com" },
+      },
       alumniOf: { "@type": "CollegeOrUniversity", name: person.school },
       knowsAbout: person.knowsAbout,
       sameAs: socials.map((s) => s.url),
@@ -52,10 +58,16 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  title={`${person.name} · ${person.role} at ${person.company}`}
+  title={`${person.name} · ${person.role} at ${person.team}`}
   rawTitle
   description={person.summary}
-  image={`https://og.anit.dev/og?title=${encodeURIComponent(person.name)}`}
+  image={ogImageUrl({
+    variant: "profile",
+    title: person.name,
+    description: `${person.role} at ${person.team}`,
+    meta: "Kubernetes · Crossplane · Go · React · TypeScript",
+  })}
+  imageAlt={`${person.name}, ${person.role} at ${person.team}`}
   type="profile"
   jsonLd={jsonLd}
 >
@@ -65,7 +77,12 @@ const jsonLd = [
       <div>
         <p class="rise flex items-center gap-2.5 text-[0.9375rem] font-medium text-ink-2" style="--i:0">
           <span class="now-dot" aria-hidden="true"></span>
-          {person.role} at {person.team}
+          <span>
+            {person.role} at
+            <span class="whitespace-nowrap text-ink"
+              ><Icon name="apple" size={15} class="mx-0.5 -translate-y-px align-middle" />{person.team}</span
+            >
+          </span>
         </p>
         <h1
           id="intro"
@@ -151,7 +168,10 @@ const jsonLd = [
             </p>
             <div>
               <h3 class="text-[1.075rem] font-semibold leading-snug tracking-[-0.015em]">{role.title}</h3>
-              <p class="text-sm text-ink-3">{role.org}</p>
+              <p class="flex items-center gap-1.5 text-sm text-ink-3">
+                {role.apple && <Icon name="apple" size={13} class="-translate-y-px text-ink-2" />}
+                {role.org}
+              </p>
               <p class="mt-2.5 text-[0.975rem] leading-relaxed">{role.summary}</p>
               {role.stack.length > 0 && <p class="tag mt-2.5">{role.stack.join(" · ")}</p>}
             </div>

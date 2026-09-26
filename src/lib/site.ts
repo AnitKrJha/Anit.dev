@@ -7,7 +7,8 @@ export const person = {
   fullName: "Anit Kumar Jha",
   role: "DevOps, Tools & Automation Engineer",
   company: "Apple",
-  team: "Apple Online Store (AOS)",
+  team: "Apple Online Store",
+  teamShort: "AOS",
   age: 23,
   school: "Netaji Subhas University of Technology",
   schoolShort: "NSUT Delhi",
@@ -49,6 +50,8 @@ export type Role = {
   summary: string;
   stack: string[];
   current?: boolean;
+  /** Show the Apple logo next to the org. */
+  apple?: boolean;
 };
 
 export const experience: Role[] = [
@@ -60,6 +63,7 @@ export const experience: Role[] = [
       "DevOps plus automation, or whatever we're calling it this year. I work on infrastructure as code with Crossplane on Kubernetes, write tooling in Go, and build the internal web tools on top in React and TypeScript.",
     stack: ["Kubernetes", "Crossplane", "IaC", "Go", "React", "TypeScript"],
     current: true,
+    apple: true,
   },
   {
     when: "Jan – Jun 2025",
@@ -67,6 +71,7 @@ export const experience: Role[] = [
     org: "Apple Online Store",
     summary: "Worked on the checkout flow in Scala, mostly on how offers are handled at checkout.",
     stack: ["Scala"],
+    apple: true,
   },
   {
     when: "2021 – 2025",

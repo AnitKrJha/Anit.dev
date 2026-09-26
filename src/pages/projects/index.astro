@@ -3,6 +3,7 @@ import BaseLayout from "../../Layouts/BaseLayout.astro";
 import ProjectRow from "../../components/ProjectRow.astro";
 import { getProjects } from "../../lib/content";
 import { person, SITE_URL } from "../../lib/site";
+import { ogImageUrl } from "../../lib/og";
 
 const projects = await getProjects();
 
@@ -26,6 +27,12 @@ const jsonLd = {
 <BaseLayout
   title="Projects"
   description="Websites and apps built by Anit Jha: GrowthSense, Softly Drawn, The ChessMaster and Moksha Innovision, with notes on the stack behind each one."
+  image={ogImageUrl({
+    title: "Projects",
+    type: "Work",
+    description: "Websites and apps I've designed and built, for clients, friends and myself.",
+    meta: projects.map((p) => p.data.name).join(" · "),
+  })}
   jsonLd={jsonLd}
 >
   <header class="pt-14 sm:pt-20">

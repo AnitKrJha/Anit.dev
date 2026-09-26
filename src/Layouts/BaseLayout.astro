@@ -7,13 +7,15 @@ import Navbar from "../components/Navbar.astro";
 import Footer from "../components/Footer.astro";
 import { person, socials, SITE_URL } from "../lib/site";
 import Analytics from "@vercel/analytics/astro";
+import { ogImageUrl } from "../lib/og";
+
 
 type Props = {
   /** Page title. Suffixed with " · Anit Jha" unless `rawTitle` is set. */
   title: string;
   rawTitle?: boolean;
   description: string;
-  /** Absolute URL or site-relative path. Defaults to a generated OG card. */
+  /** Share image URL. Defaults to an og.anit.dev card with the page title. */
   image?: string;
   imageAlt?: string;
   type?: "website" | "article" | "profile";
@@ -39,10 +41,7 @@ const {
 const fullTitle = rawTitle ? title : `${title} · ${person.name}`;
 const path = Astro.url.pathname.replace(/\/$/, "") || "/";
 const canonical = new URL(path, SITE_URL).href;
-const ogImage = new URL(
-  image ?? `https://og.anit.dev/og?title=${encodeURIComponent(title)}`,
-  SITE_URL
-).href;
+const ogImage = new URL(image ?? ogImageUrl({ title }), SITE_URL).href;
 const twitter = socials.find((s) => s.icon === "x")?.handle;
 const structured = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---

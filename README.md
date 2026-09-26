@@ -34,6 +34,6 @@ The design direction, tokens and rules are in [`DESIGN.md`](DESIGN.md), and the 
 ## SEO
 
 - A unique title, description and canonical URL on every page
-- Open Graph and Twitter cards. Posts and projects use their cover image, and other pages use `og.anit.dev`.
+- Open Graph and Twitter cards rendered by [og.anit.dev](https://og.anit.dev) (repo: `AnitKrJha/OG`). URLs are built in `src/lib/og.ts`. Posts and projects pass their cover as a thumbnail.
 - JSON-LD: `ProfilePage` + `Person` on the home page, `BlogPosting` and `CreativeWork` with breadcrumbs on detail pages
 - `sitemap-index.xml` (drafts excluded), `rss.xml`, and `robots.txt`

@@ -3,6 +3,7 @@ import BaseLayout from "../../Layouts/BaseLayout.astro";
 import PostRow from "../../components/PostRow.astro";
 import { getPosts } from "../../lib/content";
 import { person, SITE_URL } from "../../lib/site";
+import { ogImageUrl } from "../../lib/og";
 
 const posts = await getPosts();
 
@@ -24,6 +25,12 @@ const jsonLd = {
 <BaseLayout
   title="Blog"
   description="Notes and guides by Anit Jha on Git, terminals, Linux and the tools developers use every day."
+  image={ogImageUrl({
+    title: "Blog",
+    type: "Writing",
+    description: "Notes and guides on Git, terminals, Linux and the tools developers use every day.",
+    meta: `${posts.length} posts`,
+  })}
   jsonLd={jsonLd}
 >
   <header class="pt-14 sm:pt-20">
