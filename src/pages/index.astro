@@ -58,16 +58,16 @@ const jsonLd = [
 ---
 
 <BaseLayout
-  title={`${person.name} · ${person.role} at ${person.team}`}
+  title={`${person.name} · ${person.role} at ${person.company}`}
   rawTitle
   description={person.summary}
   image={ogImageUrl({
     variant: "profile",
     title: person.name,
-    description: `${person.role} at ${person.team}`,
+    description: `${person.role} at ${person.company}`,
     meta: "Kubernetes · Crossplane · Go · React · TypeScript",
   })}
-  imageAlt={`${person.name}, ${person.role} at ${person.team}`}
+  imageAlt={`${person.name}, ${person.role} at ${person.company}`}
   type="profile"
   jsonLd={jsonLd}
 >
@@ -80,7 +80,7 @@ const jsonLd = [
           <span>
             {person.role} at
             <span class="whitespace-nowrap text-ink"
-              ><Icon name="apple" size={15} class="mx-0.5 -translate-y-px align-middle" />{person.team}</span
+              ><Icon name="apple" size={14} class="mx-0.5 -translate-y-px align-middle" />{person.company}</span
             >
           </span>
         </p>

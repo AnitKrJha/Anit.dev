@@ -1,14 +1,15 @@
 ---
 /**
- * Icons from Phosphor (https://phosphoricons.com, MIT): one consistent family for UI glyphs and brand logos.
- * The SVGs are imported as strings from the installed package, so the build never needs the network.
- * Brand logos use the "fill" weight and small arrows use "bold", which read better at 14–16px.
+ * Brand logos are the official marks from Simple Icons (https://simpleicons.org, CC0). LinkedIn isn't in
+ * Simple Icons, so it comes from Phosphor. UI glyphs are Phosphor (https://phosphoricons.com, MIT); small
+ * arrows use the "bold" weight, which reads better at 14–16px.
+ * The SVGs are imported as strings from the installed packages, so the build never needs the network.
  */
-import apple from "@phosphor-icons/core/fill/apple-logo-fill.svg?raw";
-import github from "@phosphor-icons/core/fill/github-logo-fill.svg?raw";
+import apple from "simple-icons/icons/apple.svg?raw";
+import github from "simple-icons/icons/github.svg?raw";
+import x from "simple-icons/icons/x.svg?raw";
+import instagram from "simple-icons/icons/instagram.svg?raw";
 import linkedin from "@phosphor-icons/core/fill/linkedin-logo-fill.svg?raw";
-import x from "@phosphor-icons/core/fill/x-logo-fill.svg?raw";
-import instagram from "@phosphor-icons/core/fill/instagram-logo-fill.svg?raw";
 import rss from "@phosphor-icons/core/bold/rss-simple-bold.svg?raw";
 import arrowUpRight from "@phosphor-icons/core/bold/arrow-up-right-bold.svg?raw";
 import arrowLeft from "@phosphor-icons/core/bold/arrow-left-bold.svg?raw";
@@ -57,7 +58,7 @@ const svg = icons[name]
   .replace(/<title>[\s\S]*?<\/title>/, "")
   .replace(/(fill|stroke)="#000(000)?"/g, '$1="currentColor"')
   .replace(/<svg([^>]*)>/, (_, attrs: string) => {
-    const kept = attrs.replace(/\s(width|height|fill|version)="[^"]*"/g, "");
+    const kept = attrs.replace(/\s(width|height|fill|version|role)="[^"]*"/g, "");
     const size = isMark ? 'width="100%"' : 'width="100%" height="100%"';
     return `<svg${kept} ${size} fill="currentColor" focusable="false" aria-hidden="true">`;
   })

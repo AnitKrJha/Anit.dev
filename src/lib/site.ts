@@ -14,7 +14,7 @@ export const person = {
   schoolShort: "NSUT Delhi",
   /** Used for meta descriptions and JSON-LD. Keep under ~155 characters. */
   summary:
-    "Anit Jha is a DevOps, tools and automation engineer at Apple Online Store (AOS), working with Kubernetes, Crossplane, Go, React and TypeScript.",
+    "Anit Jha is a DevOps, tools and automation engineer at Apple, on the Apple Online Store, working with Kubernetes, Crossplane, Go, React and TypeScript.",
   knowsAbout: [
     "DevOps",
     "Platform engineering",
@@ -58,7 +58,7 @@ export const experience: Role[] = [
   {
     when: "2025 – now",
     title: "AOS DevOps, Tools & Automation Engineer",
-    org: "Apple Online Store",
+    org: "Apple",
     summary:
       "DevOps plus automation, or whatever we're calling it this year. I work on infrastructure as code with Crossplane on Kubernetes, write tooling in Go, and build the internal web tools on top in React and TypeScript.",
     stack: ["Kubernetes", "Crossplane", "IaC", "Go", "React", "TypeScript"],
@@ -68,7 +68,7 @@ export const experience: Role[] = [
   {
     when: "Jan – Jun 2025",
     title: "Software Engineering Intern, Checkout",
-    org: "Apple Online Store",
+    org: "Apple",
     summary: "Worked on the checkout flow in Scala, mostly on how offers are handled at checkout.",
     stack: ["Scala"],
     apple: true,
