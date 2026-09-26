@@ -3,7 +3,8 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import { Image, getImage } from "astro:assets";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
-import ProjectDummyImage from "../../content/project Dummy.png";
+import CodeCopy from "../../components/CodeCopy.astro";
+import ProjectDummyImage from "../../content/project-dummy.png";
 import { person, SITE_URL } from "../../lib/site";
 
 export async function getStaticPaths() {
@@ -145,5 +146,6 @@ const jsonLd = [
     <div class="prose mt-10">
       <Content />
     </div>
+    <CodeCopy />
   </article>
 </BaseLayout>

@@ -5,6 +5,8 @@ import sitemap from "@astrojs/sitemap";
 import vercel from "@astrojs/vercel/static";
 import mdx from "@astrojs/mdx";
 import partytown from "@astrojs/partytown";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 
 const SITE = "https://anit.dev";
 
@@ -31,7 +33,20 @@ export default defineConfig({
     domains: ["dev-to-uploads.s3.amazonaws.com", "og.anit.dev"],
   },
   markdown: {
-    shikiConfig: { theme: "github-dark-dimmed", wrap: false },
+    // Code follows the page theme; the dark variant is switched on by `.dark` in global.css.
+    shikiConfig: { experimentalThemes: { light: "github-light", dark: "github-dark-dimmed" }, wrap: false },
+    rehypePlugins: [
+      rehypeSlug,
+      [
+        rehypeAutolinkHeadings,
+        {
+          behavior: "append",
+          test: ["h2", "h3", "h4"],
+          properties: { className: ["heading-anchor"], ariaHidden: "true", tabIndex: -1 },
+          content: { type: "text", value: "#" },
+        },
+      ],
+    ],
   },
   integrations: [
     tailwind({ applyBaseStyles: false }),

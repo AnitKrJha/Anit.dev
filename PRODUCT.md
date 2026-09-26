@@ -14,7 +14,7 @@ Scene: an engineer opens anit.dev from a LinkedIn message on a laptop in the eve
 
 ## Product Purpose
 
-The personal site of **Anit Jha**, a 23-year-old Tools & Automation Engineer at Apple (AOS). It introduces Anit, shows selected work, hosts the blog, and links to socials. Success means a visitor leaves knowing Anit's role and stack, opens a project or a post, and can find the site easily in search.
+The personal site of **Anit Jha**, a 23-year-old DevOps, Tools & Automation Engineer at Apple Online Store (AOS). It introduces Anit, shows selected work, hosts the blog, and links to socials. Success means a visitor leaves knowing Anit's role and stack, opens a project or a post, and can find the site easily in search.
 
 ## Brand Personality
 

@@ -1,0 +1,42 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<template id="copy-code-template">
+  <button type="button" class="copy-code" aria-label="Copy code" title="Copy code">
+    <span class="when-idle"><Icon name="copy" size={16} /></span>
+    <span class="when-copied"><Icon name="check" size={16} /></span>
+  </button>
+</template>
+
+<script>
+  function enhanceCodeBlocks() {
+    const template = document.getElementById("copy-code-template") as HTMLTemplateElement | null;
+    if (!template || !navigator.clipboard) return;
+
+    document.querySelectorAll<HTMLPreElement>(".prose pre").forEach((pre) => {
+      if (pre.parentElement?.classList.contains("code-block")) return;
+
+      const wrapper = document.createElement("div");
+      wrapper.className = "code-block";
+      pre.replaceWith(wrapper);
+      wrapper.append(pre, template.content.cloneNode(true));
+
+      const button = wrapper.querySelector<HTMLButtonElement>(".copy-code")!;
+      let timer: number | undefined;
+      button.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(pre.innerText.replace(/\n$/, ""));
+        button.dataset.copied = "";
+        button.setAttribute("aria-label", "Copied");
+        clearTimeout(timer);
+        timer = window.setTimeout(() => {
+          delete button.dataset.copied;
+          button.setAttribute("aria-label", "Copy code");
+        }, 1600);
+      });
+    });
+  }
+
+  // Runs on first load and after every view-transition navigation.
+  document.addEventListener("astro:page-load", enhanceCodeBlocks);
+</script>

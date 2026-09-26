@@ -65,7 +65,7 @@ const jsonLd = [
       <div>
         <p class="rise flex items-center gap-2.5 text-[0.9375rem] font-medium text-ink-2" style="--i:0">
           <span class="now-dot" aria-hidden="true"></span>
-          {person.role} at {person.company}
+          {person.role} at {person.team}
         </p>
         <h1
           id="intro"
@@ -89,13 +89,13 @@ const jsonLd = [
 
     <div class="mt-9 max-w-[38rem] space-y-4 text-[1.1rem] leading-[1.7]">
       <p class="rise" style="--i:3">
-        I'm {person.age} and work on DevOps and automation on Apple's {person.team} team. Day to day that means
+        I'm {person.age} and work on DevOps, tools and automation at the Apple Online Store. Day to day that means
         infrastructure as code with <strong class="font-semibold text-ink">Crossplane</strong> and
         <strong class="font-semibold text-ink">Kubernetes</strong>, tooling in <strong class="font-semibold text-ink">Go</strong>,
         and internal web apps in <strong class="font-semibold text-ink">React</strong> and TypeScript.
       </p>
       <p class="rise" style="--i:4">
-        Before that I interned on the checkout team, writing Scala. Outside work I build websites for small businesses and
+        I started there as an intern on the checkout team in early 2025, writing Scala. Outside work I build websites for small businesses and
         friends, play a lot of chess, write about the tools I use, and keep a little
         <a href="https://recipies.anit.dev" target="_blank" rel="noopener" class="link">recipe site</a>.
       </p>
@@ -144,7 +144,7 @@ const jsonLd = [
     <ol class="mt-6">
       {
         experience.map((role) => (
-          <li class="grid gap-1.5 border-t border-line py-6 first:border-t-0 sm:grid-cols-[6.5rem_1fr] sm:gap-6">
+          <li class="grid gap-1.5 border-t border-line py-6 first:border-t-0 sm:grid-cols-[8rem_1fr] sm:gap-6">
             <p class="nums flex items-center gap-2 pt-0.5 text-sm text-ink-3">
               {role.current && <span class="now-dot" aria-hidden="true" />}
               {role.when}
@@ -178,7 +178,7 @@ const jsonLd = [
     <dl class="mt-6">
       {
         toolbox.map((group) => (
-          <div class="grid gap-1 border-t border-line py-4 first:border-t-0 sm:grid-cols-[6.5rem_1fr] sm:gap-6">
+          <div class="grid gap-1 border-t border-line py-4 first:border-t-0 sm:grid-cols-[8rem_1fr] sm:gap-6">
             <dt class="text-sm text-ink-3">{group.label}</dt>
             <dd class="text-[0.975rem] text-ink">{group.items.join(", ")}</dd>
           </div>

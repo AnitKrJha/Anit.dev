@@ -3,6 +3,7 @@ import { getCollection, type CollectionEntry } from "astro:content";
 import { Image, getImage } from "astro:assets";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
+import CodeCopy from "../../components/CodeCopy.astro";
 import { formattedDate, isoDate, readingTime } from "../../lib/utils";
 import { person, SITE_URL } from "../../lib/site";
 
@@ -118,6 +119,7 @@ const jsonLd = [
     <div class="prose mt-10">
       <Content />
     </div>
+    <CodeCopy />
 
     <footer class="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6 text-sm">
       <p class="text-ink-3">

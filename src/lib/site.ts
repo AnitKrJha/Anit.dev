@@ -5,15 +5,15 @@ export const SITE_URL = "https://anit.dev";
 export const person = {
   name: "Anit Jha",
   fullName: "Anit Kumar Jha",
-  role: "Tools & Automation Engineer",
+  role: "DevOps, Tools & Automation Engineer",
   company: "Apple",
-  team: "AOS",
+  team: "Apple Online Store (AOS)",
   age: 23,
   school: "Netaji Subhas University of Technology",
   schoolShort: "NSUT Delhi",
   /** Used for meta descriptions and JSON-LD. Keep under ~155 characters. */
   summary:
-    "Anit Jha is a Tools & Automation Engineer at Apple, working on DevOps and automation with Kubernetes, Crossplane, Go, React and TypeScript.",
+    "Anit Jha is a DevOps, tools and automation engineer at Apple Online Store (AOS), working with Kubernetes, Crossplane, Go, React and TypeScript.",
   knowsAbout: [
     "DevOps",
     "Platform engineering",
@@ -53,24 +53,23 @@ export type Role = {
 
 export const experience: Role[] = [
   {
-    when: "Now",
-    title: "Tools & Automation Engineer, AOS",
-    org: "Apple",
+    when: "2025 – now",
+    title: "AOS DevOps, Tools & Automation Engineer",
+    org: "Apple Online Store",
     summary:
       "DevOps plus automation, or whatever we're calling it this year. I work on infrastructure as code with Crossplane on Kubernetes, write tooling in Go, and build the internal web tools on top in React and TypeScript.",
     stack: ["Kubernetes", "Crossplane", "IaC", "Go", "React", "TypeScript"],
     current: true,
   },
   {
-    when: "Intern",
+    when: "Jan – Jun 2025",
     title: "Software Engineering Intern, Checkout",
-    org: "Apple",
-    summary:
-      "Worked on the checkout flow in Scala, mostly on how offers are handled at checkout.",
+    org: "Apple Online Store",
+    summary: "Worked on the checkout flow in Scala, mostly on how offers are handled at checkout.",
     stack: ["Scala"],
   },
   {
-    when: "2021–25",
+    when: "2021 – 2025",
     title: "B.Tech, Computer Science",
     org: "NSUT Delhi",
     summary:
