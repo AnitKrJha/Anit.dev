@@ -1,72 +1,81 @@
 ---
-title: "My guide to customize grub theme on fedora"
-description: "Writing this guide for myself because I tend to forget and get stuck, doing this. Changing Grub2 theme Fedora"
+title: "How to Customize the GRUB Theme on Fedora"
+description: "Change the GRUB2 boot menu theme on Fedora step by step: install a theme, edit /etc/default/grub, regenerate grub.cfg, and fix the usual problems."
 isDraft: false
-tags:
-  [
-    "Grub",
-    "Fedora",
-    "RHEL",
-    "BootLoader",
-  ]
+tags: ["GRUB", "Fedora", "Linux", "Bootloader", "RHEL"]
 image: "./../../assets/blog/Grub_Fedora/Grub_Cover.png"
 date: "01-01-2024"
 slug: "customize-grub-theme-fedora"
 ---
 
+## Why I'm writing this
 
----
+I decided to change the GRUB theme on my Fedora machine. It took me tutorial after tutorial and a whopping **12 restarts** to get it right. A lot of the guides out there are written for Ubuntu, and Fedora does a few things differently.
 
-### **Why Am I Writing This?**
+So this is the guide I wish I'd had, written mostly for future me. If it saves you eleven reboots, even better. ✈️
 
-Today, I decided to switch up my Fedora GRUB2 theme. After sifting through tutorial after tutorial and restarting my computer a whopping 12 times, I think I've finally cracked the code on the correct way to do it. So let's dive right in! ✈️✈️
+It should work on any recent Fedora (34 and newer), and on RHEL-based distros that use GRUB2 the same way.
 
-### **Things You Would Need**
+## What you'll need
 
-Before we start, let's ensure you've got everything handy:
+- **A GRUB theme.** [Gnome-Look](https://www.gnome-look.org/browse?cat=109&ord=rating) has hundreds. If you want a safe starting point, [vinceliuice/grub2-themes](https://github.com/vinceliuice/grub2-themes) (Tela, Vimix, Stylish, WhiteSur) is well maintained.
+- **A terminal** and `sudo` access.
+- **Patience.** Follow the steps in order and don't skip any. ⚠️
 
-- **Follow Instructions Carefully:** No skipping steps allowed! ⚠️
-- **Grab a Grub Theme:** You'll need one from [Gnome-Look](https://www.gnome-look.org/browse?cat=109&ord=rating). Surprise, surprise!
-- **Familiarity with Command Line:** Get a bit cozy with it.
-- **Patience is Key:** I'll walk you through each step in detail.
+## Before you start: back up your GRUB config
 
----
-
-### **Step 0: Try <b class="text-green-600">using grub-customizer</b> first**
-
-If that does not work then  ⬇️⬇️⬇️
-
-### **Step 1: Downloading a Grub Theme**
-
-First things first, head to [Gnome-Look](https://www.gnome-look.org/browse?cat=109&ord=rating) and pick a theme you fancy. Most likely, it'll be in an archive file.
-
-Once downloaded, double-click to extract it.
-
-Now pop open the terminal and write
+One command, and you can always get back to where you started:
 
 ```bash
-sudo cp -r /path/to/extracted/theme /boot/grub2/themes
+sudo cp /etc/default/grub /etc/default/grub.bak
 ```
 
-Replace `/path/to/extracted/theme` with the actual path to the extracted theme folder.
+## Step 0: try grub-customizer first
 
-This command will copy the entire extracted theme folder to the `/boot/grub2/themes` directory using the `sudo` command for administrative privileges.
+If you'd rather click than type, try [grub-customizer](https://launchpad.net/grub-customizer) first:
 
-> It's important to note that when using the command line, you need to specify the correct paths to ensure the theme folder is a accurately copied to the designated GRUB themes directory. Adjust the path accordingly based on where the theme is extracted.
+```bash
+sudo dnf install grub-customizer
+```
 
-Congrats! You've aced a major step. Now, just stick to my commands religiously.
+It works for plenty of people. If the theme still doesn't show up when you boot, do it by hand. ⬇️
 
----
+## Step 1: download and install the theme
 
-### **Step 2: Editing the Grub Config**
+Download a theme and extract it. Most come as `.tar.gz`, `.tar.xz` or `.zip`:
 
-Time to play with some configs! Open the terminal and access `/etc/default/grub` using your favorite editor:
+```bash
+cd ~/Downloads
+tar -xf your-theme.tar.xz
+```
+
+Before you copy anything, look inside the extracted folder. **The folder you copy must contain `theme.txt` directly.** Archives often have an extra folder level (`Theme/Theme/theme.txt`), and GRUB won't find the theme if you copy the wrong one.
+
+```bash
+ls ~/Downloads/your-theme
+# you should see theme.txt, plus images and fonts
+```
+
+Now copy it into GRUB's themes folder. Create the folder first if it doesn't exist:
+
+```bash
+sudo mkdir -p /boot/grub2/themes
+sudo cp -r ~/Downloads/your-theme /boot/grub2/themes/
+```
+
+Replace `your-theme` with the actual folder name.
+
+> Double-check the path. A typo or one folder level too many is the most common reason a theme doesn't show up. `ls /boot/grub2/themes/your-theme/theme.txt` should print the file, not an error.
+
+## Step 2: edit /etc/default/grub
+
+Open the config in your editor of choice:
 
 ```bash
 sudo nano /etc/default/grub
 ```
 
-Your file should mirror this:
+Your file should look something like this:
 
 ```plaintext
 GRUB_TIMEOUT="10"
@@ -77,32 +86,65 @@ GRUB_DISABLE_SUBMENU="true"
 GRUB_CMDLINE_LINUX="rhgb quiet"
 GRUB_DISABLE_RECOVERY="true"
 GRUB_ENABLE_BLSCFG="true"
+GRUB_GFXMODE="auto"
 
 export GRUB_COLOR_NORMAL="light-gray/black"
 export GRUB_COLOR_HIGHLIGHT="magenta/black"
 GRUB_THEME="/boot/grub2/themes/<YOUR-THEME>/theme.txt"
 ```
 
-> **Simply Replace `<your-theme>` with your actual theme folder name**
+The lines that matter:
 
-This file controls Fedora's `grub.cfg` generation, which is crucial for booting.
+- **`GRUB_THEME`**: the full path to your theme's `theme.txt`. Replace `<YOUR-THEME>` with your folder name.
+- **`GRUB_TERMINAL_OUTPUT="console"`**: Fedora sets this by default, and it forces GRUB into plain text mode, so no theme can show. **Comment it out** with a `#` like above. This is the one most Ubuntu guides never mention.
+- **`GRUB_GFXMODE`**: optional. `auto` is fine. If the theme looks stretched or tiny, set your resolution, for example `"1920x1080"`.
+- **`GRUB_TIMEOUT`**: how many seconds the menu stays up. With a nice theme, you'll want to see it for a bit.
 
----
+Save and exit (`Ctrl + O`, `Enter`, `Ctrl + X` in nano).
 
-### **Step 3: Generating the Grub.Cfg File**
+## Step 3: regenerate grub.cfg
 
-Almost there! Run this commands:
+GRUB doesn't read `/etc/default/grub` directly. You have to generate the real config from it:
 
 ```bash
 sudo grub2-mkconfig -o /boot/grub2/grub.cfg
 ```
 
-> 🚫🚫 Don't run this command ` sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg` because this file is meant not to be touched after **fedora 33**
+This is the right command for both BIOS and UEFI machines on Fedora 34 and newer.
 
-**Reboot**
+> 🚫 Don't run `sudo grub2-mkconfig -o /boot/efi/EFI/fedora/grub.cfg`. Plenty of older guides tell you to, but since Fedora 34 that file is a tiny stub that just points to `/boot/grub2/grub.cfg`. Overwriting it can leave you with a machine that doesn't boot.
 
----
+## Step 4: make sure the menu actually shows
 
-### **You're Welcome If It Helped You** 😎
+Fedora hides the GRUB menu when only one OS is installed and the last boot went fine. So your theme could be installed and you'd never see it. Turn that off:
 
-Remember, it's all about patience and precision! If you're having a blast customizing your Fedora GRUB2, then my mission here is accomplished. Happy theming!
+```bash
+sudo grub2-editenv - unset menu_auto_hide
+```
+
+Now **reboot**. 🎉
+
+## Troubleshooting
+
+**Still a plain text menu.** `GRUB_TERMINAL_OUTPUT="console"` is probably still active. Comment it out and run the `grub2-mkconfig` command again.
+
+**The theme doesn't load, and the menu looks like the default one.** The path in `GRUB_THEME` is wrong, or `theme.txt` is one folder deeper than you think. Check with `ls` as in step 1.
+
+**The theme looks stretched, blurry or tiny.** Set `GRUB_GFXMODE` to your screen's resolution, then regenerate.
+
+**No menu at all, straight into Fedora.** Run the `menu_auto_hide` command from step 4, or hold `Shift` (BIOS) or tap `Esc` (UEFI) while booting.
+
+## Going back to the default
+
+Restore the backup from the start and regenerate:
+
+```bash
+sudo cp /etc/default/grub.bak /etc/default/grub
+sudo grub2-mkconfig -o /boot/grub2/grub.cfg
+```
+
+You can delete the theme folder from `/boot/grub2/themes` afterwards if you like.
+
+## That's it 😎
+
+It's all about patience and getting the paths exactly right. If this saved you a few reboots, my mission here is accomplished. Happy theming!

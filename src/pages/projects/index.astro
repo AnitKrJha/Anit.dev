@@ -1,38 +1,47 @@
 ---
-import { getCollection } from "astro:content";
-import ProjectCard from "../../components/ProjectCard.astro";
-import BaseLayout from "./../../Layouts/BaseLayout.astro";
-import ProjectPreview from "../../components/ProjectPreview.astro";
-import Icon from "../../components/Icon.astro";
-const projects = (await getCollection("projects")).filter(
-  (project) => !project.data.isDraft
-);
+import BaseLayout from "../../Layouts/BaseLayout.astro";
+import ProjectRow from "../../components/ProjectRow.astro";
+import { getProjects } from "../../lib/content";
+import { person, SITE_URL } from "../../lib/site";
+
+const projects = await getProjects();
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: `Projects by ${person.name}`,
+  url: `${SITE_URL}/projects`,
+  mainEntity: {
+    "@type": "ItemList",
+    itemListElement: projects.map((project, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      url: `${SITE_URL}/projects/${project.slug}`,
+      name: project.data.name,
+    })),
+  },
+};
 ---
 
 <BaseLayout
-  title="Projects • Anit"
-  description="List of projects made by Anit Jha.Showcasing everything I code."
-  image="https://og.anit.dev/og?title=Project Showcase&type=projects"
+  title="Projects"
+  description="Websites and apps built by Anit Jha: GrowthSense, Softly Drawn, The ChessMaster and Moksha Innovision, with notes on the stack behind each one."
+  jsonLd={jsonLd}
 >
-  <h1 class="text-2xl mb-6 mt-4 inline-block">my projects</h1>
-  <main>
+  <header class="pt-14 sm:pt-20">
+    <h1 class="rise text-[length:var(--step-2)] font-bold tracking-[-0.035em] sm:text-[2.6rem]" style="--i:0">Projects</h1>
+    <p class="rise mt-3 max-w-[34rem] text-[1.075rem]" style="--i:1">
+      Things I've designed and built outside my day job, for clients, friends and myself.
+    </p>
+  </header>
+
+  <div class="mt-10">
     {
       projects.length === 0 ? (
-        <p>No Projects yet 🚫</p>
+        <p>Nothing here yet.</p>
       ) : (
-        projects.map((project) => {
-          return (
-            <ProjectPreview
-              blogLink={"/projects/" + project.slug}
-              ghLink={project.data.ghLink}
-              liveLink={project.data.liveLink}
-              title={project.data.name}
-              desc={project.data.description}
-              image={project.data.image}
-            />
-          );
-        })
+        projects.map((project, i) => <ProjectRow project={project} eager={i < 2} headingLevel="h2" />)
       )
     }
-  </main>
+  </div>
 </BaseLayout>

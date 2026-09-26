@@ -1,0 +1,92 @@
+---
+name: "Softly Drawn"
+description: "Portfolio site for Softly Drawn, the studio of digital artist Kio: a small WebGL gallery with scroll reveals and artwork that morphs between pages."
+tagline: "A gallery-like portfolio for a digital artist, with a WebGL hero and artwork that morphs between pages."
+isDraft: false
+slug: "softly-drawn"
+image: "../../assets/projects/SoftlyDrawn/CoverImg.jpg"
+imageAlt: "Softly Drawn by Kio social card with four hand-drawn character illustrations."
+year: 2026
+role: "Design & build"
+tags: ["React", "TypeScript", "Three.js", "GSAP", "Vite"]
+order: 2
+---
+
+import { Image } from "astro:assets";
+import beanie from "../../assets/projects/SoftlyDrawn/autumn-beanie.webp";
+import library from "../../assets/projects/SoftlyDrawn/candlelit-library.webp";
+import sentinel from "../../assets/projects/SoftlyDrawn/celestial-sentinel.webp";
+
+**Softly Drawn** is the portfolio studio of **Kio**, a digital artist who makes semi-realistic character art, original characters (OCs), book covers and profile icons. Every piece is hand-drawn, with no AI. Kio takes work through Fiverr and Threads, and this site gives that work a home of its own.
+
+I designed and built it.
+
+<div class="not-prose mt-10 grid grid-cols-3 gap-3">
+  <Image src={beanie} alt="Autumn Beanie: a girl in a grey beanie and orange sweater, finger to her lips" widths={[240, 480]} sizes="(min-width: 768px) 230px, 33vw" class="aspect-[3/4] h-full w-full rounded-xl object-cover ring-1 ring-line" />
+  <Image src={library} alt="Candlelit Reading Nook: a dark-haired boy reading in an armchair surrounded by glowing bookshelves" widths={[240, 480]} sizes="(min-width: 768px) 230px, 33vw" class="aspect-[3/4] h-full w-full rounded-xl object-cover ring-1 ring-line" />
+  <Image src={sentinel} alt="Celestial Sentinel: a book cover with a pink-haired magical girl among clouds" widths={[240, 480]} sizes="(min-width: 768px) 230px, 33vw" class="aspect-[3/4] h-full w-full rounded-xl object-cover ring-1 ring-line" />
+</div>
+
+<p class="not-prose mb-10 mt-3 text-center text-sm text-ink-3">Three pieces from the gallery. Artwork © Kio.</p>
+
+## The brief
+
+The site had to feel like a **small gallery**: quiet enough that the artwork always leads, with enough craft that people remember it. It also had to work as a shop window. Someone who likes a piece should find the matching service, read real reviews, and get in touch without hunting for the button.
+
+## The home page
+
+- **A WebGL hero**: a three.js ring of Kio's artworks, with custom shaders for a brush-stroke reveal and a velocity effect. On phones it becomes a lightweight card deck instead.
+- **A hand-drawn moment**: a small procedural 3D stylus draws a stroke across the screen as you scroll, a nod to the fact that everything here is drawn by hand. Without WebGL, it falls back to an SVG version.
+- **Selected works** in a pinned horizontal scroll, and a services list where hovering a service shows matching artwork next to your cursor.
+- **Reviews copied word for word** from Fiverr, each paired with the artwork it was about. Kio has a 4.8 rating there, and the reviews stay exactly as the clients wrote them.
+- A process timeline, a velocity-driven marquee, a custom cursor and a short preloader.
+
+## Only run the heavy stuff where it helps
+
+WebGL is lovely on a laptop and miserable on a cheap phone. So the heavy scenes only start when **all** of these are true:
+
+- the screen is at least 900px wide, with a mouse or trackpad
+- the browser supports WebGL2
+- the device reports at least 4 GB of memory
+- Data Saver is off
+- the visitor hasn't asked for reduced motion
+
+Everyone else gets CSS and SVG versions of the same moments, so nobody sees a broken or empty hero. The three.js code is split into its own chunk and only loads on desktop.
+
+## Gallery and piece pages
+
+The gallery can be filtered by category: portraits, couples, scenes, book covers, and icons and chibi. GSAP **Flip** animates the grid as it rearranges, and there's an index view if you'd rather scan a list.
+
+Click a piece and its image **morphs** from the grid into its own page. Each piece page has:
+
+- a lightbox for the full image
+- **detail crops** that zoom into focal points of the drawing, picked per piece
+- the service it belongs to, with a button that pre-fills the contact form
+- "More like this" at the bottom
+
+## A contact page that reads like a letter
+
+The contact form sits on cream paper and feels more like writing to someone than filling in a ticket. It never leaves you stuck. If no form endpoint is set up, it opens your email app with the message already written, and the email address always has a copy button next to it.
+
+## Keeping images fast
+
+Kio's originals are big PNGs. An image pipeline script built on ImageMagick turns each one into:
+
+- responsive **WebP** sizes (480px, 960px and one larger size)
+- a smaller texture for the WebGL scenes
+- a blurred placeholder that shows while the real image loads
+
+It then updates a manifest the site reads. Adding a new piece means dropping the PNG in, adding one line to the script, running it, and adding the title and details to a data file.
+
+## A rename along the way
+
+The site started out branded as Kio. Partway through, **Softly Drawn** became the main brand, with Kio as the artist behind it. That meant a new wordmark, a brush-stroke "S" favicon and app icons, a regenerated social card, and new copy. The calls to action also changed from "Commission me" to **"Work with me"**, because the work isn't only commissions.
+
+## Under the hood
+
+- **Vite**, **React 19** and **TypeScript**
+- **react-router** for `/`, `/work`, `/work/:slug` and `/contact`
+- **GSAP** (ScrollTrigger, SplitText, Flip) for animation, and **Lenis** for smooth scrolling
+- **three.js** for the hero and the stylus scene, code-split and desktop-only
+- **Fraunces** and **Manrope** variable fonts, self-hosted
+- All content (bio, links, artworks, reviews) in typed data files, so updating the site never means touching a component

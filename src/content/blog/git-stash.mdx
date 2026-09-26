@@ -1,88 +1,210 @@
 ---
-title: "Git Stash : Beginner's Guide"
-description: "In the world of programming, code blocks are an essential tool for sharing and explaining code snippets."
+title: "Git Stash: A Practical Beginner's Guide"
+description: "A practical git stash guide with real examples: save work, switch branches, name and apply stashes, stash untracked files, fix conflicts and recover drops."
 isDraft: false
-tags: ["fd", "df"]
+tags: ["Git", "Version control", "CLI"]
 date: "02-03-2023"
 slug: git-stash
-image: "./../../assets/blog/Git_stash/Git_stash cover.jpg"
+image: "./../../assets/blog/Git_stash/git-stash-cover.jpg"
 ---
 
-## Introduction: The Power of Git Stash
+`git stash` takes the changes you haven't committed yet, puts them on a shelf, and gives you a clean working tree. Later you take them off the shelf and carry on. That's it. You don't need a throwaway commit, and nothing lands in your history.
 
-Git stash is a powerful command that allows developers to temporarily save changes and switch branches without the need to commit unfinished work. It is recommended to use `git stash` sparingly, in rare situations. In this blog post, I will guide you through practical examples of using `git stash` in your everyday workflow, drawing from my own experience where git stash proved to be invaluable. These examples will help you effectively organize your work and seamlessly switch between branches. Let's get started!
+I don't use it every day, and I'd say that's how it should be. But when I need it, nothing else does the job as cleanly. This guide covers the situations where it actually saved me, plus the handful of flags I wish someone had told me about earlier.
 
-![Git stash will change your life](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/vc8kgls7tkwkyrqws3dv.png)
+## What git stash actually saves
 
-## Use Case 1: Stashing Changes Before Switching Branches
+By default, `git stash` saves:
 
-Imagine you are working on a new feature branch called "User-Profile" that involves modifying multiple files. Suddenly, you realize you need to make changes to the main branch to fix an urgent bug. Instead of committing the incomplete changes and polluting your commit history and dealing with merge conflicts later, you can use `git stash` to save your progress:
+- changes to **tracked** files that you haven't staged yet
+- changes you **have** staged with `git add`
 
-```bash
-git stash
-```
+It does **not** save:
 
-This command will stash your changes, allowing you to switch to the main branch and fix the urgent bug without conflicts. Once you have resolved the issue, you can return to the "User-Profile" branch and apply the stashed changes using:
+- **untracked** files (new files Git has never seen)
+- **ignored** files
 
-```bash
-git stash apply
-```
+That second list catches everyone at least once. You stash, switch branches, and your new file is still sitting there. See [stashing untracked files](#stashing-untracked-files) below.
 
-> Alternatively, you can use `git stash pop`. The `git stash pop` command removes the stash from the stash list, while `git stash apply` keeps the stash for future use.
+## Use case 1: stashing before you switch branches
 
-## Use Case 2: Stashing Multiple Sets of Changes
+Say you're on a feature branch called `user-profile`, halfway through changes across a few files. Then someone pings you: there's a bug on `main` and it needs fixing now.
 
-In some cases, you might be working on multiple tasks that require extensive modifications across various files. To keep things organized, you can stash each set of changes separately. For example:
-
-```bash
-git stash save "Task: Implement Payment Gateway"
-git stash save "Feat: Introduce table view in dashboard"
-```
-
-![Output of git stash save](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/rglntj0rtzm6yfwfkr9j.png)
-
-By providing descriptive messages like "Task: Implement Payment Gateway," you can easily identify the stashed changes later. Once you have completed the first task, you can return to the second task and apply the stashed changes:
-
-```bash
-git stash apply stash^{/<stash-name>}
-```
-
-![git stash apply](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/ncnkotusqacfrikno4p3.png)
-
-## Use Case 3: Stashing Conflicting Changes
-
-Imagine you are working on a project with a teammate, and you both make changes to the same file simultaneously. However, your teammate's changes conflict with yours.
-This situation happened a few times, when I was working on the Moksha's website with my team-mate Harsh. In this situation, you can stash your changes to resolve the conflict:
+You don't want to commit half-done work and clutter your history. So stash it:
 
 ```bash
 git stash
 ```
 
-After stashing your changes, you can pull the latest changes from the remote repository and apply them to your branch:
+Your working tree is clean again. Switch to `main`, fix the bug, commit, push. Then come back and restore your work:
 
 ```bash
-git pull origin main
+git switch user-profile
+git stash pop
 ```
 
-Now that your branch is up to date, you can apply your stashed changes and resolve any conflicts that arise:
+> `git stash pop` applies the stash **and removes it** from the stash list. `git stash apply` applies it but **keeps** it, which is handy if you want the same changes on more than one branch.
+
+## Use case 2: keeping several stashes with names
+
+Sometimes you've got two half-finished things going. Stash each one with a message so you can tell them apart later:
 
 ```bash
-git stash apply
+git stash push -m "Task: implement payment gateway"
+git stash push -m "Feat: table view in dashboard"
 ```
 
-## Use Case 4: Checking the Stash List
+> You'll see older tutorials (including an older version of this post) use `git stash save "message"`. That still works, but it's deprecated. `git stash push -m` is the current way, and it also lets you stash specific files.
 
-To keep track of your stashes, you can use the `git stash list` command. It provides an overview of your stashed changes:
+Now list them:
 
 ```bash
 git stash list
 ```
 
-![output of git stash list command](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/psxvdn3z7a17rof1xn0j.png)
+```plaintext
+stash@{0}: On user-profile: Feat: table view in dashboard
+stash@{1}: On user-profile: Task: implement payment gateway
+```
 
-The output will display a list of stashes, including their respective stash index and descriptions. This allows you to easily identify and select the correct stash when applying or discarding changes.
+The newest stash is always `stash@{0}`. To bring back a specific one, use its index:
 
-## Conclusion
+```bash
+git stash apply stash@{1}
+```
 
-Congratulations! You've learned how to leverage the power of `git stash` to effectively manage your work and switch between branches seamlessly. By stashing changes before switching branches, handling conflicting changes, and using descriptive messages, you can streamline your development workflow. Remember stash is not a very common command you will be using but it comes in handy in such situations.
-Stay tuned for more valuable blogs about development and developer tools. Happy coding!
+Or find it by a word in its message, so you don't have to count:
+
+```bash
+git stash apply "stash^{/payment}"
+```
+
+The quotes matter. zsh and PowerShell both do their own thing with curly braces, and you'll get a confusing error without them.
+
+## Use case 3: stashing when a pull conflicts
+
+This happened to me a few times while building the [Moksha Innovision website](/projects/moksha-innovision) with my teammate Harsh. We'd both be editing the same files, I'd try to `git pull`, and Git would refuse because my local changes would be overwritten.
+
+The fix is to stash, pull, then put your changes back:
+
+```bash
+git stash
+git pull origin main
+git stash pop
+```
+
+If your changes and the pulled changes touch the same lines, `pop` stops with a conflict, just like a merge. Open the files, fix the conflict markers, then:
+
+```bash
+git add .
+git stash drop
+```
+
+> When `git stash pop` hits a conflict, it does **not** drop the stash, so your changes are still safe on the shelf. That's why you drop it yourself once everything's resolved.
+
+If you do this dance a lot, Git can do it for you:
+
+```bash
+git pull --rebase --autostash
+```
+
+Or turn it on for good:
+
+```bash
+git config --global rebase.autoStash true
+```
+
+## Stashing untracked files
+
+As mentioned, new files aren't stashed by default. Add `-u` (short for `--include-untracked`):
+
+```bash
+git stash -u
+```
+
+If you also want ignored files (build output, `.env`, and so on), use `-a` (`--all`). I rarely want that, so be careful with it.
+
+## Stashing only some files
+
+You don't have to stash everything. Pass paths after `--`:
+
+```bash
+git stash push -m "only the api changes" -- src/api/
+```
+
+Or pick changes interactively, hunk by hunk:
+
+```bash
+git stash -p
+```
+
+On Git 2.35 and newer, you can also stash just what's staged:
+
+```bash
+git stash push --staged
+```
+
+## Looking inside a stash before applying it
+
+Not sure what's in `stash@{1}`? Check before you apply it:
+
+```bash
+git stash show stash@{1}      # which files changed
+git stash show -p stash@{1}   # the full diff
+```
+
+## Turning a stash into a branch
+
+If the stash turns out to be a real piece of work, make it a branch:
+
+```bash
+git stash branch payment-gateway stash@{1}
+```
+
+This creates a branch from the commit you were on when you stashed, applies the stash there, and drops it if everything applies cleanly. It's also the easiest way out when a stash won't apply on your current branch because too much has changed.
+
+## Cleaning up
+
+Stashes pile up quietly. Every now and then, clean them out:
+
+```bash
+git stash drop stash@{0}   # remove one
+git stash clear            # remove all of them
+```
+
+> `git stash clear` doesn't ask for confirmation. Run `git stash list` first.
+
+## Recovering a stash you dropped by accident
+
+It happens. A dropped stash is still a commit object for a while. It's just not referenced anymore. You can usually find it:
+
+```bash
+git fsck --no-reflog | awk '/dangling commit/ {print $3}'
+```
+
+Check the hashes with `git show <hash>` until you find yours, then:
+
+```bash
+git stash apply <hash>
+```
+
+## Quick reference
+
+| Command | What it does |
+| --- | --- |
+| `git stash` | Stash tracked changes (staged and unstaged) |
+| `git stash push -m "msg"` | Stash with a name |
+| `git stash -u` | Also stash untracked files |
+| `git stash list` | Show all stashes |
+| `git stash show -p stash@{n}` | Show the diff of a stash |
+| `git stash apply stash@{n}` | Apply a stash, keep it in the list |
+| `git stash pop` | Apply the latest stash and remove it |
+| `git stash branch <name>` | Create a branch from a stash |
+| `git stash drop stash@{n}` | Delete one stash |
+| `git stash clear` | Delete every stash |
+
+## When not to use stash
+
+A stash is a shelf, not storage. If you're parking work for more than a day or two, a work-in-progress commit on its own branch is safer. It has a name, it shows up in `git log`, and you can push it. If you regularly need two branches checked out at once, look at `git worktree` instead.
+
+For the quick "hold on, I need to do something else first" moments, though, `git stash` is exactly the right tool.

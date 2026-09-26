@@ -1,0 +1,68 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import { formattedDate, isoDate, readingTime } from "../lib/utils";
+
+type Props = {
+  post: CollectionEntry<"blog">;
+  /** Show the cover, description and reading time (blog index, related posts). */
+  detailed?: boolean;
+  headingLevel?: "h2" | "h3";
+};
+
+const { post, detailed = false, headingLevel = "h2" } = Astro.props;
+const Heading = headingLevel;
+const { title, description, date, image } = post.data;
+---
+
+{
+  detailed ? (
+    <li class="group relative grid gap-4 border-t border-line py-6 first:border-t-0 first:pt-2 sm:grid-cols-[1fr_9.5rem] sm:gap-7">
+      <div class="order-2 sm:order-1">
+        <p class="text-sm text-ink-3">
+          <time datetime={isoDate(date)}>{formattedDate(date)}</time>
+          <span aria-hidden="true"> · </span>
+          {readingTime(post.body)} min read
+        </p>
+        <Heading class="mt-1.5 text-[1.2rem] font-bold leading-snug tracking-[-0.02em]">
+          <a
+            href={`/blog/${post.slug}`}
+            class="transition-colors duration-200 after:absolute after:inset-0 group-hover:text-accent"
+            transition:name={`post-${post.slug}-title`}
+          >
+            {title.trim()}
+          </a>
+        </Heading>
+        <p class="mt-2 line-clamp-2 text-[0.975rem] leading-relaxed text-ink-2">{description}</p>
+      </div>
+      {
+        image && (
+          <div class="order-1 aspect-[16/10] overflow-hidden rounded-xl bg-surface ring-1 ring-line sm:order-2">
+            <Image
+              src={image}
+              alt=""
+              widths={[304, 608]}
+              sizes="(min-width: 640px) 152px, 100vw"
+              class="size-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.04]"
+            />
+          </div>
+        )
+      }
+    </li>
+  ) : (
+    <li class="group relative border-t border-line py-5 first:border-t-0">
+      <div class="flex items-baseline justify-between gap-6">
+        <h3 class="text-[1.075rem] font-semibold leading-snug tracking-[-0.015em]">
+          <a
+            href={`/blog/${post.slug}`}
+            class="transition-colors duration-200 after:absolute after:inset-0 group-hover:text-accent"
+            transition:name={`post-${post.slug}-title`}
+          >
+            {title.trim()}
+          </a>
+        </h3>
+        <time datetime={isoDate(date)} class="shrink-0 text-sm text-ink-3">{formattedDate(date)}</time>
+      </div>
+    </li>
+  )
+}

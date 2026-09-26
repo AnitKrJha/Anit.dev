@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+import type { CollectionEntry } from "astro:content";
+import Icon from "./Icon.astro";
+import ProjectDummyImage from "../content/project-dummy.png";
+
+type Props = {
+  project: CollectionEntry<"projects">;
+  /** Load the image eagerly (use for the first row above the fold). */
+  eager?: boolean;
+  headingLevel?: "h2" | "h3";
+};
+
+const { project, eager = false, headingLevel = "h3" } = Astro.props;
+const { name, tagline, description, image, imageAlt, year, tags, liveLink, ghLink } = project.data;
+const href = `/projects/${project.slug}`;
+const Heading = headingLevel;
+---
+
+<article class="group relative grid gap-5 border-t border-line py-8 first:border-t-0 first:pt-2 sm:grid-cols-[15.5rem_1fr] sm:gap-8">
+  <div class="aspect-[1200/630] overflow-hidden rounded-xl bg-surface ring-1 ring-line">
+    <Image
+      src={image ?? ProjectDummyImage}
+      alt={imageAlt ?? `${name} cover`}
+      widths={[496, 744, 992]}
+      sizes="(min-width: 640px) 248px, 100vw"
+      loading={eager ? "eager" : "lazy"}
+      class="size-full object-cover transition-transform duration-700 ease-out-expo group-hover:scale-[1.03]"
+      transition:name={`project-${project.slug}-image`}
+    />
+  </div>
+  <div class="flex flex-col">
+    <div class="flex items-baseline justify-between gap-4">
+      <Heading class="text-[1.3rem] font-bold leading-tight tracking-[-0.025em]">
+        <a href={href} class="transition-colors duration-200 after:absolute after:inset-0 group-hover:text-accent">
+          {name}
+        </a>
+      </Heading>
+      {year && <span class="nums shrink-0 text-sm text-ink-3">{year}</span>}
+    </div>
+    <p class="mt-2 text-[0.975rem] leading-relaxed text-ink-2">{tagline ?? description}</p>
+    {tags.length > 0 && <p class="tag mt-3">{tags.join(" · ")}</p>}
+    {
+      (liveLink || ghLink) && (
+        <div class="relative z-10 mt-4 flex gap-5">
+          {liveLink && (
+            <a href={liveLink} target="_blank" rel="noopener" class="more">
+              Live site
+              <Icon name="arrow-up-right" size={14} />
+            </a>
+          )}
+          {ghLink && (
+            <a href={ghLink} target="_blank" rel="noopener" class="more">
+              Source
+              <Icon name="arrow-up-right" size={14} />
+            </a>
+          )}
+        </div>
+      )
+    }
+  </div>
+</article>

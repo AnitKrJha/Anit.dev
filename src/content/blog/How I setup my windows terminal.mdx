@@ -1,200 +1,212 @@
 ---
-title: "Elevate Your Windows PowerShell: My Personal Customization Guide"
-description: "Discover how I transform my Windows PowerShell into a stylish, efficient, and feature-packed terminal. Explore the journey of making my terminal visually appealing, enabling auto-completions, configuring global aliases, and crafting custom commands."
+title: "My Windows PowerShell Setup: Oh My Posh, Nerd Fonts and Autocomplete"
+description: "How I set up Windows Terminal and PowerShell: Scoop, a Nerd Font, an Oh My Posh prompt, Terminal-Icons, PSReadLine autocomplete and handy profile functions."
 isDraft: false
 tags:
   [
     "PowerShell",
+    "Windows Terminal",
+    "Oh My Posh",
     "Customization",
-    "Terminal",
-    "Auto-Completions",
+    "Autocomplete",
     "Aliases",
-    "Custom Commands",
   ]
 image: "./../../assets/blog/Custom_Terminal/Cover.png"
 date: "10-15-2023"
 slug: "customize-windows-powershell"
 ---
 
-Hi 👋🏻! Today I'm gonna talk about how I setup windows powershell on my windows machine. As a developer, I think having a nice looking terminal and some good useful tools can push towards being a little more productive.
+Hi 👋🏻! Today I'm going to walk through how I set up PowerShell on my Windows machine. As a developer, I think a nice-looking terminal with a few good tools genuinely makes you a little more productive. At the very least, it makes you want to open it.
 
-## Terminal Application
+By the end you'll have:
 
-There are many terminal application for windows, but my favourite is the pre packaged **Windows Terminal App**.
-It is :
+- **Windows Terminal** as the default terminal, with a background and a bit of blur
+- **Scoop** to install everything with one command
+- A **Nerd Font**, so icons and glyphs actually render
+- An **Oh My Posh** prompt that shows your folder, Git branch and status
+- **Terminal-Icons** for file and folder icons in `ls`
+- **PSReadLine** autocomplete from your history
+- A few **profile functions** that save a lot of typing
 
-- Visually Appealing
-- Highly customizable
-- Tabs Support.
+The whole thing takes about 15 minutes.
 
-## Customizing the Appearance of Windows Terminal
+## Terminal application
 
-First and foremost, set the Windows Terminal as your default Terminal App.
+There are many terminal apps for Windows, but my favourite is the one that already ships with it: **Windows Terminal**. It's:
 
-Access your settings with a quick `Ctrl + ,` shortcut. Within the settings menu, find the option to change the default Terminal Application for your machine, and select `windows terminal` from the dropdown.
+- visually appealing
+- highly customizable
+- tabbed, so you can have PowerShell, WSL and cmd side by side
 
-With your default terminal all sorted! 💫  
-Now it's time to give it a fresh look.
-I'm all about that cool acrylic aesthetic in my Terminal App.  
-**Open settings** 👉, then, on the left-hand-side menu, head to 👉 **Profiles**, and within that, navigate to 👉 **Defaults**. Inside the default settings, you'll find 👉 **Appearance**.
-Now, here's where you can tweak the theme to match your style.
-I, for one, love to throw in a **Background Image** and give the **Terminal a bit of blur** for that extra flair.
+If it's not on your machine, install it from the Microsoft Store.
+
+> While you're at it, consider installing **PowerShell 7** (`winget install Microsoft.PowerShell`). The blue "Windows PowerShell" that comes with Windows is 5.1 and hasn't changed in years. Everything in this post works in both, but PowerShell 7 is faster and gets the newest PSReadLine features.
+
+## Making Windows Terminal the default and giving it a look
+
+First, set Windows Terminal as your default terminal app. Open settings with `Ctrl + ,`. On the **Startup** page, set **Default terminal application** to **Windows Terminal**.
+
+Now for the fun part. I'm all about that acrylic look.
+
+Open **Settings** 👉 **Profiles** 👉 **Defaults** 👉 **Appearance**. This is where you tweak the theme to your style. I like to add a **background image** and turn on **acrylic** (the blur) for that extra flair. Keep the background dim, or dial the image opacity down, so text stays readable.
 
 ## Installing Scoop
 
-[Scoop](https://scoop.sh) is your go-to Windows package manager, much like Ubuntu's apt and Fedora's dnf. It simplifies the management of apps and binaries on your Windows machine. With a single command, you can easily update, install, or delete binaries, eliminating the need for manual configuration of environment variables and paths. Scoop offers various buckets filled with a wide range of apps, and it even makes font installation a breeze.
+[Scoop](https://scoop.sh) is a package manager for Windows, much like `apt` on Ubuntu or `dnf` on Fedora. One command installs, updates or removes an app. No installers, no clicking "Next" five times, and no fiddling with environment variables or `PATH`. It even makes installing fonts painless, which we'll need in a minute.
 
-Before we start customizing the prompt I recommend installing the **[SCOOP](https://scoop.sh)** package manager for windows, It will make our work very easy moving froward.
-
-In your terminal run these commands one by one:
+Run these one at a time in PowerShell (not as administrator):
 
 ```powershell
 Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
 irm get.scoop.sh | iex
 ```
 
-This will install SCOOP in your system.
+The first line allows locally created scripts (like your profile) to run for your user. Without it, PowerShell refuses to run the Scoop installer and, later, your profile. The second line downloads and runs the installer.
 
-## NERD Font Installation with Scoop
+## Installing a Nerd Font with Scoop
 
-Before customizing your prompt with glyphs and symbols like the GitHub or folder icons, you'll need to install a NERD font. Regular fonts just can't handle these unique characters, but the NERD fonts have got you covered. You can explore other nerd fonts at (https://nerdfonts.com).
+Before your prompt can show glyphs like the GitHub logo or folder icons, you need a **Nerd Font**. Regular fonts don't include these characters, so you'd see empty boxes. Nerd Fonts are popular coding fonts patched with thousands of extra icons. You can browse them at [nerdfonts.com](https://www.nerdfonts.com/).
 
-My personal favorite NERD font is Cascadia-Code, and here's where the Scoop magic comes into play. If you've ever attempted to install a custom font, you're aware that it often involves multiple steps. Scoop simplifies the process to just one command. Here's how it's done:
+My favourite is Cascadia Code, and this is where Scoop shines. Installing a font normally takes several steps. With Scoop it's two commands:
 
-1. Start by adding the NERD Font bucket to your Scoop setup:
+1. Add the Nerd Fonts bucket (a bucket is Scoop's name for a collection of apps):
 
 ```powershell
 scoop bucket add nerd-fonts
 ```
 
-2. Next, install the Cascadia Code NERD font with this command:
+2. Install the font:
 
 ```powershell
 scoop install Cascadia-Code
 ```
 
-This straightforward process will add the Cascadia-Code font to your system, making it available for you to use.
+> If some icons still show up as empty boxes later, you probably have a version without the extra glyphs. Run `scoop search cascadia` to see the Nerd Font variants and install one of those instead.
 
-### Changing Your Terminal Font
+### Changing your terminal font
 
-Now that you have the NERD font installed, it's time to change your terminal font to Cascadia-Code. Here's how to do it:
+1. Open Windows Terminal settings.
+2. Go to **Profiles** 👉 **Defaults** 👉 **Appearance**.
+3. Under **Font face**, pick the Cascadia font you just installed.
 
-1. Navigate to your terminal's settings.
-2. Look for "Defaults" and then "Appearance."
-3. In the "Font Face" option, select "Cascadia-Code."
+Your terminal is now ready for a fancy prompt.
 
-With these simple steps, you'll have your terminal decked out with the NERD font of your choice, ready to make your prompt uniquely yours.
+## Customizing the prompt with Oh My Posh
 
-## Customizing the prompt using OH-MY-POSH.
+[Oh My Posh](https://ohmyposh.dev/) is my favourite tool for making the prompt look great. Beyond looks, a good prompt tells you where you are at a glance: current folder, Git branch, whether you have uncommitted changes, and how long the last command took.
 
-**[Oh-My-Posh](https://ohmyposh.dev/)**, is my favourite tool for making my prompt look super cool. It gives my terminal a unique, fancy style. Oh-My-Posh makes it super easy. A nice prompt makes a dev life easier.
+### Installing Oh My Posh
 
-### Getting Oh-My-Posh Installed
-
-Te main bucket is already added, you can skip this if you want...
+The `main` bucket is added by default when you install Scoop, but running this again doesn't hurt:
 
 ```powershell
 scoop bucket add main
 ```
 
-Get yourself oh-my-posh.
+Then install it:
 
 ```powershell
 scoop install oh-my-posh
 ```
 
-Now that oh-my-posh is installed its time to configure our windows profile script.
+## Setting up your PowerShell profile
 
-## Setting Up Your PowerShell Profile
+![My Oh My Posh prompt in Windows Terminal](./../../assets/blog/Custom_Terminal/prompt.png)
 
-![Terminal Prompt configuration](./../../assets/blog/Custom_Terminal/prompt.png)
-PowerShell profile, it's like a special script that runs whenever you start up PowerShell. You can do all sorts of things with it to make your PowerShell experience more awesome. You can add shortcuts, like nicknames, and extra tools that load up when you start PowerShell. Plus, you can make your own special functions to fit the way you work. It's like a power-up for PowerShell!
+Your PowerShell **profile** is a script that runs every time PowerShell starts. It's where all the customization lives: which prompt to load, which modules to import, your aliases and your own functions. Think of it as a power-up for PowerShell.
 
-To open your PowerShell profile in Notepad, just type this command:
+Open it in Notepad:
 
 ```powershell
-notepad $profile
+notepad $PROFILE
 ```
 
-If you come across an error, don't worry! You can fix it with this command:
+If you get an error saying the file doesn't exist, create it first:
 
 ```powershell
 New-Item -Path $PROFILE -Type File -Force
 ```
 
-Give it a try, and then open your profile again. If you haven't made any changes before, your profile will be empty.
+Then run `notepad $PROFILE` again. If you've never touched it, it'll be empty.
 
-To make your prompt look like mine, add this line to your profile and save it:
+> PowerShell 7 and Windows PowerShell 5.1 each have **their own** profile file. If you use both, you'll need to set up each one. `$PROFILE` always points to the right one for the shell you're in.
 
-```PowerShell
+To make your prompt look like mine, add this line and save:
+
+```powershell
 oh-my-posh init pwsh --config "C:\Users\anitj\scoop\apps\oh-my-posh\17.12.0\themes\craver.omp.json" | Invoke-Expression
 ```
 
-After saving, close and reopen the terminal to reload the profile. It'll make your PowerShell prompt like mine and everything will work together smoothly.
-
-You can also change the prompt theme to match your preferences. For more information and customization options, you can refer to the oh-my-posh documentation at this link: 'https://ohmyposh.dev/docs/installation/customize'. It's a great resource for tailoring your PowerShell experience exactly the way you like it.
-
-Sure, let's briefly discuss how to install two essential PowerShell modules: "Terminal Icons" and "PSReadLine."
-
-## Install Terminal Icons.
-
-![Icons to understand what file extenstion , Terminal Icons](./../../assets/blog/Custom_Terminal/terminal_icons.png)
-Terminal Icons is a module that adds icons to your terminal for a visually enhanced experience. You can install it by following these steps:
-
-- Open PowerShell.
-- Use the following command to install Terminal Icons:
+That path includes the version number, so it breaks the next time Oh My Posh updates. A sturdier version uses the `POSH_THEMES_PATH` variable that the install sets up:
 
 ```powershell
-Install-Module -Name Terminal-Icons -Scope CurrentUser
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\craver.omp.json" | Invoke-Expression
 ```
 
-- You may be prompted to install the module from the PSGallery repository. Confirm the installation.
+Close and reopen the terminal to reload the profile, and your prompt should look like mine.
 
-Now, you have Terminal Icons installed, and it will automatically enhance your terminal interface with icons for files and folders, making it easier to navigate.
+`craver` is just the theme I like. Run `Get-PoshThemes` to preview all the built-in themes right in your terminal, then swap the file name. For more options, see the [Oh My Posh customization docs](https://ohmyposh.dev/docs/installation/customize).
 
-Now add this line to your **profile**
+## Installing Terminal-Icons
+
+![Terminal-Icons showing file type icons in a directory listing](./../../assets/blog/Custom_Terminal/terminal_icons.png)
+
+[Terminal-Icons](https://github.com/devblackops/Terminal-Icons) adds file and folder icons to `ls` and `Get-ChildItem`, colour-coded by file type. It sounds small, but it makes scanning a folder so much faster.
+
+Install it:
 
 ```powershell
-Import-Module -Name Terminal-Icons
+Install-Module -Name Terminal-Icons -Repository PSGallery -Scope CurrentUser
 ```
 
-## Install PSReadLine
+If PowerShell asks whether you trust the PSGallery repository, say yes.
 
-![Auto Complete from history](./../../assets/blog/Custom_Terminal/auto_complete.png)
-
-PSReadLine is a module that enhances the PowerShell command line editing experience. It adds features like syntax highlighting, tab completion, and more. To install it, follow these steps:
-
-- Open PowerShell.
-- Use the following command to install PSReadLine:
-
-```powershell
-Install-Module -Name PSReadLine -Scope CurrentUser
-```
-
-- Confirm the installation if prompted.
-
-Once PSReadLine is installed, it will significantly improve your PowerShell command line editing capabilities. You can customize it further by modifying your PowerShell profile.
-
-Now append this line to your **profile**
+Then add this to your **profile**:
 
 ```powershell
 Import-Module -Name Terminal-Icons
 ```
 
-These modules, Terminal Icons and PSReadLine, can enhance your PowerShell experience by providing a more visually appealing interface and improving your command line editing capabilities.
+## Autocomplete with PSReadLine
 
-> Now reload your poweshell by closing and reopening the terminal.
+![PSReadLine suggesting a command from history as I type](./../../assets/blog/Custom_Terminal/auto_complete.png)
 
-## Custom Functions for Enhanced PowerShell Workflow
+[PSReadLine](https://github.com/PowerShell/PSReadLine) handles everything about typing on the PowerShell command line: syntax highlighting, tab completion, history search and, my favourite, **predictions**. As you type, it suggests the rest of the command from your history, like in the screenshot above.
 
-In PowerShell, you can tailor your experience by adding custom functions that simplify common tasks and streamline your workflow.
-I use the below functions to make my life easier.
+PowerShell already comes with PSReadLine, but often an old version. Update it:
 
-### Git Functions
+```powershell
+Install-Module -Name PSReadLine -Scope CurrentUser -Force
+```
 
-#### 1. `gcom` - Simplify Git Commits
+Then add this to your **profile**:
 
-The `gcom` function streamlines the process of committing changes in a Git repository. It's perfect for those who frequently make Git commits. Here's how it works:
+```powershell
+Import-Module -Name PSReadLine
+
+# Suggest commands from history as you type (press → to accept)
+Set-PSReadLineOption -PredictionSource History
+# Show suggestions as a list you can arrow through (press F2 to toggle)
+Set-PSReadLineOption -PredictionViewStyle ListView
+
+# Tab shows a menu of completions instead of cycling through them
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+# ↑ and ↓ search history for commands starting with what you've typed
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+```
+
+> The `ListView` style needs PSReadLine 2.2 or newer. If you see an error about it, the update above didn't take. Run `Get-Module PSReadLine` to check the version.
+
+Reload your terminal by closing and reopening it.
+
+## Custom functions for a faster workflow
+
+This is where the profile really pays off. You can add your own functions for things you type every day. These are the ones I use.
+
+### Git functions
+
+#### 1. `gcom`: stage and commit in one go
 
 ```powershell
 function gcom {
@@ -203,11 +215,11 @@ function gcom {
 }
 ```
 
-When you run `gcom "Your commit message here"`, it automatically stages all changes and commits them with the provided message. No need to run separate `git add` and `git commit` commands.
+Run `gcom "your commit message"` and it stages everything and commits it with that message. No separate `git add` and `git commit`.
 
-#### 2. `lazyg` - Commit and Push in One Step
+#### 2. `lazyg`: stage, commit and push
 
-For an even more streamlined Git workflow, the `lazyg` function takes the automation a step further. It stages changes, commits with your message, and then pushes the changes to the remote Git repository:
+For when you're feeling extra lazy, `lazyg` does all three:
 
 ```powershell
 function lazyg {
@@ -217,13 +229,15 @@ function lazyg {
 }
 ```
 
-Use it like this: `lazyg "Your commit message here"`. This "lazy" approach automates multiple steps, making your Git interactions even more efficient.
+Use it like `lazyg "your commit message"`.
 
-### Utility Functions
+> Both of these stage **everything** with `git add .`. Keep an eye on `git status` so you don't commit something you didn't mean to.
 
-#### 3. `which` - Locate Command Definitions
+### Utility functions
 
-The `which` function is a handy utility for pinpointing the location of a specific command or function within your PowerShell environment. It takes a command name as an argument and returns its definition. For example:
+#### 3. `which`: find where a command comes from
+
+Linux has `which`; PowerShell doesn't. This gets you close:
 
 ```powershell
 function which($name) {
@@ -231,11 +245,9 @@ function which($name) {
 }
 ```
 
-Running `which Get-ChildItem` will reveal the definition of the `Get-ChildItem` command in your environment.
+`which git` prints the full path to `git.exe`. For PowerShell functions, it prints the function's code.
 
-#### 4. `whichdir` - Find Command Directories
-
-Similar to `which`, the `whichdir` function returns the directory path where a command or function is defined. It uses the `Split-Path` cmdlet to extract the directory path:
+#### 4. `whichdir`: find the folder a command lives in
 
 ```powershell
 function whichdir($name) {
@@ -244,6 +256,57 @@ function whichdir($name) {
 }
 ```
 
-Executing `whichdir Get-ChildItem` will provide the directory where `Get-ChildItem` is defined.
+`whichdir git` gives you the folder that `git.exe` lives in. That's handy when you're chasing down which of two installs is on your `PATH`.
 
-By adding these custom functions to your PowerShell profile, you ensure they are available each time you open PowerShell. They not only simplify Git-related tasks but also help you explore your PowerShell environment efficiently.
+### Aliases
+
+Aliases are shorter names for commands you already have. For example:
+
+```powershell
+Set-Alias -Name g -Value git
+```
+
+Now `g status` works like `git status`. Aliases can only point to a single command, so anything with arguments (like `gcom` above) needs to be a function.
+
+## My full profile
+
+Here's everything from this post in one place, ready to paste into `notepad $PROFILE`:
+
+```powershell
+# Prompt
+oh-my-posh init pwsh --config "$env:POSH_THEMES_PATH\craver.omp.json" | Invoke-Expression
+
+# Modules
+Import-Module -Name Terminal-Icons
+Import-Module -Name PSReadLine
+
+# PSReadLine
+Set-PSReadLineOption -PredictionSource History
+Set-PSReadLineOption -PredictionViewStyle ListView
+Set-PSReadLineKeyHandler -Key Tab -Function MenuComplete
+Set-PSReadLineKeyHandler -Key UpArrow -Function HistorySearchBackward
+Set-PSReadLineKeyHandler -Key DownArrow -Function HistorySearchForward
+
+# Aliases
+Set-Alias -Name g -Value git
+
+# Git
+function gcom { git add .; git commit -m "$args" }
+function lazyg { git add .; git commit -m "$args"; git push }
+
+# Utilities
+function which($name) { Get-Command $name | Select-Object -ExpandProperty Definition }
+function whichdir($name) { Split-Path -Parent (Get-Command $name | Select-Object -ExpandProperty Definition) }
+```
+
+## Troubleshooting
+
+**"Running scripts is disabled on this system."** Run the `Set-ExecutionPolicy RemoteSigned -Scope CurrentUser` line from the Scoop section.
+
+**Icons show up as empty boxes or question marks.** Your terminal isn't using a Nerd Font. Check **Font face** in the Windows Terminal settings.
+
+**PowerShell takes a while to start.** Each module and the prompt add a little time. To see how long your profile takes, run `Measure-Command { . $PROFILE }`. If it's slow, try a simpler Oh My Posh theme first.
+
+**The prompt looks right in one shell but not the other.** PowerShell 7 and 5.1 have separate profiles, so set up both.
+
+That's my setup. Tweak it until it feels like yours. Your terminal is where you spend half your day, so it might as well be nice. ✨

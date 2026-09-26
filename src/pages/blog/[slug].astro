@@ -1,13 +1,16 @@
 ---
-import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { Image, getImage } from "astro:assets";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
-import { Image } from "astro:assets";
-import BlogDummyImage from "../../content/blog_dummy.png";
+import CodeCopy from "../../components/CodeCopy.astro";
+import PostRow from "../../components/PostRow.astro";
+import { getPosts } from "../../lib/content";
+import { formattedDate, isoDate, readingTime } from "../../lib/utils";
+import { person, SITE_URL } from "../../lib/site";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
-
   return posts.map((post) => ({
     params: { slug: post.slug },
     props: { post },
@@ -18,65 +21,133 @@ type Props = {
   post: CollectionEntry<"blog">;
 };
 
-let {
-  post,
-  post: {
-    data: { date, isDraft, title, image, ogImage },
-  },
-} = Astro.props;
+const { post } = Astro.props;
+const { date, isDraft, title: rawTitle, description, image, ogImage, tags } = post.data;
+const title = rawTitle.trim();
 const { Content } = await post.render();
 
-if (!ogImage) {
-  ogImage = `https://og.anit.dev/og?title=${title.trim()}&type=blog`;
-}
-// console.table(ogImage);
+// Up to two other posts, preferring ones that share a tag.
+const others = (await getPosts()).filter((p) => p.slug !== post.slug);
+const shares = (p: (typeof others)[number]) => p.data.tags.some((t) => tags.includes(t));
+const related = [...others.filter(shares), ...others.filter((p) => !shares(p))].slice(0, 2);
+
+const coverUrl = image ? (await getImage({ src: image, width: 1200, format: "jpg" })).src : undefined;
+const shareImage = ogImage ?? coverUrl;
+const url = `${SITE_URL}/blog/${post.slug}`;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: title,
+    description,
+    url,
+    mainEntityOfPage: url,
+    datePublished: date.toISOString(),
+    keywords: tags.join(", "),
+    ...(shareImage && { image: new URL(shareImage, SITE_URL).href }),
+    author: { "@type": "Person", name: person.name, url: SITE_URL },
+    publisher: { "@type": "Person", name: person.name, url: SITE_URL },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Blog", item: `${SITE_URL}/blog` },
+      { "@type": "ListItem", position: 3, name: title, item: url },
+    ],
+  },
+];
 ---
 
 <BaseLayout
-  title={post.data.title}
-  description={post.data.description}
-  image={ogImage}
+  title={title}
+  description={description}
+  image={shareImage}
+  imageAlt={`Cover image for ${title}`}
+  type="article"
+  publishedTime={date}
+  tags={tags}
+  noindex={isDraft}
+  jsonLd={jsonLd}
 >
-  <button
-    transition:name="back-button-blog"
-    slot="extra-header"
-    title="go back"
-    type="button"
-    class={`back-button flex items-center w-fit py-1 underline hover:decoration-slate-400 underline-offset-4 duration-200  dark:text-gray-50 text-gray-950 gap-1`}
-  >
-    <Icon name="mdi:arrow-left" height={16} width={16} />back
-  </button>
-  {
-    isDraft && (
-      <blockquote
-        class="my-8 bg-neutral-200/50 py-4 pl-4 dark:bg-neutral-800/60 rounded"
-        role="alert"
+  <article class="pt-10 sm:pt-14">
+    <a href="/blog" class="more">
+      <Icon name="arrow-left" size={14} /> Blog
+    </a>
+
+    {
+      isDraft && (
+        <p class="mt-6 rounded-xl bg-surface px-4 py-3 text-sm" role="note">
+          This post is a <strong class="text-ink">draft</strong>. If you're reading it, you're probably a trusted
+          person. Please don't share it yet.
+        </p>
+      )
+    }
+
+    <header class="mt-6">
+      <h1
+        class="text-[1.9rem] font-bold leading-[1.1] tracking-[-0.035em] sm:text-[2.5rem]"
+        transition:name={`post-${post.slug}-title`}
       >
-        This post is a <strong>draft</strong>. If you're reading this, you're
-        probably a cool and trusted person. Please <strong>don't share</strong>{" "}
-        it thank you.
-      </blockquote>
-    )
-  }
-  <h1 transition:name={post.slug + "heading"} class="mt-8">
-    {post.data.title}
-  </h1>
-  <figure class="w-full overflow-hidden">
-    <Image
-      transition:name={post.slug.trim() + "image"}
-      class="object-cover aspect-video rounded"
-      src={!!image ? image : BlogDummyImage}
-      alt={`${title} cover image`}
-    />
-  </figure>
-  <article class="content">
-    <Content />
+        {title}
+      </h1>
+      <p class="mt-4 flex flex-wrap items-center gap-x-2 text-sm text-ink-3">
+        <time datetime={isoDate(date)}>{formattedDate(date)}</time>
+        <span aria-hidden="true">·</span>
+        <span>{readingTime(post.body)} min read</span>
+        {
+          tags.length > 0 && (
+            <>
+              <span aria-hidden="true">·</span>
+              <span>{tags.slice(0, 3).join(", ")}</span>
+            </>
+          )
+        }
+      </p>
+    </header>
+
+    {
+      image && (
+        <figure class="mt-8 overflow-hidden rounded-2xl bg-surface ring-1 ring-line">
+          <Image
+            src={image}
+            alt=""
+            widths={[704, 1056, 1408]}
+            sizes="(min-width: 768px) 704px, 100vw"
+            loading="eager"
+            class="aspect-video w-full object-cover"
+          />
+        </figure>
+      )
+    }
+
+    <div class="prose mt-10">
+      <Content />
+    </div>
+    <CodeCopy />
+
+    <footer class="mt-14 border-t border-line pt-6 text-sm">
+      <p class="text-ink-3">
+        Written by <a href="/" class="link">{person.name}</a>, a DevOps and automation engineer at Apple. Found a
+        mistake? Tell me on <a href="https://x.com/_anitjha" target="_blank" rel="noopener" class="link">X</a> or
+        <a href="https://www.linkedin.com/in/anitjha" target="_blank" rel="noopener" class="link">LinkedIn</a>.
+      </p>
+    </footer>
+
+    {
+      related.length > 0 && (
+        <section class="section" aria-labelledby="keep-reading">
+          <div class="flex items-baseline justify-between">
+            <h2 id="keep-reading" class="section-title">Keep reading</h2>
+            <a href="/blog" class="more">All posts <Icon name="arrow-up-right" size={14} /></a>
+          </div>
+          <ul class="mt-4">
+            {related.map((p) => <PostRow post={p} detailed headingLevel="h3" />)}
+          </ul>
+        </section>
+      )
+    }
   </article>
-  <Icon name="Full Logo" height={90} width={90} class="dark:fill-white" />
 </BaseLayout>
-<script is:inline>
-function goBack() {
-  window.history.back();
-}
-document.querySelector(".back-button")?.addEventListener("click", goBack);
-</script>

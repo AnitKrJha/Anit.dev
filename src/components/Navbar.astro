@@ -1,39 +1,42 @@
 ---
-import ColorModeToggle from "./ColorModeToggle.astro";
 import Icon from "./Icon.astro";
-import Navlink from "./Navlink.astro";
-type NavItemProps = { displayName: string; slug: string };
+import ThemeToggle from "./ThemeToggle.astro";
 
-let NavItems: NavItemProps[] = [
-  {
-    displayName: "home",
-    slug: "/",
-  },
-  {
-    displayName: "blog",
-    slug: "/blog",
-  },
-  // {
-  //   displayName: "guestbook",
-  //   slug: "/guestbook",
-  // },
-  {
-    displayName: "projects",
-    slug: "/projects",
-  },
+const links = [
+  { label: "home", href: "/" },
+  { label: "projects", href: "/projects" },
+  { label: "blog", href: "/blog" },
 ];
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) => (href === "/" ? path === "/" : path.startsWith(href));
 ---
 
-<nav
-  class="w-full py-2 my-12 tracking-tight text-gray-800 dark:text-gray-500 flex items-center"
-  transition:animate="none"
->
-  <Icon name="logo" class="mr-2 fill-black dark:fill-white" />
-  <ul class="flex">
-    {NavItems.map((item) => <Navlink {...item} />)}
-  </ul>
-
-  <div class="ml-auto gap-1" transition:persist="color-mode-toggle">
-    <ColorModeToggle />
+<header class="shell flex items-center gap-2 pb-4 pt-8 sm:pt-10" transition:animate="none">
+  <a href="/" class="mr-3 inline-flex items-center text-ink transition-opacity duration-200 hover:opacity-70" aria-label="Anit Jha, home">
+    <Icon name="logo" size={30} />
+  </a>
+  <nav aria-label="Primary">
+    <ul class="flex items-center">
+      {
+        links.map(({ label, href }) => (
+          <li>
+            <a
+              href={href}
+              aria-current={isActive(href) ? "page" : undefined}
+              class:list={[
+                "rounded-full px-3 py-1.5 text-[0.9375rem] transition-colors duration-200",
+                isActive(href) ? "bg-surface font-medium text-ink" : "text-ink-3 hover:text-ink",
+              ]}
+            >
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+  <div class="ml-auto" transition:persist="theme-toggle">
+    <ThemeToggle />
   </div>
-</nav>
+</header>
