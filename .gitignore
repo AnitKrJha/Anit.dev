@@ -20,3 +20,18 @@ pnpm-debug.log*
 
 # macOS-specific files
 .DS_Store
+
+# Re-include site assets. A global gitignore may exclude image files, but the
+# build imports these, so they must be committed or the deploy fails.
+!src/**/*.png
+!src/**/*.jpg
+!src/**/*.jpeg
+!src/**/*.webp
+!src/**/*.gif
+!src/**/*.svg
+!public/**/*.png
+!public/**/*.jpg
+!public/**/*.jpeg
+!public/**/*.webp
+!public/**/*.svg
+!public/**/*.ico
