@@ -13,28 +13,99 @@ tags: ["Astro", "React", "TypeScript", "Three.js", "Vitest"]
 order: 1
 ---
 
+import { Image } from "astro:assets";
+import calculators from "../../assets/projects/GrowthSense/calculators.png";
+import services from "../../assets/projects/GrowthSense/services.png";
+
+[GrowthSense](https://growthsense.net) is the practice of **Avinash Thakur**, a tax and accounts practitioner in Delhi NCR with more than ten years in accounting and finance. He helps salaried people, pensioners, shop owners, freelancers and small businesses with income tax returns, GST, TDS and the paperwork in between. I designed and built the site end to end.
+
 ## The brief
 
-GrowthSense is the practice of Avinash Thakur, a tax and accounts practitioner with more than ten years in finance. His clients are salaried people, pensioners, shop owners and freelancers. Most of them open the site from a WhatsApp-forwarded link on a mid-range Android phone, often a little anxious about a due date or a notice.
+The typical visitor gets a link forwarded on WhatsApp and opens it on a mid-range Android phone in the evening. They're usually a little anxious: a due date is close, or a notice just arrived.
 
-The site has one job: in about ten seconds, look competent, legitimate and easy to reach, then get that person to send a message.
+So the site has one job. In about ten seconds it has to look **competent, legitimate and easy to reach**, and then get that person to send a message with the right context: which service, and which documents they have.
+
+That gave me a few rules before I drew anything:
+
+- **Fast on a cheap phone.** Content first, effects later, and nothing heavy on mobile.
+- **Nobody hunts for the WhatsApp button.** It's always one tap away.
+- **Useful before persuasive.** Real calculators and exact document checklists earn more trust than big claims.
+- **Honest by construction.** No invented stats, testimonials or credentials.
 
 ## The idea: paperwork in, acknowledgement out
 
-The art direction is called **Paperwork → Filed**. You hand over a pile of confusing papers and get back an acknowledgement. The home hero is a small 3D scene where sheets of paper float and lean toward your pointer or finger. Everything after it is calm, legible and official, because nobody should have to hunt for the WhatsApp button.
+The art direction is called **Paperwork → Filed**. The story is literally what the service does: you hand over a pile of confusing papers, and you get back an acknowledgement.
 
-I kept a strict set of anti-references: no navy and gold, no stock handshakes, no "Trusted by 500+ clients" counters, no gradient blobs.
+The home page opens on a dark green "desk" with a small 3D scene of papers floating over it. They lean gently toward your pointer, or your finger on a phone. Everything after the hero is calm, legible and official: warm paper backgrounds, graphite text, and one stamp-red accent used only a few times per page. Receipts, stamps and form labels are set in a mono font, as if they were printed. Everything else uses Bricolage Grotesque and Hanken Grotesk.
 
-## What's in it
+I kept a strict list of things to avoid: navy and gold, stock handshake photos, "Trusted by 500+ clients" counters, laurel badges and gradient blobs. That's what generic CA-firm templates look like, and none of it helps an anxious person decide.
 
-- **Service pages** for ITR filing, GST, TDS, challans, PAN and Aadhaar, notices and refunds, and business registrations. Each one lists who it's for, the exact document checklist, the process and the timeline.
-- **Free calculators**: income tax (old vs new regime, with a full breakdown), HRA exemption, GST, an advance tax planner and a TDS rate finder. They bring in search traffic and build trust before anyone talks to a person.
-- **Honest by construction.** Owner facts live in one config file. Anything unconfirmed shows a visible placeholder instead of an invented number.
+## Free tax calculators
+
+<Image
+  src={calculators}
+  alt="GrowthSense calculators card: 'Tax calculators that show their working' with a worksheet stamped ESTIMATE."
+  widths={[704, 1056, 1408]}
+  sizes="(min-width: 768px) 704px, 100vw"
+/>
+
+The calculators are the most useful part of the site, and they're meant to bring in search traffic on their own. There are five, for FY 2025-26:
+
+- **Income tax calculator**: old vs new regime side by side, with a full slab-by-slab breakdown. For example, on a ₹15,00,000 salary with ₹1,75,000 of 80C and 80D deductions, the old regime works out to ₹2,02,800 and the new regime to ₹97,500. That kind of difference is exactly why people ask for help.
+- **HRA exemption calculator** for the old regime.
+- **GST calculator**: add or remove GST, and split it into CGST and SGST or IGST.
+- **Advance tax planner**: instalment due dates and an estimate of 234B and 234C interest.
+- **TDS rate finder** for common sections and thresholds.
+
+They're designed like worksheets that show their working, not a black box that spits out one number. They need no sign-up and store nothing. Every result is labelled as an estimate.
+
+The tax logic lives in plain TypeScript modules, separate from the UI, and each one is covered by **Vitest** tests. Tax rules change every budget, so I wanted the maths to be easy to check and hard to break.
+
+## Service pages
+
+<Image
+  src={services}
+  alt="GrowthSense services card: 'ITR, GST, TDS, challans and the paperwork in between' with an index sheet stamped ON FILE."
+  widths={[704, 1056, 1408]}
+  sizes="(min-width: 768px) 704px, 100vw"
+/>
+
+Seven services are live: ITR filing, GST registration and returns, TDS, challan payments, PAN and Aadhaar, tax notices and refunds, and business registrations. Every service page follows the same shape, so visitors always know where to look:
+
+- who it's for
+- what's included
+- the **exact document checklist**, which you can tick off and print
+- the process and a realistic timeline
+- FAQs and links to the official government portals
+
+Each page is a Markdown file in an Astro content collection with a zod schema, so adding or editing a service never means touching a component.
+
+## Honest by construction
+
+All of the owner's facts (name, experience, phone, WhatsApp, email, hours, which services are live) live in a single config file. Anything that isn't confirmed yet stays `null`, and the site shows a visible placeholder instead of making something up. The disclaimer page states plainly what isn't claimed. I think that matters more for a tax practitioner than for almost any other kind of site.
+
+## SEO
+
+For a local service business, search matters. The site gets:
+
+- **Per-page Open Graph cards** generated at build time with satori and resvg. The images on this page are two of them.
+- Full Open Graph, Twitter and robots tags, tight titles and descriptions, and a sitemap
+- A **post-build SEO audit** that fails the build if any page is missing a unique title or description, an absolute canonical URL, the full Open Graph and Twitter set, exactly one `<h1>` or valid JSON-LD. It also checks that every `og:image` points to a file that actually exists.
+
+## What changed along the way
+
+A few things changed after the first version:
+
+- **The hero.** The first version was a pinned scroll story. I retired it for papers that float freely and lean toward your pointer or finger, with a gentle turn as you scroll and no pinning. It also let me drop GSAP from the project.
+- **The mobile contact bar.** I started with a fixed Call + WhatsApp bar along the bottom of the screen, then replaced it with a single floating WhatsApp button.
+- **Horizontal scroll on small phones.** A few elements, including the flap-board tiles and the TDS tables, were slightly too wide at 320px. I fixed each one, and added an `overflow-x: clip` safety net.
+- **A Vercel build that failed with "Invalid URL".** An empty or scheme-less `PUBLIC_SITE_URL` crashed the Astro config. The config now accepts a bare domain, or nothing at all, and falls back to the production URL.
 
 ## Under the hood
 
-- **Astro 7** with TypeScript, prerendered to static HTML. React islands only where interactivity is needed: the calculators and the contact form.
-- **Content collections** with zod schemas for every service page.
-- **Tax engines** in plain TypeScript, covered by **Vitest**.
-- **SEO**: per-route OG images generated at build time with satori and resvg, full Open Graph and Twitter tags, a sitemap, and a post-build script that audits every page's SEO tags.
-- Motion uses only transform, opacity and clip-path, with a static fallback under `prefers-reduced-motion`. Page changes use native cross-document view transitions, so there's no client router.
+- **Astro 7** with TypeScript, prerendered to static HTML and deployed on Vercel
+- **React islands** only where interactivity is needed: the calculators and the contact form
+- **three.js** via react-three-fiber for the hero, loaded after the content
+- Plain CSS with OKLCH design tokens and self-hosted variable fonts
+- Motion that only uses transform, opacity and clip-path, with a static fallback under `prefers-reduced-motion`
+- Native cross-document **view transitions** between pages, so there's no client-side router

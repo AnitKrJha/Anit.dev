@@ -4,6 +4,8 @@ import { Image, getImage } from "astro:assets";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
 import CodeCopy from "../../components/CodeCopy.astro";
+import PostRow from "../../components/PostRow.astro";
+import { getPosts } from "../../lib/content";
 import { formattedDate, isoDate, readingTime } from "../../lib/utils";
 import { person, SITE_URL } from "../../lib/site";
 
@@ -23,6 +25,11 @@ const { post } = Astro.props;
 const { date, isDraft, title: rawTitle, description, image, ogImage, tags } = post.data;
 const title = rawTitle.trim();
 const { Content } = await post.render();
+
+// Up to two other posts, preferring ones that share a tag.
+const others = (await getPosts()).filter((p) => p.slug !== post.slug);
+const shares = (p: (typeof others)[number]) => p.data.tags.some((t) => tags.includes(t));
+const related = [...others.filter(shares), ...others.filter((p) => !shares(p))].slice(0, 2);
 
 const coverUrl = image ? (await getImage({ src: image, width: 1200, format: "jpg" })).src : undefined;
 const shareImage = ogImage ?? coverUrl;
@@ -121,11 +128,26 @@ const jsonLd = [
     </div>
     <CodeCopy />
 
-    <footer class="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-line pt-6 text-sm">
+    <footer class="mt-14 border-t border-line pt-6 text-sm">
       <p class="text-ink-3">
-        Written by <a href="/" class="link">{person.name}</a>.
+        Written by <a href="/" class="link">{person.name}</a>, a DevOps and automation engineer at Apple. Found a
+        mistake? Tell me on <a href="https://x.com/_anitjha" target="_blank" rel="noopener" class="link">X</a> or
+        <a href="https://www.linkedin.com/in/anitjha" target="_blank" rel="noopener" class="link">LinkedIn</a>.
       </p>
-      <a href="/blog" class="more">More posts <Icon name="arrow-up-right" size={14} /></a>
     </footer>
+
+    {
+      related.length > 0 && (
+        <section class="section" aria-labelledby="keep-reading">
+          <div class="flex items-baseline justify-between">
+            <h2 id="keep-reading" class="section-title">Keep reading</h2>
+            <a href="/blog" class="more">All posts <Icon name="arrow-up-right" size={14} /></a>
+          </div>
+          <ul class="mt-4">
+            {related.map((p) => <PostRow post={p} detailed headingLevel="h3" />)}
+          </ul>
+        </section>
+      )
+    }
   </article>
 </BaseLayout>

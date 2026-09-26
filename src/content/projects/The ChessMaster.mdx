@@ -14,19 +14,39 @@ tags: ["Next.js", "TypeScript", "Supabase", "WebSockets", "chess.js"]
 order: 3
 ---
 
+**The ChessMaster** is a real-time multiplayer chess game you play in the browser with friends. You create a room, send the invite, and the game happens live: every move shows up instantly for both players and for anyone watching. You can [play it here](https://thechessmaster.vercel.app/), and the [code is on GitHub](https://github.com/anitkrjha/chessmaster).
+
 ## Why I built it
 
-I play a lot of chess, and I wanted a way to play friends without either of us signing up for a big platform. I also wanted an excuse to build something properly real-time.
+I've always loved chess, and building a way to play it with my friends felt like the perfect project.
+
+It's also a genuinely real-time problem. Most web apps are fine if data shows up a second late. A chess game isn't. If your opponent moves and you don't see it, the game is broken.
 
 ## How it works
 
-- **Create an account** and land on a dashboard with your game history.
-- **Open a game room** and share the invite with friends.
-- **The first friend to join is your opponent.** Everyone else who joins becomes a spectator and watches the game move by move.
+1. **Create an account.** You land on your own dashboard.
+2. **See your history.** The dashboard lists the games you've played.
+3. **Open a game room** and invite your friends.
+4. **The first friend to join is your opponent.**
+5. **Everyone else who joins is a spectator.** They watch the game live, move by move. It's like having your own live audience.
+
+## The real-time part
+
+Two pieces do most of the work:
+
+- **[chess.js](https://github.com/jhlywa/chess.js)** knows the rules. It checks whether a move is legal and tracks the full game state: whose turn it is, check, checkmate, stalemate and draws. Chess has plenty of edge cases (castling, en passant, promotion), and chess.js handles all of them.
+- **[Supabase Realtime](https://supabase.com/docs/guides/realtime)** keeps everyone in the room in sync over [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket). A move goes out to the opponent and every spectator straight away, with no refreshing and no polling.
+
+Supabase is also the database behind the app.
 
 ## Under the hood
 
-- **[TypeScript](https://www.typescriptlang.org/)** and **Next.js** for the app.
-- **[Supabase Realtime](https://supabase.com/docs/guides/realtime)** over [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) to sync moves between players and spectators.
-- **[chess.js](https://github.com/jhlywa/chess.js)** for move validation and game state.
-- **[Tailwind CSS](https://tailwindcss.com/)** for the interface.
+- **Next.js** and **[TypeScript](https://www.typescriptlang.org/)**
+- **Supabase** for the database and Realtime
+- **chess.js** for move validation and game state
+- **[Tailwind CSS](https://tailwindcss.com/)** for the interface
+- Deployed on **Vercel**
+
+## Try it
+
+Grab a friend, open [thechessmaster.vercel.app](https://thechessmaster.vercel.app/), create a room and send the invite. If you find a bug, or you beat me, [let me know on X](https://x.com/_anitjha).

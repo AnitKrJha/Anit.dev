@@ -13,52 +13,68 @@ tags: ["Next.js", "TypeScript", "Three.js", "Supabase"]
 order: 4
 ---
 
+**Moksha Innovision** is the annual fest of NSUT Delhi, my university. In 2023 it drew around **80,000 attendees**. I worked on the fest's website, [mokshansut.com](https://mokshansut.com/events), with the web team, and I'm proud of what we built.
+
 ## The brief
 
-Moksha Innovision is the annual fest of NSUT Delhi. In 2023 it drew around **80,000 attendees**. The site had to handle event discovery and registration for all of them, and give event organisers a way to run their own events without asking the web team for help.
+A fest this size runs a lot of events, each organised by a different team. The site had to be one place where:
+
+- attendees could find every event and register for it
+- **organisers could run their own events**: create them, collect registrations and see who's coming, without needing the web team
 
 ## What it does
 
-**For organisers**
+### For organisers
 
-- Create events, each with its own registration form.
-- Track who has registered from a dashboard.
+- Create an event with its own **registration form**.
+- See everyone who registered from a **dashboard**.
+- Manage **only their own** events.
 
-**For participants**
+### For participants
 
-- Register for events, alone or as a team.
-- See every event you're part of and who your teammates are.
+- Browse the events at the fest and **register**, alone or as a team.
+- See all the events you're part of in one place, and **who your teammates are**.
 
-Access is **role-based**, so organisers only see and manage their own events.
+## Role-based access
+
+With many organisers on the same site, permissions mattered. Access is **role-based**: the site knows whether you're a participant or an organiser, and organisers can only see and manage the events that belong to them. Auth, the database and those access rules are built on **Supabase**.
 
 ## The look
 
-The theme blends traditional and modern, with mandala effects throughout and 3D touches built in Three.js.
+The theme blends traditional and modern: **mandala** effects throughout, with 3D touches built in **Three.js**.
 
-## Under the hood
+## Working as a team
 
-- **Next.js** and **TypeScript**.
-- **Three.js** for the 3D effects.
-- **Supabase** for auth, the database and role-based access.
+I built this with my teammate Harsh, and we sometimes ended up editing the same files at the same time. Stash your changes, pull, put them back, fix the conflict: it happened often enough that I wrote the workflow up in [Git Stash: A Practical Beginner's Guide](/blog/git-stash).
 
 ## Pages
 
 ### Events
 
-![Moksha Innovision events page](../../assets/projects/MokshaInno/EventsPage.jpg)
+![Moksha Innovision events page listing fest events with mandala artwork](../../assets/projects/MokshaInno/EventsPage.jpg)
+
 The heart of the site: every event at the fest, with registration built in.
 
 ### Legacy
 
-![Moksha Innovision legacy page](../../assets/projects/MokshaInno/LegacyPage.png)
+![Moksha Innovision legacy page about the fest's history](../../assets/projects/MokshaInno/LegacyPage.png)
+
 A look back at the fest's history.
 
 ### Contact
 
 ![Moksha Innovision contact page](../../assets/projects/MokshaInno/ContactPage.png)
+
 How to reach the organisers.
 
 ### Login
 
 ![Moksha Innovision login page](../../assets/projects/MokshaInno/loginpage.png)
-Where participants sign in and organisers reach their dashboards.
+
+Where participants sign in and organisers get to their dashboards.
+
+## Under the hood
+
+- **Next.js** and **TypeScript**
+- **Three.js** for the 3D effects
+- **Supabase** for auth, the database and role-based access

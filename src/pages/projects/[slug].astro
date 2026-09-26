@@ -4,6 +4,8 @@ import { Image, getImage } from "astro:assets";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
 import CodeCopy from "../../components/CodeCopy.astro";
+import ProjectRow from "../../components/ProjectRow.astro";
+import { getProjects } from "../../lib/content";
 import ProjectDummyImage from "../../content/project-dummy.png";
 import { person, SITE_URL } from "../../lib/site";
 
@@ -22,6 +24,7 @@ type Props = {
 const { project } = Astro.props;
 const { isDraft, name, description, image, imageAlt, ghLink, liveLink, year, role, tags } = project.data;
 const { Content } = await project.render();
+const more = (await getProjects()).filter((p) => p.slug !== project.slug).slice(0, 2);
 
 const cover = image ?? ProjectDummyImage;
 const ogImage = (await getImage({ src: cover, width: 1200, format: "jpg" })).src;
@@ -147,5 +150,19 @@ const jsonLd = [
       <Content />
     </div>
     <CodeCopy />
+
+    {
+      more.length > 0 && (
+        <section class="section" aria-labelledby="more-projects">
+          <div class="flex items-baseline justify-between">
+            <h2 id="more-projects" class="section-title">More projects</h2>
+            <a href="/projects" class="more">All projects <Icon name="arrow-up-right" size={14} /></a>
+          </div>
+          <div class="mt-6">
+            {more.map((p) => <ProjectRow project={p} />)}
+          </div>
+        </section>
+      )
+    }
   </article>
 </BaseLayout>
