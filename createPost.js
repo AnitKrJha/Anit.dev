@@ -11,7 +11,7 @@ const PROJECT_DIRPATH = join(rootDir, "src", "content", "projects");
 
 const BLOG_TEMPLATE = `---
 title: "BLOG TITLE HERE"
-description: "BLOG DESCRIPTION"
+description: "BLOG DESCRIPTION (under 160 characters, used for SEO)"
 isDraft: true
 tags: []
 #image:
@@ -21,12 +21,18 @@ date: "MM-DD-YYYY"
 
 const PROJECT_TEMPLATE = `---
 name: "PROJECT NAME"
-description: "PROJECT DESC"
+description: "PROJECT DESC (under 160 characters, used for SEO)"
+#tagline: "One line for project lists"
 isDraft: true
 #slug: ""
-#image:""
-# ghLink: ""
-# liveLink: ""
+#image: ""
+#imageAlt: ""
+#ghLink: ""
+#liveLink: ""
+#year: 2026
+#role: "Design & build"
+tags: []
+#order: 10
 ---
 `;
 

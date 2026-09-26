@@ -1,0 +1,32 @@
+---
+name: "Softly Drawn"
+description: "Portfolio site for Softly Drawn, the studio of digital artist Kio: a small WebGL gallery with scroll reveals and artwork that morphs between pages."
+tagline: "A gallery-like portfolio for a digital artist, with a WebGL hero and artwork that morphs between pages."
+isDraft: false
+slug: "softly-drawn"
+image: "../../assets/projects/SoftlyDrawn/CoverImg.jpg"
+imageAlt: "Softly Drawn by Kio social card with four hand-drawn character illustrations."
+year: 2026
+role: "Design & build"
+tags: ["React", "TypeScript", "Three.js", "GSAP", "Vite"]
+order: 2
+---
+
+## The brief
+
+**Softly Drawn** is the portfolio studio of **Kio**, a digital artist who makes semi-realistic character art, original characters, book covers and profile icons. Every piece is hand-drawn, with no AI. The site had to feel like a small gallery: quiet enough that the artwork leads, but with enough craft that it's memorable.
+
+## What I built
+
+- **A WebGL hero.** A three.js scene with custom shaders, loaded only on desktop and code-split so phones get a fast static version.
+- **Page transitions that carry the artwork.** Click a piece and its image morphs from the grid into its own page, using GSAP Flip.
+- **Scroll-driven reveals** with GSAP ScrollTrigger and SplitText, plus Lenis for smooth scrolling.
+- **A contact page that reads like a letter** on cream paper, for commissions and orders.
+- **Reviews copied word for word** from Fiverr, each linked to the artwork it was about.
+
+## Under the hood
+
+- **Vite**, **React 19** and **TypeScript**, with react-router for `/`, `/work`, `/work/:slug` and `/contact`.
+- An **image pipeline** script that takes the full-resolution PNGs and writes responsive WebP sizes, GPU textures and blur placeholders, then updates a manifest the site reads.
+- All content (bio, links, artworks, reviews) lives in typed data files, so adding a new piece never means touching a component.
+- Fraunces and Manrope variable fonts, self-hosted.

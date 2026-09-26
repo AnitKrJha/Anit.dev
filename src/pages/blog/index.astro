@@ -1,52 +1,40 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
-import BlogPreview from "../../components/BlogPreview.astro";
-import Icon from "../../components/Icon.astro";
+import PostRow from "../../components/PostRow.astro";
+import { getPosts } from "../../lib/content";
+import { person, SITE_URL } from "../../lib/site";
 
-// Get all entries from a collection.
-// Requires the name of the collection as an argument.
-// Example: retrieve `src/content/blog/**`
-const allBlogPosts = (await getCollection("blog"))
-  .sort((a, b) => {
-    if (a.data.date < b.data.date) return 1;
-    if (a.data.date > b.data.date) return -1;
-    else return 0;
-  })
-  .filter((post) => post.data.isDraft != true);
+const posts = await getPosts();
 
-// Get a single entry from a collection.
-// Requires the name of the collection and either
-// the entry `slug` (content collections) or `id` (data collections)
-// Example: retrieve `src/content/authors/grace-hopper.json`
-// const graceHopperProfile = await getEntry('');
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  name: `${person.name}'s blog`,
+  url: `${SITE_URL}/blog`,
+  author: { "@type": "Person", name: person.name, url: SITE_URL },
+  blogPost: posts.map((post) => ({
+    "@type": "BlogPosting",
+    headline: post.data.title.trim(),
+    url: `${SITE_URL}/blog/${post.slug}`,
+    datePublished: post.data.date.toISOString(),
+  })),
+};
 ---
 
 <BaseLayout
-  title="Blog • Anit"
-  description="Anit's technical blogs and development insights.I write about what I code"
-  image="https://og.anit.dev/og?title=Technical Wrtings&type=blogs"
+  title="Blog"
+  description="Notes and guides by Anit Jha on Git, terminals, Linux and the tools developers use every day."
+  jsonLd={jsonLd}
 >
-  <h1 class="text-2xl mb-6 mt-4 inline-block">read my blogs 👇🏻</h1>
-  {
-    // allBlogPosts.map((post) => {
-    //   return (
-    //     <div class="dark:border-b-gray-800 border-b-gray-300  border-b">
-    //       <h3 transition:name={post.slug} class="text-lg ">
-    //         <a
-    //           class="no-underline hover:text-gray-500 dark:hover:text-gray-400 duration-300"
-    //           href={`/blog/${post.slug}`}
-    //         >
-    //           {post.data.title}
-    //         </a>
-    //       </h3>
-    //       <p>{post.data.description}</p>
-    //       <small>Date: {formattedDate(post.data.date)}</small>
-    //     </div>
-    //   );
-    // })
-    allBlogPosts.map((post) => {
-      return <BlogPreview {...post} />;
-    })
-  }
+  <header class="pt-14 sm:pt-20">
+    <h1 class="rise text-[length:var(--step-2)] font-bold tracking-[-0.035em] sm:text-[2.6rem]" style="--i:0">Blog</h1>
+    <p class="rise mt-3 max-w-[34rem] text-[1.075rem]" style="--i:1">
+      Notes on the tools I use, mostly written so future me stops googling the same thing.
+      <a href="/rss.xml" class="link" data-astro-reload>Subscribe via RSS</a>.
+    </p>
+  </header>
+
+  <ul class="mt-10">
+    {posts.map((post) => <PostRow post={post} detailed />)}
+  </ul>
 </BaseLayout>

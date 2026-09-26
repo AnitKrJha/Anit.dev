@@ -1,172 +1,212 @@
 ---
-import { getCollection } from "astro:content";
-import BlogPreview from "../components/BlogPreview.astro";
-import IconChip from "../components/IconChip.astro";
-import Projects from "../components/Projects.astro";
-import SmallBlogPreview from "../components/SmallBlogPreview.astro";
-import BaseLayout from "./../Layouts/BaseLayout.astro";
-import SocialChip from "../components/SocialChip.astro";
-import ImageGrid from "../components/ImageGrid.astro";
-import BannerChip from "../components/BannerChip.astro";
-const allPosts = await getCollection("blog");
-const latestPosts = allPosts
-  .sort((a, b) => {
-    if (a.data.date > b.data.date) return 1;
-    if (a.data.date < b.data.date) return -1;
-    else return 0;
-  })
-  .filter((post) => post.data.isDraft != true)
-  .slice(0, 3);
+import { Image, getImage } from "astro:assets";
+import BaseLayout from "../Layouts/BaseLayout.astro";
+import Icon from "../components/Icon.astro";
+import ProjectRow from "../components/ProjectRow.astro";
+import PostRow from "../components/PostRow.astro";
+import { getPosts, getProjects } from "../lib/content";
+import { experience, person, socials, toolbox, SITE_URL } from "../lib/site";
+import portrait from "../assets/Others/anit-portrait.jpg";
+import keyboard from "../assets/Others/potrait_keyboard.jpg";
+import campus from "../assets/Others/nsit.jpg";
+import leaf from "../assets/Others/leaves.jpg";
+
+const [projects, posts] = await Promise.all([getProjects(), getPosts()]);
+const latestPosts = posts.slice(0, 4);
+
+const photos = [
+  { src: keyboard, alt: "A laptop keyboard glowing pink and violet in the dark" },
+  { src: campus, alt: "A lamp post in front of the red-brick NSUT Delhi campus at dusk" },
+  { src: leaf, alt: "Close-up of a blue-toned leaf covered in water droplets" },
+];
+
+const portraitUrl = new URL((await getImage({ src: portrait, width: 396, format: "jpg" })).src, SITE_URL).href;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfilePage",
+    url: SITE_URL,
+    mainEntity: {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: person.name,
+      alternateName: person.fullName,
+      url: SITE_URL,
+      image: portraitUrl,
+      jobTitle: person.role,
+      worksFor: { "@type": "Organization", name: person.company, url: "https://www.apple.com" },
+      alumniOf: { "@type": "CollegeOrUniversity", name: person.school },
+      knowsAbout: person.knowsAbout,
+      sameAs: socials.map((s) => s.url),
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: person.name,
+    url: SITE_URL,
+    author: { "@id": `${SITE_URL}/#person` },
+  },
+];
 ---
 
 <BaseLayout
-  image="https://og.anit.dev/og?type=student"
-  title="Anit Jha • CSE"
-  description="Anit Jha, CSE student love to Code, playing Chess and Building Things in public. Open source contributor"
+  title={`${person.name} · ${person.role} at ${person.company}`}
+  rawTitle
+  description={person.summary}
+  image={`https://og.anit.dev/og?title=${encodeURIComponent(person.name)}`}
+  type="profile"
+  jsonLd={jsonLd}
 >
-  <header>
-    <BannerChip />
-    <h1 class="tracking-tight mb-8 mt-3">hey, I'm anitjha 👋</h1>
-    <p class="sm:leading-9">
-      Hi there, I'm a 20-year-old CS undergrad student who has a passion for
-      <strong>Chess</strong> and building things. I thoroughly enjoy
-      problem-solving, especially in the realms of web development and
-      open-source (OSS). My go-to setup is "<IconChip
-        text="Fedora"
-        iconName="logos:fedora"
-        shadowColorClass="shadow-sky-400"
-      />
-       + <IconChip
-        text="Windows"
-        iconName="mdi:microsoft-windows"
-        shadowColorClass="shadow-cyan-200"
-      />" with a sprinkle of <strong>WSL</strong> for that extra functionality.
-    </p>
-    <p>
-      Currently, I'm diving deep into the world of <strong
-        >Machine Learning</strong
-      > (<em>ML</em>) in my studies.
-    </p>
-
-    <hr class="my-0 border-neutral-100 dark:border-neutral-700 border" />
-    <ImageGrid />
-    <section class="social">
-      <p>
-        You can stay <strong>updated</strong> and follow my journey here. 👇🏻
-      </p>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-x-4">
-        <SocialChip socialMedia="insta" />
-        <SocialChip socialMedia="twitter" />
-        <SocialChip socialMedia="linkedin" />
-        <SocialChip socialMedia="github" />
+  <!-- Hero -->
+  <section class="pt-14 sm:pt-20" aria-labelledby="intro">
+    <div class="flex flex-col-reverse gap-8 sm:flex-row sm:items-end sm:justify-between">
+      <div>
+        <p class="rise flex items-center gap-2.5 text-[0.9375rem] font-medium text-ink-2" style="--i:0">
+          <span class="now-dot" aria-hidden="true"></span>
+          {person.role} at {person.company}
+        </p>
+        <h1
+          id="intro"
+          class="rise mt-4 text-[length:var(--step-hero)] font-[760] leading-[0.95] tracking-[-0.045em]"
+          style="--i:1"
+        >
+          Hi, I'm <br />Anit Jha.
+        </h1>
       </div>
-    </section>
+      <div class="rise w-28 shrink-0 sm:w-36" style="--i:2">
+        <Image
+          src={portrait}
+          alt="Anit Jha smiling, leaning on a steel railing under a tree at night"
+          widths={[144, 288, 396]}
+          sizes="(min-width: 640px) 144px, 112px"
+          loading="eager"
+          class="aspect-[3/4] w-full rotate-[2.5deg] rounded-2xl object-cover shadow-[0_18px_40px_-18px_oklch(0.2_0.05_300/0.45)] ring-1 ring-line"
+        />
+      </div>
+    </div>
 
-    <h2 class="mt-14 mb-8 shdow-">Skills and Interests ✏️</h2>
-
-    <p class="leading-9">
-      I've explored a diverse range of technologies and environments, mastering
-      key domains including:
-      <br />
-      <strong>Web Frameworks and BaaS:</strong>
-
-      <IconChip
-        iconName="teenyicons:nextjs-outline"
-        text="NextJS"
-        shadowColorClass="shadow-gray-50"
-      />
-      <IconChip
-        iconName="logos:firebase"
-        text="Firebase"
-        shadowColorClass="shadow-rose-500"
-      />
-      <IconChip
-        iconName="logos:typescript-icon"
-        text="Typescript"
-        shadowColorClass="shadow-blue-500"
-      />
-      <IconChip
-        shadowColorClass="shadow-rose-500"
-        iconName="simple-icons:astro"
-        text="Astro"
-      />
-      <br />
-       Proficient in the <strong>Server and the Terminal</strong>, with
-      expertise in various <IconChip
-        iconName="flat-color-icons:linux"
-        text="Linux/Unix"
-        shadowColorClass="shadow-black"
-      /> environments. <br />
-       I've also mastered <strong>Backend Languages</strong>, including
-      <IconChip
-        shadowColorClass="shadow-green-500"
-        iconName="vscode-icons:file-type-python"
-        text="Python"
-      />,
-      <IconChip
-        shadowColorClass="shadow-red-500"
-        iconName="logos:java"
-        text="Java"
-      />, and <IconChip
-        shadowColorClass="shadow-purple-500"
-        iconName="logos:go"
-        text="Golang"
-      />.
-      <br /> Currently, I'm delving into <strong>Machine Learning</strong>,
-      utilizing tools like <IconChip
-        shadowColorClass="shadow-rose-500"
-        iconName="logos:tensorflow"
-        text="TensorFlow"
-      /> and <IconChip
-        shadowColorClass="shadow-pink-500"
-        iconName="logos:pytorch"
-        text="PyTorch"
-      /> to expand my knowledge further.
-      <br />
-       Very comfortable with <strong>Version Control Systems</strong> with
-      <IconChip
-        shadowColorClass="shadow-rose-500"
-        iconName="logos:git-icon"
-        text="Git"
-      /> and
-      <IconChip
-        shadowColorClass="shadow-purple-500"
-        iconName="mdi:github"
-        text="GitHub"
-      />
-    </p>
-    <Projects />
-    <hr class="border border-neutral-300 dark:border-neutral-700" />
-    <section>
-      <p>
-        I also have a passion for sharing my knowledge and insights from my
-        experiences. One way I do this is by occasionally <strong
-          >writing blogs</strong
-        >. Some of them are 👇
+    <div class="mt-9 max-w-[38rem] space-y-4 text-[1.1rem] leading-[1.7]">
+      <p class="rise" style="--i:3">
+        I'm {person.age} and work on DevOps and automation on Apple's {person.team} team. Day to day that means
+        infrastructure as code with <strong class="font-semibold text-ink">Crossplane</strong> and
+        <strong class="font-semibold text-ink">Kubernetes</strong>, tooling in <strong class="font-semibold text-ink">Go</strong>,
+        and internal web apps in <strong class="font-semibold text-ink">React</strong> and TypeScript.
       </p>
+      <p class="rise" style="--i:4">
+        Before that I interned on the checkout team, writing Scala. Outside work I build websites for small businesses and
+        friends, play a lot of chess, write about the tools I use, and keep a little
+        <a href="https://recipies.anit.dev" target="_blank" rel="noopener" class="link">recipe site</a>.
+      </p>
+    </div>
+
+    <ul class="rise mt-8 flex flex-wrap gap-2" style="--i:5" aria-label="Find me elsewhere">
       {
-        latestPosts.map((post) => (
-          <SmallBlogPreview
-            date={post.data.date}
-            title={post.data.title}
-            slug={post.slug}
-          />
+        socials.map((s) => (
+          <li>
+            <a
+              href={s.url}
+              target="_blank"
+              rel="me noopener"
+              class="inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-sm font-medium text-ink-2 ring-1 ring-line transition duration-200 hover:text-ink hover:ring-line-strong"
+            >
+              <Icon name={s.icon} size={14} />
+              {s.label}
+            </a>
+          </li>
         ))
       }
-      <a
-        href="/blog"
-        class="text-sm no-underline justify-end gap-2 hover:underline flex w-full items-center pr-3 opacity-75"
-        >..more blogs<svg
-          width="10"
-          height="10"
-          viewBox="0 0 12 12"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-          ><path
-            d="M2.07102 11.3494L0.963068 10.2415L9.2017 1.98864H2.83807L2.85227 0.454545H11.8438V9.46023H10.2955L10.3097 3.09659L2.07102 11.3494Z"
-            fill="currentColor"></path></svg
-        ></a
-      >
-    </section>
-  </header>
+    </ul>
+  </section>
+
+  <!-- Photos -->
+  <div class="section grid grid-cols-3 gap-3 sm:gap-4" aria-label="Photos">
+    {
+      photos.map((photo, i) => (
+        <Image
+          src={photo.src}
+          alt={photo.alt}
+          widths={[240, 480]}
+          sizes="(min-width: 768px) 230px, 33vw"
+          class:list={[
+            "aspect-[3/4] w-full rounded-xl object-cover ring-1 ring-line",
+            i === 1 && "translate-y-5 sm:translate-y-8",
+          ]}
+        />
+      ))
+    }
+  </div>
+
+  <!-- Experience -->
+  <section class="section" aria-labelledby="experience">
+    <h2 id="experience" class="section-title">Experience</h2>
+    <ol class="mt-6">
+      {
+        experience.map((role) => (
+          <li class="grid gap-1.5 border-t border-line py-6 first:border-t-0 sm:grid-cols-[6.5rem_1fr] sm:gap-6">
+            <p class="nums flex items-center gap-2 pt-0.5 text-sm text-ink-3">
+              {role.current && <span class="now-dot" aria-hidden="true" />}
+              {role.when}
+            </p>
+            <div>
+              <h3 class="text-[1.075rem] font-semibold leading-snug tracking-[-0.015em]">{role.title}</h3>
+              <p class="text-sm text-ink-3">{role.org}</p>
+              <p class="mt-2.5 text-[0.975rem] leading-relaxed">{role.summary}</p>
+              {role.stack.length > 0 && <p class="tag mt-2.5">{role.stack.join(" · ")}</p>}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <!-- Projects -->
+  <section class="section" aria-labelledby="projects">
+    <div class="flex items-baseline justify-between">
+      <h2 id="projects" class="section-title">Selected projects</h2>
+      <a href="/projects" class="more">All projects <Icon name="arrow-up-right" size={14} /></a>
+    </div>
+    <div class="mt-6">
+      {projects.map((project) => <ProjectRow project={project} />)}
+    </div>
+  </section>
+
+  <!-- Toolbox -->
+  <section class="section" aria-labelledby="toolbox">
+    <h2 id="toolbox" class="section-title">Toolbox</h2>
+    <dl class="mt-6">
+      {
+        toolbox.map((group) => (
+          <div class="grid gap-1 border-t border-line py-4 first:border-t-0 sm:grid-cols-[6.5rem_1fr] sm:gap-6">
+            <dt class="text-sm text-ink-3">{group.label}</dt>
+            <dd class="text-[0.975rem] text-ink">{group.items.join(", ")}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <!-- Writing -->
+  <section class="section" aria-labelledby="writing">
+    <div class="flex items-baseline justify-between">
+      <h2 id="writing" class="section-title">Writing</h2>
+      <a href="/blog" class="more">All posts <Icon name="arrow-up-right" size={14} /></a>
+    </div>
+    <ul class="mt-4">
+      {latestPosts.map((post) => <PostRow post={post} />)}
+    </ul>
+  </section>
 </BaseLayout>
+
+<style>
+  .now-dot {
+    display: inline-block;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 999px;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+    flex-shrink: 0;
+  }
+</style>

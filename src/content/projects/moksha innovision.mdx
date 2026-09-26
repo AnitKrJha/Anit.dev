@@ -1,74 +1,64 @@
 ---
 name: "Moksha Innovision"
-description: " I recently had the opportunity to work on something pretty exciting - the website for Moksha Innovision, the annual fest of NSUT Delhi."
+description: "Website for Moksha Innovision, NSUT Delhi's annual fest with around 80,000 attendees: event registration, organiser dashboards and a 3D mandala theme."
+tagline: "The website for NSUT's annual fest: 80,000 attendees, event registration and organiser dashboards."
 isDraft: false
-#slug: ""
 image: "./../../assets/projects/MokshaInno/CoverImg.png"
+imageAlt: "Moksha Innovision website hero with mandala artwork."
 ghLink: "https://github.com/anitkrjha/moksha-innovision-2023"
 liveLink: "https://mokshansut.com/events"
+year: 2023
+role: "Built with the fest web team"
+tags: ["Next.js", "TypeScript", "Three.js", "Supabase"]
+order: 4
 ---
 
-## My Experience Building the Moksha Innovision Website
+## The brief
 
-Hey there, I'm Anit Jha, and I recently had the opportunity to work on something pretty exciting - the website for Moksha Innovision, the annual fest of NSUT Delhi. It was a fantastic experience, and I'd love to share a bit about it.
+Moksha Innovision is the annual fest of NSUT Delhi. In 2023 it drew around **80,000 attendees**. The site had to handle event discovery and registration for all of them, and give event organisers a way to run their own events without asking the web team for help.
 
-## The Numbers Don't Lie
+## What it does
 
-First things first, let's talk about the numbers. Last year, in 2023, Moksha Innovision attracted a whopping 80,000 attendees. Yes, you read that right! It's a massive event, and I was thrilled to be a part of it.
+**For organisers**
 
-## The Tech Stack
+- Create events, each with its own registration form.
+- Track who has registered from a dashboard.
 
-Now, let's dive into the technical side of things. The website I built for Moksha Innovision was a mix of cutting-edge technologies. We used:
+**For participants**
 
-- **Three.js**: This JavaScript library allowed us to create stunning 3D effects and animations on the website.
-- **TypeScript**: For that extra layer of type safety and code quality.
-- **Next.js**: A React framework that made building a fast and efficient website a breeze.
-- **Supabase**: To handle the backend and database needs.
-- **Authentication Role-Based**: Ensuring that only authorized users could access certain parts of the website.
+- Register for events, alone or as a team.
+- See every event you're part of and who your teammates are.
 
-## The Functionalities
+Access is **role-based**, so organisers only see and manage their own events.
 
-The website wasn't just a pretty face; it had some powerful features too. We designed it with both event managers and attendees in mind:
+## The look
 
-### Event Managers
+The theme blends traditional and modern, with mandala effects throughout and 3D touches built in Three.js.
 
-- They could easily create events, complete with registration forms for participants.
-- A dashboard allowed them to keep tabs on who had registered for their events.
+## Under the hood
 
-### Participants
+- **Next.js** and **TypeScript**.
+- **Three.js** for the 3D effects.
+- **Supabase** for auth, the database and role-based access.
 
-- Participants could see which events they were a part of and who their team members were.
+## Pages
 
-## The Aesthetics
+### Events
 
-The theme we went for was a blend of traditional and modern, with captivating mandala effects sprinkled throughout the website. It gave the site a unique and eye-catching look that matched the spirit of Moksha Innovision.
+![Moksha Innovision events page](../../assets/projects/MokshaInno/EventsPage.jpg)
+The heart of the site: every event at the fest, with registration built in.
 
-## Spotlight on Pages
+### Legacy
 
-Let's take a visual tour of some of the key pages:
+![Moksha Innovision legacy page](../../assets/projects/MokshaInno/LegacyPage.png)
+A look back at the fest's history.
 
-### Events Page
+### Contact
 
-![Events Page](../../assets/projects/MokshaInno/EventsPage.jpg)
-This page served as the heart of the website, showcasing all the fantastic events happening during Moksha Innovision.
+![Moksha Innovision contact page](../../assets/projects/MokshaInno/ContactPage.png)
+How to reach the organisers.
 
-### Legacy Page
+### Login
 
-![Legacy Page](../../assets/projects/MokshaInno/LegacyPage.png)
-A tribute to the festival's history and past glories.
-
-### Contact Page
-
-![Contact Page](../../assets/projects/MokshaInno/ContactPage.png)
-A place to get in touch with the organizers for queries and information.
-
-### Login Page
-
-![Login Page](../../assets/projects/MokshaInno/loginpage.png)
-Where users could access their accounts, and event managers could log in to manage their events.
-
-## In Conclusion
-
-Building the Moksha Innovision website was an incredible experience, and I'm proud of what our team achieved. It's a testament to the power of technology in bringing people together and making large-scale events like this possible.
-
-I hope you enjoyed this brief journey through my work on the Moksha Innovision website. If you were a part of the fest last year, I hope you had a great time navigating the website, and if you're reading this in preparation for the next Moksha Innovision, get ready for an amazing experience!
+![Moksha Innovision login page](../../assets/projects/MokshaInno/loginpage.png)
+Where participants sign in and organisers reach their dashboards.

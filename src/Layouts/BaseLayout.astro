@@ -1,207 +1,151 @@
 ---
 import { ViewTransitions } from "astro:transitions";
+import "@fontsource-variable/bricolage-grotesque/opsz.css";
+import fontLatin from "@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-opsz-normal.woff2?url";
+import "../styles/global.css";
 import Navbar from "../components/Navbar.astro";
-import Icon from "/public/logo.svg";
 import Footer from "../components/Footer.astro";
+import { person, socials, SITE_URL } from "../lib/site";
+
 type Props = {
+  /** Page title. Suffixed with " · Anit Jha" unless `rawTitle` is set. */
   title: string;
+  rawTitle?: boolean;
   description: string;
-  image: string;
+  /** Absolute URL or site-relative path. Defaults to a generated OG card. */
+  image?: string;
+  imageAlt?: string;
+  type?: "website" | "article" | "profile";
+  publishedTime?: Date;
+  tags?: string[];
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 };
-const { title, description, image } = Astro.props;
+
+const {
+  title,
+  rawTitle = false,
+  description,
+  image,
+  imageAlt,
+  type = "website",
+  publishedTime,
+  tags = [],
+  noindex = false,
+  jsonLd,
+} = Astro.props;
+
+const fullTitle = rawTitle ? title : `${title} · ${person.name}`;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const canonical = new URL(path, SITE_URL).href;
+const ogImage = new URL(
+  image ?? `https://og.anit.dev/og?title=${encodeURIComponent(title)}`,
+  SITE_URL
+).href;
+const twitter = socials.find((s) => s.icon === "x")?.handle;
+const structured = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
 ---
 
-<html lang="en" class="dark font-graphik">
+<html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-    <script
-      type="text/partytown"
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-2Z1H8WC6DF"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <meta name="theme-color" content="#fcf9f5" />
+    <meta name="color-scheme" content="light dark" />
+
+    <!-- Theme: follow the OS until the visitor picks one. Inline in head to avoid a flash. -->
+    <script is:inline>
+      window.__applyTheme = () => {
+        const stored = localStorage.theme;
+        const dark = stored ? stored === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.classList.toggle("dark", dark);
+        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#0e0d16" : "#fcf9f5");
+      };
+      window.__applyTheme();
+      document.addEventListener("astro:after-swap", window.__applyTheme);
+      matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+        if (!localStorage.theme) window.__applyTheme();
+      });
+    </script>
+
+    <!-- Primary -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={person.name} />
+    <meta
+      name="robots"
+      content={noindex ? "noindex, follow" : "index, follow, max-image-preview:large, max-snippet:-1"}
+    />
+    <link rel="canonical" href={canonical} />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={person.name} />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={imageAlt ?? fullTitle} />
+    {type === "article" && publishedTime && (
+      <meta property="article:published_time" content={publishedTime.toISOString()} />
+    )}
+    {type === "article" && <meta property="article:author" content={SITE_URL} />}
+    {type === "profile" && <meta property="profile:first_name" content={person.name.split(" ")[0]} />}
+    {type === "profile" && <meta property="profile:last_name" content={person.name.split(" ").slice(1).join(" ")} />}
+    {type === "profile" && <meta property="profile:username" content="anitkrjha" />}
+    {type === "article" && tags.map((tag) => <meta property="article:tag" content={tag} />)}
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={`@${twitter}`} />
+    <meta name="twitter:creator" content={`@${twitter}`} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Icons, feeds, fonts -->
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/logo.ico" sizes="any" />
+    <link rel="alternate" type="application/rss+xml" title={`${person.name}'s blog`} href="/rss.xml" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="preload" href={fontLatin} as="font" type="font/woff2" crossorigin />
+
+    {structured.map((data) => <script type="application/ld+json" set:html={JSON.stringify(data)} />)}
+
+    <!-- Google tag (gtag.js), off the main thread via Partytown -->
+    <script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-2Z1H8WC6DF"></script>
     <script type="text/partytown">
       window.dataLayer = window.dataLayer || [];
       function gtag() {
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-2Z1H8WC6DF");
     </script>
-    <meta name="color-scheme" content="dark light" />
-    <meta name="theme-color" content="#1c1917" />
-
     <script is:inline>
-      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
-
-      const setColorMode = () => {
-        if (localStorage.theme === "dark" || !("theme" in localStorage)) {
-          // const metaTheme = document.querySelector('meta[name="theme-color"]');
-          // if (metaTheme !== null) metaTheme.setAttribute("content", "#1c1917");
-          document.documentElement.classList.add("dark");
-        } else {
-          // const metaTheme = document.querySelector('meta[name="theme-color"]');
-          // if (metaTheme !== null) metaTheme.setAttribute("content", "#fff9eb");
-          document.documentElement.classList.remove("dark");
-        }
-      };
-
-      setColorMode();
-      document.addEventListener("astro:after-swap", setColorMode);
-
-      // document.addEventListener("astro:page-load", setColorMode);
-    </script>
-    <!-- global meta tags -->
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <link rel="icon" href={"/logo.svg"} />
-    <meta name="generator" content={Astro.generator} />
-    <!-- primary meta tags -->
-    <title>{title}</title>
-    <meta name="title" content={title} />
-    <meta name="description" content={description} />
-
-    <!-- open graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Anit Kumar Jha" />
-    <meta property="og:url" content={Astro.url} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:image" content={image} />
-
-    <!-- twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content={Astro.url} />
-    <meta property="twitter:title" content={title} />
-    <meta property="twitter:description" content={description} />
-    <meta property="twitter:image" content={image} />
-
-    <!-- link tags-->
-    <link
-      rel="preload"
-      href="/fonts/graphik.ttf"
-      as="font"
-      type="font/ttf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/graphik.ttf"
-      as="font"
-      type="font/ttf"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="preload"
-      href="/fonts/graphik2.ttf"
-      as="font"
-      type="font/ttf"
-      crossorigin="anonymous"
-    />
-    <link rel="sitemap" href="/sitemap-index.xml" />
-    <ViewTransitions />
-    <script>
       window.va =
         window.va ||
         function () {
           (window.vaq = window.vaq || []).push(arguments);
         };
     </script>
+
+    <ViewTransitions />
   </head>
-  <body
-    class="bg-lightGradient dark:bg-darkGradient dak:text-slate-50 text-slate-800 dark:bg-stone-900 max-w-3xl mx-auto px-4 overflow-y-scroll"
-  >
-    <Navbar />
-    <main
-      class="prose prose-stone dark:prose-invert py-2 px-2 min-h-[90dvh] !w-full max-w-full"
+  <body class="relative flex min-h-dvh flex-col">
+    <div class="aurora" aria-hidden="true" transition:persist="aurora"></div>
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-full focus:bg-ink focus:px-4 focus:py-2 focus:text-bg"
+      >Skip to content</a
     >
-      <slot name="extra-header" />
+    <Navbar />
+    <main id="main" class="shell flex-1">
       <slot />
     </main>
     <Footer />
-    <style is:global>
-      * {
-        @apply font-normal;
-      }
-      @font-face {
-        font-family: "graphik";
-        src: url("/fonts/graphik.ttf"), url("/fonts/graphik.ttf"),
-          url("/fonts/graphik2.ttf");
-        font-display: swap;
-      }
-      /* @keyframes fade-in {
-        from {
-          opacity: 0;
-        }
-      }
-
-      @keyframes fade-out {
-        to {
-          opacity: 0;
-        }
-      }
-
-      @keyframes slide-from-right {
-        from {
-          transform: translateX(30px);
-        }
-      }
-
-      @keyframes slide-to-left {
-        to {
-          transform: translateX(-30px);
-        }
-      }
-
-      ::view-transition-old(root) {
-        animation:
-          90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
-          300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-to-left;
-      }
-
-      ::view-transition-new(root) {
-        animation:
-          210ms cubic-bezier(0, 0, 0.2, 1) 90ms both fade-in,
-          300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-from-right;
-      } */
-
-      p {
-        font-size: 1rem;
-      }
-      h4 {
-        font-size: 1.1rem !important;
-      }
-      h1 {
-        @apply !text-2xl;
-      }
-      h2 {
-        @apply !text-xl;
-      }
-      h3 {
-        @apply !text-lg;
-      }
-      ::-webkit-scrollbar {
-        width: 5px;
-        height: 5px;
-      }
-
-      /* Track styles */
-      ::-webkit-scrollbar-track {
-        @apply bg-gray-600 /* Light greyish background */;
-      }
-
-      /* Thumb styles */
-      ::-webkit-scrollbar-thumb {
-        @apply bg-gray-300/80  rounded
-        /* background-color: rgba(
-          192,
-          192,
-          192,
-          0.5
-        ); Translucent light greyish */;
-      }
-      & img {
-        @apply mx-auto rounded;
-      }
-    </style>
   </body>
 </html>

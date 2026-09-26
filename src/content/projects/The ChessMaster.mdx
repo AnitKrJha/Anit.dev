@@ -1,42 +1,32 @@
 ---
 name: "The ChessMaster"
-description: "A real-time chess game, The ChessMaster. Create an account, invite friends, and play against opponents in this thrilling online chess experience."
+description: "Real-time multiplayer chess: open a room, invite friends and play live while others watch as spectators. Built with Next.js, Supabase Realtime and chess.js."
+tagline: "Real-time multiplayer chess with game rooms, invites and live spectators."
 isDraft: false
 slug: "the-chessmaster"
 ghLink: "https://github.com/anitkrjha/chessmaster"
 liveLink: "https://thechessmaster.vercel.app/"
 image: "../../assets/projects/The ChessMaster/CoverImg.png"
+imageAlt: "The ChessMaster game board and dashboard."
+year: 2023
+role: "Design & build"
+tags: ["Next.js", "TypeScript", "Supabase", "WebSockets", "chess.js"]
+order: 3
 ---
 
-**TypeScript** • **NextJS** • **Supabase** • **Tailwind** • **WebSockets** • **Chess.js**
+## Why I built it
 
-## Introduction
+I play a lot of chess, and I wanted a way to play friends without either of us signing up for a big platform. I also wanted an excuse to build something properly real-time.
 
-Hey, I'm Anit Jha, and I want to introduce you to **The ChessMaster**, an exhilarating real-time chess game that's taking the online gaming world by storm!
+## How it works
 
-## Overview
+- **Create an account** and land on a dashboard with your game history.
+- **Open a game room** and share the invite with friends.
+- **The first friend to join is your opponent.** Everyone else who joins becomes a spectator and watches the game move by move.
 
-**The ChessMaster** offers you a unique chess gaming experience. After creating an account, you'll be directed to your personalized dashboard, where you can view your gaming history and set up new game rooms to challenge your friends.
+## Under the hood
 
-### Real-Time Chess Fun
-
-- **Create an Account**: Start by creating your personalized gaming account.
-- **Dashboard Delight**: Your dashboard lets you relive your past games and launch new ones.
-- **Invite Your Friends**: Challenge your friends by creating game rooms and inviting them to join.
-- **Spectator Thrills**: The first friend to join becomes your opponent, while others can watch as spectators. It's like having your own live audience!
-
-## Tech Stack
-
-Wondering how we make this magic happen? Here's the tech stack that powers **The ChessMaster**:
-
-- **[Typescript](https://www.typescriptlang.org/)**: We use Typescript for smooth and robust development.
-- **[Websockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket)**: Real-time gaming wouldn't be possible without websockets, keeping you connected and engaged.
-- **[chess.js](https://github.com/jhlywa/chess.js)**: Chess logic is powered by chess.js, ensuring fair and exciting gameplay.
-- **[Supabase](https://supabase.com/blog/tags/realtime)**: Our real-time database solution ensures that your gaming experience is seamless.
-- **[Tailwind CSS](https://tailwindcss.com/)**: For a sleek and stylish look, we've used Tailwind CSS to make everything visually appealing.
-
-With this tech stack, we've crafted an incredible gaming experience for chess enthusiasts like you!
-
-So, what are you waiting for? Dive into the world of real-time chess with **The ChessMaster** and become a chess legend!
-
-Author: [Anit Jha](https://anit.dev)
+- **[TypeScript](https://www.typescriptlang.org/)** and **Next.js** for the app.
+- **[Supabase Realtime](https://supabase.com/docs/guides/realtime)** over [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket) to sync moves between players and spectators.
+- **[chess.js](https://github.com/jhlywa/chess.js)** for move validation and game state.
+- **[Tailwind CSS](https://tailwindcss.com/)** for the interface.

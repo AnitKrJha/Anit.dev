@@ -1,0 +1,40 @@
+---
+name: "GrowthSense"
+description: "Website for GrowthSense, an independent tax practice in Delhi NCR: a static Astro site with free tax calculators, a 3D paperwork hero and per-page OG cards."
+tagline: "A tax practice site that turns anxious visitors into WhatsApp messages, with free calculators that do real work."
+isDraft: false
+slug: "growthsense"
+image: "../../assets/projects/GrowthSense/CoverImg.png"
+imageAlt: "GrowthSense social card: 'Send us the mess. Get back an acknowledgement.' beside a stack of papers stamped FILED."
+liveLink: "https://growthsense.net"
+year: 2026
+role: "Design & build"
+tags: ["Astro", "React", "TypeScript", "Three.js", "Vitest"]
+order: 1
+---
+
+## The brief
+
+GrowthSense is the practice of Avinash Thakur, a tax and accounts practitioner with more than ten years in finance. His clients are salaried people, pensioners, shop owners and freelancers. Most of them open the site from a WhatsApp-forwarded link on a mid-range Android phone, often a little anxious about a due date or a notice.
+
+The site has one job: in about ten seconds, look competent, legitimate and easy to reach, then get that person to send a message.
+
+## The idea: paperwork in, acknowledgement out
+
+The art direction is called **Paperwork → Filed**. You hand over a pile of confusing papers and get back an acknowledgement. The home hero is a small 3D scene where sheets of paper float and lean toward your pointer or finger. Everything after it is calm, legible and official, because nobody should have to hunt for the WhatsApp button.
+
+I kept a strict set of anti-references: no navy and gold, no stock handshakes, no "Trusted by 500+ clients" counters, no gradient blobs.
+
+## What's in it
+
+- **Service pages** for ITR filing, GST, TDS, challans, PAN and Aadhaar, notices and refunds, and business registrations. Each one lists who it's for, the exact document checklist, the process and the timeline.
+- **Free calculators**: income tax (old vs new regime, with a full breakdown), HRA exemption, GST, an advance tax planner and a TDS rate finder. They bring in search traffic and build trust before anyone talks to a person.
+- **Honest by construction.** Owner facts live in one config file. Anything unconfirmed shows a visible placeholder instead of an invented number.
+
+## Under the hood
+
+- **Astro 7** with TypeScript, prerendered to static HTML. React islands only where interactivity is needed: the calculators and the contact form.
+- **Content collections** with zod schemas for every service page.
+- **Tax engines** in plain TypeScript, covered by **Vitest**.
+- **SEO**: per-route OG images generated at build time with satori and resvg, full Open Graph and Twitter tags, a sitemap, and a post-build script that audits every page's SEO tags.
+- Motion uses only transform, opacity and clip-path, with a static fallback under `prefers-reduced-motion`. Page changes use native cross-document view transitions, so there's no client router.

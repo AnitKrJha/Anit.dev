@@ -1,13 +1,13 @@
 ---
-import { getCollection, getEntry, type CollectionEntry } from "astro:content";
+import { getCollection, type CollectionEntry } from "astro:content";
+import { Image, getImage } from "astro:assets";
 import BaseLayout from "../../Layouts/BaseLayout.astro";
 import Icon from "../../components/Icon.astro";
-import { Image } from "astro:assets";
 import ProjectDummyImage from "../../content/project Dummy.png";
+import { person, SITE_URL } from "../../lib/site";
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects");
-
   return projects.map((project) => ({
     params: { slug: project.slug },
     props: { project },
@@ -18,86 +18,132 @@ type Props = {
   project: CollectionEntry<"projects">;
 };
 
-const {
-  project,
-  project: {
-    data: { isDraft, name, image, ghLink, liveLink },
-  },
-} = Astro.props;
+const { project } = Astro.props;
+const { isDraft, name, description, image, imageAlt, ghLink, liveLink, year, role, tags } = project.data;
 const { Content } = await project.render();
+
+const cover = image ?? ProjectDummyImage;
+const ogImage = (await getImage({ src: cover, width: 1200, format: "jpg" })).src;
+const url = `${SITE_URL}/projects/${project.slug}`;
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    name,
+    description,
+    url,
+    image: new URL(ogImage, SITE_URL).href,
+    dateCreated: year ? String(year) : undefined,
+    keywords: tags.join(", "),
+    creator: { "@type": "Person", name: person.name, url: SITE_URL },
+    ...(liveLink && { sameAs: liveLink }),
+    ...(ghLink && { codeRepository: ghLink }),
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+      { "@type": "ListItem", position: 2, name: "Projects", item: `${SITE_URL}/projects` },
+      { "@type": "ListItem", position: 3, name, item: url },
+    ],
+  },
+];
 ---
 
 <BaseLayout
-  title={project.data.name}
-  description={project.data.description}
-  image={`https://og.anit.dev/og?title=${name.trim()}&type=project`}
+  title={name}
+  description={description}
+  image={ogImage}
+  imageAlt={imageAlt}
+  noindex={isDraft}
+  jsonLd={jsonLd}
 >
-  <button
-    slot="extra-header"
-    title="go back"
-    class={`back-button flex items-center w-fit py-1 underline hover:decoration-slate-400 underline-offset-4 duration-200  dark:text-gray-50 text-gray-950 gap-1`}
-  >
-    <Icon name="mdi:arrow-left" height={16} width={16} />back
-  </button>
-  {
-    isDraft && (
-      <blockquote
-        class="my-8 bg-neutral-200/50 py-4 pl-4 dark:bg-neutral-800/60 rounded"
-        role="alert"
-      >
-        This post is a <strong>draft</strong>. If you're reading this, you're
-        probably a cool and trusted person. Please <strong>don't share</strong>{" "}
-        it thank you.
-      </blockquote>
-    )
-  }
-  <figure class="w-full overflow-hidden">
-    <Image
-      transition:name={"/projects/" + project.slug.trim() + "image"}
-      class="object-cover aspect-video rounded"
-      src={!!image ? image : ProjectDummyImage}
-      alt={`${name} cover image`}
-    />
-  </figure>
-  <div
-    class="links flex w-full no-underline justify-end gap-2 text-xs sm:text-sm mb-4"
-  >
+  <article class="pt-10 sm:pt-14">
+    <a href="/projects" class="more">
+      <Icon name="arrow-left" size={14} /> Projects
+    </a>
+
     {
-      ghLink && (
-        <a
-          href={ghLink}
-          target="_blank"
-          referrerpolicy="no-referrer"
-          class="flex items-center gap-1 no-underline outline rounded outline-1 p-1"
-        >
-          <Icon name="mdi:github" />
-          Github
-        </a>
+      isDraft && (
+        <p class="mt-6 rounded-xl bg-surface px-4 py-3 text-sm" role="note">
+          This is a <strong class="text-ink">draft</strong>. If you're reading it, you're probably a trusted person.
+          Please don't share it yet.
+        </p>
       )
     }
-    {
-      liveLink && (
-        <a
-          href={liveLink}
-          target="_blank"
-          referrerpolicy="no-referrer"
-          class="flex items-center gap-1 no-underline bg-stone-200 rounded px-1 text-black outline-1 outline"
-        >
-          <Icon name="mdi:open-in-new" />
-          Live Site
-        </a>
-      )
-    }
-  </div>
-  <h1 transition:name={"/projects/" + project.slug + "heading"}>
-    {project.data.name}
-  </h1>
-  <Content />
-  <Icon name="Full Logo" height={90} width={90} class="dark:fill-white" />
+
+    <header class="mt-6">
+      <h1 class="text-[length:var(--step-2)] font-bold leading-[1.05] tracking-[-0.035em] sm:text-[2.6rem]">{name}</h1>
+      <dl class="mt-5 flex flex-wrap gap-x-8 gap-y-2 text-sm">
+        {
+          year && (
+            <div class="flex gap-2">
+              <dt class="text-ink-3">Year</dt>
+              <dd class="nums text-ink">{year}</dd>
+            </div>
+          )
+        }
+        {
+          role && (
+            <div class="flex gap-2">
+              <dt class="text-ink-3">Role</dt>
+              <dd class="text-ink">{role}</dd>
+            </div>
+          )
+        }
+        {
+          tags.length > 0 && (
+            <div class="flex gap-2">
+              <dt class="text-ink-3">Stack</dt>
+              <dd class="text-ink">{tags.join(", ")}</dd>
+            </div>
+          )
+        }
+      </dl>
+      {
+        (liveLink || ghLink) && (
+          <div class="mt-5 flex flex-wrap gap-2">
+            {liveLink && (
+              <a
+                href={liveLink}
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-sm font-medium text-bg transition-opacity duration-200 hover:opacity-85"
+              >
+                Visit site <Icon name="arrow-up-right" size={14} />
+              </a>
+            )}
+            {ghLink && (
+              <a
+                href={ghLink}
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium text-ink ring-1 ring-line transition duration-200 hover:ring-line-strong"
+              >
+                <Icon name="github" size={14} /> Source
+              </a>
+            )}
+          </div>
+        )
+      }
+    </header>
+
+    <figure class="mt-9 overflow-hidden rounded-2xl bg-surface ring-1 ring-line">
+      <Image
+        src={cover}
+        alt={imageAlt ?? `${name} cover`}
+        widths={[704, 1056, 1408]}
+        sizes="(min-width: 768px) 704px, 100vw"
+        loading="eager"
+        class="aspect-[1200/630] w-full object-cover"
+        transition:name={`project-${project.slug}-image`}
+      />
+    </figure>
+
+    <div class="prose mt-10">
+      <Content />
+    </div>
+  </article>
 </BaseLayout>
-<script is:inline>
-function goBack() {
-  window.history.back();
-}
-document.querySelector(".back-button")?.addEventListener("click", goBack);
-</script>

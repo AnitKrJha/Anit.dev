@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { formattedDate, isoDate, readingTime } from "../lib/utils";
+
+type Props = {
+  post: CollectionEntry<"blog">;
+  /** Show the description and reading time (blog index). */
+  detailed?: boolean;
+};
+
+const { post, detailed = false } = Astro.props;
+const { title, description, date } = post.data;
+---
+
+<li class="group relative border-t border-line py-5 first:border-t-0">
+  <div class="flex items-baseline justify-between gap-6">
+    <h3 class="text-[1.075rem] font-semibold leading-snug tracking-[-0.015em]">
+      <a
+        href={`/blog/${post.slug}`}
+        class="transition-colors duration-200 after:absolute after:inset-0 group-hover:text-accent"
+        transition:name={`post-${post.slug}-title`}
+      >
+        {title.trim()}
+      </a>
+    </h3>
+    <time datetime={isoDate(date)} class="shrink-0 text-sm text-ink-3">{formattedDate(date)}</time>
+  </div>
+  {
+    detailed && (
+      <>
+        <p class="mt-1.5 line-clamp-2 max-w-[38rem] text-[0.975rem] leading-relaxed text-ink-2">{description}</p>
+        <p class="tag mt-2">{readingTime(post.body)} min read</p>
+      </>
+    )
+  }
+</li>

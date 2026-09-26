@@ -4,140 +4,56 @@ import Icon from "../components/Icon.astro";
 ---
 
 <BaseLayout
-  title="OOPS! Page Not Found"
-  description="Sorry, the page you're looking for isn't here. It might have been moved or doesn't exist. Don't worry; we're here to help you get back on track. Visit our homepage or use the navigation menu to explore our website."
-  image="https://og.anit.dev/og?title=404"
+  title="Page not found"
+  description="This page doesn't exist or has moved. Head back to the home page, the blog or the projects."
+  noindex
 >
-  <div class="scanlines"></div>
-  <div class="glitch-container">
-    <div class="text">
-      <p>404</p>
-      <div class="subtitle">Not Found</div>
-      <div class="text-clip">
-        <p>404</p>
-        <div class="subtitle">Not Found</div>
-      </div>
+  <section class="flex min-h-[55vh] flex-col items-start justify-center pt-10">
+    <p class="glitch rise select-none text-[clamp(6rem,4rem+12vw,11rem)] font-[780] leading-[0.85] tracking-[-0.06em] text-ink" style="--i:0" aria-hidden="true">
+      404
+    </p>
+    <h1 class="rise mt-6 text-[length:var(--step-2)] font-bold tracking-[-0.03em]" style="--i:1">Page not found</h1>
+    <p class="rise mt-3 max-w-[30rem]" style="--i:2">
+      It might have moved, or it never existed. Either way, here's a way back.
+    </p>
+    <div class="rise mt-7 flex flex-wrap gap-2" style="--i:3">
+      <a
+        href="/"
+        class="inline-flex items-center gap-1.5 rounded-full bg-ink px-4 py-2 text-sm font-medium text-bg transition-opacity duration-200 hover:opacity-85"
+      >
+        <Icon name="arrow-left" size={14} /> Home
+      </a>
+      <a href="/blog" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-ink ring-1 ring-line transition duration-200 hover:ring-line-strong">Blog</a>
+      <a href="/projects" class="inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-ink ring-1 ring-line transition duration-200 hover:ring-line-strong">Projects</a>
     </div>
-  </div>
-
-  <style lang="scss">
-    .scanlines {
-      position: absolute;
-      inset: 0;
-      overflow: hidden;
-      pointer-events: none;
-
-      // Courtesy https://codepen.io/zerospree/pen/mdevOB
-      background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAGCAYAAAD37n+BAAAALElEQVQYV2NkYGD4/x9IMAIxAxoDmzhIHfU0gCxFB9S1AacfsFmNJQzAoQIAH84j/OCkeYUAAAAASUVORK5CYII=");
-      background-size: 12px 6px;
-      mix-blend-mode: color-dodge;
-      opacity: 0.5;
-
-      &::after {
-        content: "";
-        position: absolute;
-        width: 100%;
-        background: rgb(255 255 255 / 5%);
-        height: 6px;
-        animation: scanline 5s linear infinite;
-      }
-    }
-
-    .glitch-container {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      overflow: hidden;
-      z-index: -1;
-      animation: flicker 20ms infinite;
-    }
-
-    .text {
-      font-family: var(--font-display);
-      position: relative;
-      z-index: -1;
-      line-height: 0.8;
-      letter-spacing: 0.02em;
-      pointer-events: none;
-      user-select: none;
-      text-align: center;
-      text-shadow:
-        -1.5px 0 0 rgb(0 0 255),
-        1.5px 0 0 rgb(255 0 0),
-        0 1.5px 0 rgb(0 255 0);
-      filter: blur(1.5px);
-
-      p {
-        font-size: 100px;
-      }
-
-      .subtitle {
-        font-size: 40px;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        white-space: nowrap;
-      }
-
-      @media screen and (width <= 600px) {
-        line-height: 0.7;
-
-        p {
-          font-size: 6rem;
-        }
-
-        .subtitle {
-          font-size: 2rem;
-        }
-      }
-
-      .text-clip {
-        position: absolute;
-        top: 0;
-        left: -0.3rem;
-        text-shadow:
-          -1.5px 0 0 rgb(0 0 255),
-          1.5px 0 0 rgb(255 0 0),
-          0 1.5px 0 rgb(0 255 0),
-          0.35rem 0 0 var(--bg),
-          4px 4px 0 var(--bg);
-        animation: text-offset 8s linear infinite;
-
-        // Dark mode transition
-        transition: text-shadow 1s ease-in-out;
-      }
-    }
-
-    @keyframes text-offset {
-      0% {
-        clip-path: polygon(0 110%, 100% 110%, 100% 160%, 0 160%);
-      }
-
-      100% {
-        clip-path: polygon(0 -90%, 100% -90%, 100% -10%, 0 -10%);
-      }
-    }
-
-    @keyframes scanline {
-      0% {
-        transform: translate3d(0, 100vh, 0);
-      }
-
-      50% {
-        transform: translate3d(0, -6px, 0);
-      }
-    }
-
-    @keyframes flicker {
-      0% {
-        opacity: 0.9;
-      }
-
-      100% {
-        opacity: 1;
-      }
-    }
-  </style>
+  </section>
 </BaseLayout>
+
+<style>
+  /* A small nod to the old glitch page: chromatic offsets in the aurora colours. */
+  .glitch {
+    text-shadow:
+      -0.025em 0 0 var(--aurora-2),
+      0.025em 0 0 var(--aurora-3);
+    animation:
+      rise 900ms var(--ease-out) both,
+      jitter 4s steps(1) 1s infinite;
+  }
+
+  @keyframes jitter {
+    0%,
+    92%,
+    100% {
+      transform: none;
+      clip-path: none;
+    }
+    94% {
+      transform: translate3d(-3px, 0, 0);
+      clip-path: inset(10% 0 55% 0);
+    }
+    96% {
+      transform: translate3d(3px, 0, 0);
+      clip-path: inset(50% 0 12% 0);
+    }
+  }
+</style>
