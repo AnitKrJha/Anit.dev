@@ -8,7 +8,7 @@ import PostRow from "../../components/PostRow.astro";
 import { getPosts } from "../../lib/content";
 import { formattedDate, isoDate, readingTime } from "../../lib/utils";
 import { person, SITE_URL } from "../../lib/site";
-import { ogImageUrl } from "../../lib/og";
+import { cardLine, ogImageUrl } from "../../lib/og";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
@@ -40,7 +40,7 @@ const shareImage =
   ogImageUrl({
     title,
     type: "Blog",
-    description,
+    description: cardLine(description),
     meta: `${formattedDate(date)} · ${minutes} min read`,
     image: coverUrl,
   });
